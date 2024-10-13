@@ -10,3 +10,19 @@ router.post('/register', registerPatient);
 router.post('/login', loginPatient);
 
 module.exports = router;
+
+
+
+
+// // routes/patientRoutes.js
+// const express = require("express");
+// const { protect, authorize } = require("../middleware/authMiddleware");
+// const { getAppointments, createAppointment } = require("../controllers/patientController");
+
+// const router = express.Router();
+
+// // Patient routes
+// router.route("/appointments").get(protect, authorize("patient"), getAppointments);
+// router.route("/appointments/new").post(protect, authorize("patient"), createAppointment);
+
+// module.exports = router;

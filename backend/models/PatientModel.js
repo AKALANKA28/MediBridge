@@ -1,20 +1,25 @@
-// models/PatientModel.js
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
 
-const PatientSchema = new mongoose.Schema({
-    fullName: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    medicalHistory: { type: String },
-    demographicInfo: { type: String }
+const PatientProfileSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  medicalHistory: [
+    {
+      disease: { type: String },
+      description: { type: String },
+      dateDiagnosed: { type: Date },
+    },
+  ],
+  appointments: [
+    {
+      doctor: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // reference to doctor
+      date: { type: Date, required: true },
+      status: { type: String, enum: ["pending", "completed", "canceled"], default: "pending" },
+    },
+  ],
 });
 
-// Hash the password before saving
-PatientSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
-});
-
-module.exports = mongoose.model('Patient', PatientSchema);
+module.exports = mongoose.model("Patient", PatientProfileSchema);
