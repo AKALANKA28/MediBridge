@@ -1,5 +1,5 @@
-const Payment = require('../models/paymentModel');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const Payment = require('../models/payModel');
+const stripe = require('stripe')('sk_test_51Q8MeRRq87H6ul5NDxC0hq98sSKcuk7JWPmZUAFCQs5j1kbdD4xhoheUUKIw2VaMWj9a8UZXkPCux6EhFPYynm0q004N4ZqQTQ');
 
 // Create a new payment
 exports.createPayment = async (req, res) => {
