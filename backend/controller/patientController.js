@@ -1,5 +1,5 @@
 // controllers/patientController.js
-const Patient = require('../models/PatientModel');
+const Patient = require('../models/PatientModelss');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -43,3 +43,15 @@ const loginPatient = async (req, res) => {
 };
 
 module.exports = { registerPatient, loginPatient };
+
+
+
+// // controllers/patientController.js
+// exports.getAppointments = async (req, res) => {
+//     // Logic for patient to get their appointments
+//   };
+  
+//   exports.createAppointment = async (req, res) => {
+//     // Logic for patient to create a new appointment
+//   };
+  
