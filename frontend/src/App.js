@@ -1,5 +1,7 @@
+import React, { useContext, useState , useEffect } from "react";
 import Home from "./pages/admin/home/Home";
 import Login from "./pages/login/Login";
+import Scanner from "./pages/QRScan/Scanner";
 // import PatientRegister from "./pages/register/PatientRegister";
 import List from "./pages/admin/list/List";
 import Single from "./pages/admin/single/Single";
@@ -7,16 +9,59 @@ import New from "./pages/admin/new/New";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
-import { useContext } from "react";
+// import { useContext } from "react";
 import { DarkModeContext } from "./context/drakModeContext";
+// import Scanner from "./pages/QRScan/Scanner";
 import { UserRoleContext } from "./context/userRoleContext";
+import { Html5QrcodeScanner } from "html5-qrcode";
+// import { useState } from "react";
+
+
 
 function App() {
+
+//   const [scanResult, setScanResult] = useState(null);
+
+//   useEffect(() => {   const scanner = new Html5QrcodeScanner("reader", {
+//     qrbox: {
+//      width: 250,
+//      height: 250
+//    },
+//    fps:5,
+//   });
+
+//   scanner.render(success, error);
+
+//   function success(result) {
+//    scanner.clear();
+//    setScanResult(result);
+//    //  console.log("Success! Found QR code:", result);
+//   }
+  
+//   function error(err) {
+//     console.warn(err);
+//   }
+// }, []);
+
+
+    
+
+//       return (
+//         <div className="App">
+//           <h1>QR Code Scanning In React</h1>
+//           {scanResult
+//             ? <div>Success: <a href={"http://"+scanResult}>{scanResult}</a></div>
+//             :  <div id="reader"></div>
+//             }
+
+//         </div>
+        
+//       );
   const { darkMode } = useContext(DarkModeContext);
   // const { userRole } = useContext(UserRoleContext); // Get user role from context
 
   // Temporarily setting userRole to "admin" for testing purposes
-    const userRole = "admin"; // Hardcoded for testing purposes
+  const userRole = "admin"; // Hardcoded for testing purposes
 
 
 
@@ -28,6 +73,7 @@ function App() {
         return (
           <Routes>
             <Route path="/" element={< Home />} />
+            <Route path="/" element={< Scanner />} />
             <Route path="users" element={<List />} />
             <Route path="users/:userId" element={< Single />} />
             <Route path="users/new" element={<New />} />
