@@ -1,36 +1,35 @@
-.qr-code-screen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+.qr-code-screen-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+}
+
+// Other classes remain unchanged
+.qr-code-display-container {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  text-align: center;
+
+  .qr-code-title {
+    margin-bottom: 10px; // Space between heading and QR code
+    color: #333; // Change the heading color if needed
   }
-  
-  .health-card {
-    margin-bottom: 20px;
-    padding: 15px;
-    // border: 1px solid #ccc;
-    border-radius: 10px;
-    // background-color: #f9f9f9;
-    width: 100%;
-    max-width: 400px;
-    text-align: left;
+
+  .qr-code-image {
+    max-width: 100%; // Makes the image responsive
+    height: auto; // Maintain aspect ratio
+    border-radius: 10px; // Optional rounded corners
   }
-  
-  .qr-code-container {
-    margin-bottom: 20px;
-    text-align: center;
+
+  .qr-code-loading-text {
+    font-size: 16px; // Optional font size adjustment
+    color: #555; // Optional text color
   }
-  
-  // button {
-  //   padding: 10px 20px;
-  //   background-color: #007bff;
-  //   color: #fff;
-  //   border: none;
-  //   border-radius: 5px;
-  //   cursor: pointer;
-  // }
-  
-  button:hover {
-    background-color: #0056b3;
+
+  .qr-code-error-text {
+    font-size: 16px; // Optional font size adjustment
+    color: red; // Highlight error messages
   }
-  
+}
