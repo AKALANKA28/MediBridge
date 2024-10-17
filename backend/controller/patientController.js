@@ -1,5 +1,5 @@
 // controllers/patientController.js
-const Patient = require('../models/PatientModelss');
+const Patient = require('../models/patientModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
