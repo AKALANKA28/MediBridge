@@ -5,7 +5,9 @@ import { Link } from "react-router-dom";
 
 const TreatmentTable = () => {
   const [data, setData] = useState([]);
-
+  const [isFormVisible, setIsFormVisible] = useState(false); // State to toggle form visibility
+  const [initialData, setInitialData] = useState(null); // State to hold initial data for editing
+  
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch('http://localhost:5000/treatments/'); // Replace with your actual API endpoint

@@ -33,7 +33,7 @@ function App() {
             <Route path="scanner" element={<Scanner />} /> 
                         <Route path="treatment" element={<Treatment />} />  {/* Add Scanner route for admin */}
                         <Route path="treatment" element={<TreatmentTable />} /> 
-                        <Route path="/treatments/new" component={TreatmentForm} />
+                        <Route path="/treatments/new" component={<TreatmentForm />} />
                         <Route path="lab" element={<Lab />} />
           </Routes>
         );

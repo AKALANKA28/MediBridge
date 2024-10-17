@@ -27,7 +27,7 @@ const Treatment = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button> {/* Button to show form */}
+        <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button> Button to show form
         {isFormVisible && (
           <TreatmentForm handleSubmit={handleFormSubmit} initialData={initialData} /> // Show form conditionally
         )}
