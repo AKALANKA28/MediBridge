@@ -20,6 +20,8 @@ Database.getInstance();
 // Routes
 // app.use('/api/patients', patientRoutes);
 app.use('/api/user', authRoutes);
+app.use('/treatments', treatmentRoutes); // Ensure this is included
+app.use('/tests', labTestRoutes); // Ensure this is included
 
 
 const PORT = process.env.PORT || 5000;

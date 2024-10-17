@@ -5,15 +5,15 @@ const {
   getTreatmentById, 
   deleteTreatment, 
   updateTreatmentById 
-} = require('../controller/MedicalRecordsManage/treatmentController'); // Correct path for the controller
+} = require('../../controller/MedicalRecordsManage/treatmentController'); // Correct path for the controller
 
 const router = express.Router();
 
 // Route to save a new treatment schedule
-router.post('/treatments', saveTreatment);
+router.post('/add', saveTreatment);
 
 // Route to retrieve all treatment schedules
-router.get('/treatments', getAllTreatments);
+router.get('/', getAllTreatments);
 
 // Route to retrieve a treatment by ID
 router.get('/treatments/:id', getTreatmentById);

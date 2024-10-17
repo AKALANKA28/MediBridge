@@ -6,10 +6,10 @@ const {
   getTestById,
   updateTestById,
   deleteTest
-} = require('../../controllers/MedicalRecordsManage/labTestController'); // Import the Test controller
+} = require('../../controller/MedicalRecordsManage/labTestController'); // Import the Test controller
 
 // Route to save a new test
-router.post('/', saveTest);
+router.post('/add', saveTest);
 
 // Route to retrieve all tests
 router.get('/', getAllTests);

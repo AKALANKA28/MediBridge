@@ -21,7 +21,7 @@ exports.saveTreatment = async (req, res) => {
     });
 
     await newTreatment.save();
-    res.status(200).json({ message: "Treatment schedule saved successfully!" });
+    res.status(201).json({ message: "Treatment schedule saved successfully!" });
   } catch (err) {
     console.error("Failed to save treatment schedule:", err);
     res.status(500).json({ message: "Failed to save treatment schedule." });

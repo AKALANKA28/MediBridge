@@ -1,0 +1,206 @@
+.main {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  .card {
+    background-color: #f8f9fa;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+
+    .add-item {
+      display: flex;
+      flex-direction: column;
+
+      .card-title {
+        font-weight: bold;
+        font-size: 20px;
+        span {
+          color: #888;
+          font-weight: normal;
+        }
+
+        h6 {
+          margin: 5px 0;
+          color: #aaa;
+        }
+      }
+    }
+
+    .page-btn {
+      button {
+        background-color: #2a75e5;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #225cb3;
+        }
+
+        i {
+          margin-right: 5px;
+        }
+      }
+    }
+
+    .table-top-head {
+      display: flex;
+      gap: 15px;
+
+      li {
+        display: inline-block;
+
+        .button-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          background-color: #e9ecef;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #dee2e6;
+          }
+
+          img {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .table-container {
+    margin-top: 20px;
+
+    .table {
+      width: 100%;
+      border-spacing: 0;
+      border: none;
+
+      th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      thead {
+        background-color: white;
+        border: none;
+
+        th {
+          font-weight: bold;
+          color: #11385a;
+        }
+      }
+
+      tbody {
+        tr {
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+
+        .action {
+          .buttons {
+            display: flex;
+            gap: 10px;
+
+            button {
+              background: none;
+              border: none;
+              cursor: pointer;
+
+              &.btn-edit {
+                color: #ffc107;
+              }
+
+              &.btn-delete {
+                color: #dc3545;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .error {
+      color: #dc3545;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .modal-body {
+    padding: 20px;
+
+    .form-container {
+      .form-label {
+        font-weight: bold;
+        color: #6c757d;
+      }
+
+      .form-control {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        transition: border-color 0.3s;
+
+        &:focus {
+          border-color: #2e63b2;
+          outline: none;
+          box-shadow: 0 0 5px rgba(77, 138, 202, 0.5);
+        }
+      }
+
+      .error {
+        color: #dc3545;
+        font-size: 12px;
+        margin-top: 5px;
+      }
+
+      textarea {
+        resize: none;
+      }
+    }
+  }
+
+  .d-flex {
+    &.justify-content-end {
+      margin-top: 20px;
+    }
+  }
+
+  .btn {
+    &.btn-success {
+      background-color: #28a745;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  }
+}
