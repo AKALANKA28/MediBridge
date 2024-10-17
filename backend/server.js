@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const Database = require('./config/Database'); // Import the Singleton Database class
 const patientRoutes = require('./routes/patientRoutes');
 const authRoutes = require('./routes/authRoutes');
+const treatmentRoutes = require('./routes/MedicalRecordsManage/treatmentRoutes');
+const labTestRoutes = require('./routes/MedicalRecordsManage/labTestRoutes'); 
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ Database.getInstance();
 // Routes
 // app.use('/api/patients', patientRoutes);
 app.use('/api/user', authRoutes);
+app.use('/treatments', treatmentRoutes); // Ensure this is included
+app.use('/tests', labTestRoutes); // Ensure this is included
 
 
 // const PORT = process.env.PORT || 5000;

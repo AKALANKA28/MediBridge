@@ -45,10 +45,28 @@ const Sidebar = () => {
               <span>Users</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/Scanner" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Products</span>
+              <span>Scanner</span>
+            </li>
+          </Link>
+          <Link to="/Treatment" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Treatment</span>
+            </li>
+          </Link>
+          <Link to="/TreatmentTable" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>TreatmentTable</span>
+            </li>
+          </Link>
+          <Link to="/Lab" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Lab</span>
             </li>
           </Link>
           <li>
@@ -57,7 +75,7 @@ const Sidebar = () => {
           </li>
           <li>
             <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
+            <span>payment</span>
           </li>
           <p className="title">USEFUL</p>
           <li>
