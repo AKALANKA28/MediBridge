@@ -18,7 +18,7 @@ const Login = () => {
     try {
       // Make a POST request to your backend login API
       const response = await axios.post(
-        "http://192.168.1.159:8080/api/user/login", // Replace with your actual network IP
+        "http://localhost:8080/api/user/login", // Replace with your actual network IP
         {
           email,
           password,
