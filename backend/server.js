@@ -20,6 +20,8 @@ Database.getInstance();
 // Routes
 // app.use('/api/patients', patientRoutes);
 app.use('/api/user', authRoutes);
+app.use('/patient', patientRoutes); // Ensure this is included
+
 app.use('/treatments', treatmentRoutes); // Ensure this is included
 app.use('/tests', labTestRoutes); // Ensure this is included
 

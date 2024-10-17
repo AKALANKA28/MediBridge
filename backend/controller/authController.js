@@ -146,6 +146,7 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
 });
 
 
+
 // Logout a User
 exports.logout = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
@@ -275,6 +276,8 @@ exports.updatedUser = asyncHandler(async (req, res) => {
         name: req?.body?.name,
         email: req?.body?.email,
         mobile: req?.body?.mobile,
+        nic: req?.body?.nic
+
       },
       {
         new: true,
