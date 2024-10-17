@@ -27,7 +27,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Align items to the start */
+  align-content: center;
+  // justify-content: flex-start; /* Align items to the start */
   padding: 20px;
   width: calc(100% - 180px); /* Account for sidebar width */
   /* No longer uses justify-content: center to push everything down */
