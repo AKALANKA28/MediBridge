@@ -61,19 +61,22 @@ exports.registerUser = asyncHandler(async (req, res) => {
 });
 
 // Login a User
+// Login a User (Handles all roles including admin)
 exports.loginController = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   console.log("Login attempt for user:", email);
 
-  // Find user and populate both doctorProfile and patientProfile
+  // Find user and populate both doctorProfile and patientProfile if applicable
   const findUser = await User.findOne({ email })
-    .populate("doctorProfile") // Populate doctorProfile if it's a doctor
-    .populate("patientProfile"); // Populate patientProfile if it's a patient
+    .populate("doctorProfile")
+    .populate("patientProfile");
 
   if (findUser) {
     console.log("User found:", findUser);
 
+    // Check if the provided password matches the stored password
     if (await findUser.isPasswordMatched(password)) {
+      // Generate refresh token
       const refreshToken = await generateRefreshToken(findUser._id);
       await User.findByIdAndUpdate(
         findUser._id,
@@ -81,21 +84,24 @@ exports.loginController = asyncHandler(async (req, res) => {
         { new: true }
       );
 
+      // Set refresh token in cookie
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         maxAge: 72 * 60 * 60 * 1000, // 72 hours
       });
 
       console.log("Login successful for user:", findUser._id);
-      // Send response with populated profiles
+
+      // Respond based on user role (admin, doctor, patient, etc.)
       res.json({
         _id: findUser._id,
         name: findUser.name,
         email: findUser.email,
-        role: findUser.role,
+        role: findUser.role, // User's role is returned here
         token: generateToken(findUser._id),
         doctorProfile: findUser.doctorProfile || null,
-        patientProfile: findUser.patientProfile || null, // Ensure patientProfile is returned
+        patientProfile: findUser.patientProfile || null,
       });
     } else {
       console.log("Invalid password for user:", email);
