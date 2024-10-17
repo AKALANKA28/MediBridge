@@ -14,14 +14,19 @@ import "./style/dark.scss";
 import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
+import QRCodeScreen from "./components/home/QRCode";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
-  const { auth } = useContext(AuthContext); // Get the full auth object
+  const { auth } = useContext(AuthContext); // Get auth and logout from context
+
+  const isAuthenticated = !!auth.token;
 
   // Render routes based on user role
   const renderRoutes = () => {
     const userRole = auth.role; // Access role from auth object
+    if (!isAuthenticated) return <Login />;
+
     switch (userRole) {
       case "admin":
         return (
@@ -50,6 +55,8 @@ function App() {
             <Route path="users" element={<List />} />
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
+            <Route path="/qr-code" element={<QRCodeScreen />} />
+
           </Routes>
         );
       default:

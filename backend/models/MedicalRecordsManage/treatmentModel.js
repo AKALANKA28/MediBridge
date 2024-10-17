@@ -1,20 +1,20 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const mongoose = require("mongoose");
 
 const TreatmentSchema = new mongoose.Schema({
-    
-    treatment_Id: { type: String, required: true, unique: true },
-    treatment_Name: { type: String, required: true },
-    doctor_Name: { type: String, required: true },
-    date: { type: Date, required: true },
-    description: { type: String }
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Patient", // reference to User or Patient model
+  },
+  treatment_Id: { type: String, required: true, unique: true },
+  treatment_Name: { type: String },
+  doctor_Name: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }, // reference to doctor
+  date: { type: Date },
+  description: { type: String },
+  status: {
+    type: String,
+    enum: ["ongoing", "completed", "canceled"],
+    default: "ongoing",
+  },
 });
 
-// Hash the password before saving
-// TreatmentSchema.pre('save', async function (next) {
-//     if (!this.isModified('password')) return next();
-//     this.password = await bcrypt.hash(this.password, 10);
-//     next();
-// });
-
-module.exports = mongoose.model('Treatment', TreatmentSchema);
+module.exports = mongoose.model("Treatment", TreatmentSchema);

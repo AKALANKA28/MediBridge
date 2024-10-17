@@ -28,4 +28,61 @@
       }
     }
   }
+
+  // Media queries for responsive design
+  @media (max-width: 768px) {
+    flex-direction: column; // Stack sidebar and main content vertically
+    display: none;
+
+
+    .homeContainer {
+      .widgets {
+        flex-direction: column; // Stack widgets vertically on small screens
+        align-items: center; // Center align widgets
+        display: none;
+
+      }
+
+      .charts {
+        flex-direction: column; // Stack charts vertically on small screens
+        align-items: center; // Center align charts
+        display: none;
+
+      }
+
+      .listContainer {
+        margin: 10px; // Reduce margin for small screens
+        padding: 10px; // Reduce padding for small screens
+        display: none;
+
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .homeContainer {
+      .widgets {
+        gap: 10px; // Adjust gap for mobile
+        display: none;
+
+      }
+
+      .charts {
+        padding: 5px; // Reduce padding for very small screens
+        display: none;
+
+      }
+    }
+  }
+}
+
+
+.homeComponent {
+  // Hide the HomeComponent on larger screens
+  display: block; // Default to block for mobile
+
+  // Media query to hide on tablet and desktop
+  @media (min-width: 768px) {
+    display: none; // Hide on tablet and larger
+  }
 }

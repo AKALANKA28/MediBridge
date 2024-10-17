@@ -1,0 +1,93 @@
+.home {
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    max-width: 480px;
+    width: 100%;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  
+  .heroSection {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    aspect-ratio: 0.457;
+    width: 100%;
+    padding-top: 749px;
+  }
+  
+  .heroImage {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  .navigationBar {
+    position: relative;
+    background-color: #fff;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    padding: 16px 24px;
+  }
+  
+  .activeNavItem {
+    border-radius: 12px;
+    background-color: rgba(99, 180, 255, 0.1);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    color: #0076c1;
+    white-space: nowrap;
+    justify-content: start;
+    margin: auto 0;
+    padding: 12px;
+    font: 700 14px Nunito, sans-serif;
+  }
+  
+  .navIcon {
+    aspect-ratio: 1;
+    object-fit: contain;
+    object-position: center;
+    width: 24px;
+    align-self: stretch;
+    margin: auto 0;
+  }
+  
+  .navText {
+    align-self: stretch;
+    margin: auto 0;
+  }
+  
+  .navItem {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: hidden;
+    justify-content: center;
+    flex: 1;
+    flex-basis: 0%;
+    margin: auto 0;
+    padding: 12px;
+  }
+  
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
