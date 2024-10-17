@@ -15,9 +15,15 @@ const PatientProfileSchema = new mongoose.Schema({
   ],
   appointments: [
     {
-      doctor: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }, // reference to doctor
+      doctor: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // reference to doctor
       date: { type: Date, required: true },
       status: { type: String, enum: ["pending", "completed", "canceled"], default: "pending" },
+    },
+  ],
+  treatments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Treatment", // Reference to the Treatment model
     },
   ],
 });
