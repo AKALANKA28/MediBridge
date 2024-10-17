@@ -18,6 +18,7 @@ exports.saveTreatment = async (req, res) => {
       doctor_Name,
       date,
       description
+    
     });
 
     await newTreatment.save();

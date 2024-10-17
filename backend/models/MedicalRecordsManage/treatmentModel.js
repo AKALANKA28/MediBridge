@@ -10,11 +10,11 @@ const TreatmentSchema = new mongoose.Schema({
   doctor_Name: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }, // reference to doctor
   date: { type: Date },
   description: { type: String },
-  status: {
-    type: String,
-    enum: ["ongoing", "completed", "canceled"],
-    default: "ongoing",
-  },
+  // status: {
+  //   type: String,
+  //   enum: ["ongoing", "completed", "canceled"],
+  //   default: "ongoing",
+  // },
 });
 
 module.exports = mongoose.model("Treatment", TreatmentSchema);
