@@ -17,6 +17,7 @@ import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
 import Register from "./pages/auth/Register";
+import PatientDetails from "./pages/auth/PatientDetails";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -31,7 +32,9 @@ function App() {
       return (
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />{" "}
+          <Route path="/register" element={<Register />} />
+          <Route path="/patient-details" element={<PatientDetails />} />
+
           {/* Add Register route */}
         </Routes>
       );

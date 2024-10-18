@@ -80,6 +80,26 @@ $social-icon-size: 1.9rem;
       }
     }
 
+    .password-input {
+      position: relative;
+      margin-bottom: 20px; // Space between fields
+    
+      input {
+        width: 100%; // Full width of the container
+        padding-right: 40px; // Space for the icon
+      }
+    
+      .eye-icon {
+        position: absolute;
+        right: 0px; // Position the icon inside the input
+        top: 47%;
+        transform: translateY(-50%); // Center vertically
+        cursor: pointer; // Pointer cursor on hover
+        color: #888; // Icon color
+        z-index: 1; // Ensure icon is above the input
+      }
+    }
+    
     // Options (remember me & forgot password)
     .login-options {
       display: flex;
@@ -134,6 +154,17 @@ $social-icon-size: 1.9rem;
       font-weight: 400;
       color: #999999;
     }
+    .skip-btn {
+      background-color: transparent; // Make it visually distinct
+      color: $primary-color; // Example color
+      font-size: 12.5px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center; // Center align the text and icon
+      position: absolute; // Absolute positioning allows it to be placed in the bottom right corner
+    }
+    
     // Social login section
     .social-login {
       display: flex;
