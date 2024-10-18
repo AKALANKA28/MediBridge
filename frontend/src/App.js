@@ -9,12 +9,14 @@ import Treatment from "./pages/admin/treatments/Treatment";
 import TreatmentTable from "./pages/admin/treatments/TreatmentTable";
 import TreatmentForm from "./pages/admin/treatments/TreatmentForm";
 import Lab from "./pages/admin/lab/Lab";
+import AnalysisScreen from "./pages/analysis/AnalysisScreen";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
+import { UserRoleContext } from "./context/userRoleContext";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -22,8 +24,8 @@ function App() {
 
   const isAuthenticated = !!auth.token;
 
-  // Render routes based on user role
-  const renderRoutes = () => {
+   // Render routes based on user role
+   const renderRoutes = () => {
     const userRole = auth.role; // Access role from auth object
     if (!isAuthenticated) return <Login />;
 
@@ -41,6 +43,7 @@ function App() {
             <Route path="treatment" element={<TreatmentTable />} />
             <Route path="/treatments/new" component={<TreatmentForm />} />
             <Route path="lab" element={<Lab />} />
+            <Route path="analysis" element={<AnalysisScreen />} />
           </Routes>
         );
       case "doctor":

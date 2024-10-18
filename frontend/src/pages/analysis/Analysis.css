@@ -1,0 +1,33 @@
+/* Analysis.css */
+
+.analysis-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f4f5f7;
+    /* margin-left: 250px; Space for the sidebar */
+  }
+  
+  .kpi-section {
+    margin-bottom: 20px;
+  }
+  
+  .charts-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .chart {
+    flex: 1; /* Makes each chart take equal space */
+    margin-right: 10px; /* Space between charts */
+  }
+  
+  .chart:last-child {
+    margin-right: 0; /* Remove margin from the last chart */
+  }
+  
+  .table-container {
+    margin-top: 20px;
+  }
+  
