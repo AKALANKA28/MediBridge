@@ -1,3 +1,5 @@
+@media (max-width: 768px) {
+
 .qr-code-screen-container {
   display: flex;
   flex-direction: column;
@@ -20,8 +22,13 @@
     background-position: right top;
     background-repeat: no-repeat;
     z-index: 1; /* Ensure the image stays behind the content */
+    @media (min-width: 768px) {
+     display: none;; // Wider container for larger screens
+    }
+  
   }
 }
+commit
 .qr-card-container {
   background-color: white;
   border-radius: 10px;
@@ -30,10 +37,20 @@
   width: 100%;
   max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  // text-align: center;
   z-index: 1; /* Ensure the content is above the background */
   position: relative;
+
+  // Web responsive styles
+  @media (min-width: 768px) {
+    max-width: 600px; // Wider container for larger screens
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 800px; // Even wider container for larger screens
+    padding: 30px; // More padding for larger screens
+  }
 }
+
 .qr-header p {
   font-size: 14px;
   margin-top: 0px;
@@ -54,7 +71,6 @@
     height: auto; // Maintain aspect ratio
     z-index: 10; // Ensure the logo is above other elements
   }
-
 }
 
 .patient-info-section {
@@ -97,7 +113,6 @@
       margin-bottom: 10px;
     }
   }
-
 }
 
 .qr-footer {
@@ -111,7 +126,6 @@
   bottom: 0;
   width: 100%;
   z-index: 20;
-  // box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .footer-btn {
@@ -130,4 +144,37 @@
 
 .footer-btn svg {
   margin-right: 5px;
+}
+
+/* Web Responsive Styles */
+@media (min-width: 768px) {
+  .qr-code-screen-container {
+    flex-direction: row; /* Change layout to row for larger screens */
+    justify-content: space-between; /* Space out content */
+    // padding: 40px; /* Increased padding for larger screens */
+  }
+
+  .qr-card-container {
+    margin: 20px; /* Margin between card containers */
+    flex: 1; /* Allow the container to grow */
+  }
+
+  .qr-footer {
+    display: none;
+  }
+
+  .qr-header p {
+    font-size: 16px; /* Larger font for web */
+  }
+
+  .patient-info-section p {
+    font-size: 16px; /* Larger font for patient info */
+  }
+}
+
+@media (min-width: 1024px) {
+  .qr-footer {
+    gap: 30px; /* More gap for larger screens */
+    padding: 25px; /* Even more padding for footer */
+  }
 }

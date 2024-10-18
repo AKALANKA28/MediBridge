@@ -87,4 +87,12 @@
             }
         }
     }
+    
   }
+
+  /* Hide the sidebar on mobile devices */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none; /* Hides the sidebar on screens smaller than or equal to 768px */
+  }
+}

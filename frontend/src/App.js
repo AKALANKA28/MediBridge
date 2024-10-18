@@ -20,6 +20,7 @@ import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
 import Register from "./pages/auth/Register";
 import PatientDetails from "./pages/auth/PatientDetails";
+import QRPage from "./pages/patient/qrPage/QRPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -70,6 +71,8 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
+            <Route path="/qr" element={<QRPage />} />
+
           </Routes>
         );
       default:

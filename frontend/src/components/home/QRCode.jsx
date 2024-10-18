@@ -59,6 +59,7 @@ const QRCodeScreen = () => {
   return (
     <div className="qr-code-screen-container">
       <Header />
+      
       <div className="qr-card-container">
         <div className="qr-header">
           <p style={{ fontSize: "12px" }}>

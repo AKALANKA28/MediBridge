@@ -36,3 +36,9 @@ z-index: 10;
     flex-grow: 1; /* Makes sure the text occupies the center space */
   }
   
+  /* Hide the header on web */
+@media (min-width: 768px) {
+  .header-container {
+    display: none; /* Hides the header container on larger screens */
+  }
+}
