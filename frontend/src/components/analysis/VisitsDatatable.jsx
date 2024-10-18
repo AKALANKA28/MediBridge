@@ -82,7 +82,7 @@ const List = () => {
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/analysis/visits");
+        const response = await axios.get("/api/analysis/visits");
         setData(response.data);
         setFilteredData(response.data); // Initialize with all data
       } catch (error) {

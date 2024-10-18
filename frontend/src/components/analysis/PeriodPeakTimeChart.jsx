@@ -13,7 +13,7 @@ const PeriodPeakTimeChart = () => {
   useEffect(() => {
     const fetchPeakTimes = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/analysis/peakperiod?period=${period}`);
+        const response = await axios.get(`/api/analysis/peakperiod?period=${period}`);
         setData(response.data.data);
         console.log("Fetched peak time data:", response.data);
       } catch (error) {

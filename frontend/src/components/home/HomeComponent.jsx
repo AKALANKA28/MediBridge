@@ -41,11 +41,6 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext); // Get auth and logout from context
 
-  // Logout function
-  const handleLogout = () => {
-    // Clear user data from local storage or context
-    localStorage.removeItem("userToken"); // Example: remove user token
-  };
 
   return (
     <div className="home-container">

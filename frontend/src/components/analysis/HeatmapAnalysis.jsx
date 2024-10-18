@@ -11,7 +11,7 @@ const HeatmapAnalysis = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/analysis/peak?period=${period}`);
+        const response = await axios.get(`/api/analysis/peak?period=${period}`);
         const visitData = response.data;
         setData(visitData.data);
         setMaxVisits(visitData.max);

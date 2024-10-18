@@ -22,7 +22,7 @@ const Analysis = () => {
   useEffect(() => {
     const fetchPeakTimes = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/analysis/peakday?period=today");
+        const response = await axios.get("/api/analysis/peakday?period=today");
         setData(response.data.data);
         console.log("Fetched data:", response.data);
       } catch (error) {

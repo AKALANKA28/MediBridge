@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import axios from "axios";
 
 // Create AuthContext with default value
 export const AuthContext = createContext({
@@ -25,7 +26,21 @@ export const AuthProvider = ({ children }) => {
     userId: null, // Store user ID
   });
 
-  // On component mount, check if there's a token and role stored in localStorage
+  // Set up Axios defaults whenever the token is available
+  useEffect(() => {
+    if (auth.token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${auth.token}`;
+    } else {
+      delete axios.defaults.headers.common["Authorization"];
+    }
+
+    // Set the base URL for Axios (adjust this to your environment)
+    axios.defaults.baseURL = "http://192.168.1.159:8080";
+    // axios.defaults.baseURL = "http:/localhost:8080";
+
+  }, [auth.token]); // Re-run whenever the token changes
+
+  // On component mount, check if there's a token, role, and userId stored in localStorage
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
     const storedRole = localStorage.getItem("role");
@@ -42,12 +57,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // Function to log in the user
-  const login = (token, role, userId, patientProfileId) => {
-    // Store token, role, userId, and patientProfileId in localStorage
+  const login = (token, role, userId) => {
+    // Store token, role, and userId in localStorage
     localStorage.setItem("token", token);
     localStorage.setItem("role", role);
     localStorage.setItem("userId", userId);
-  
+
     // Update the auth state
     setAuth({
       isAuthenticated: true,

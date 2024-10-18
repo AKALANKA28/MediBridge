@@ -16,7 +16,6 @@ import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
-import { UserRoleContext } from "./context/userRoleContext";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);

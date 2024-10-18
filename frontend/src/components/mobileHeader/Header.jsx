@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './Header.scss';
+import'./Header.scss';
 import image from '../../assets/Image.svg';
 
 const Header = () => {

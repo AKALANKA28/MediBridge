@@ -16,7 +16,7 @@ const QRCodeScreen = () => {
     const fetchQRCode = async () => {
       try {
         const qrResponse = await axios.get(
-          `http://192.168.1.159:8080/patient/generate-qr/${userId}`
+          `/patient/generate-qr/${userId}`
         );
         console.log("QR Code Response Data:", qrResponse.data);
 
@@ -34,7 +34,7 @@ const QRCodeScreen = () => {
     fetchQRCode();
   }, []);
 
-  console.log("QR Code for Image:", qrCode);
+  // console.log("QR Code for Image:", qrCode);
 
   return (
     <div className="qr-code-screen-container">
