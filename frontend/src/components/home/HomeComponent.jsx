@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import NavItem from "./NavItem";
 import "./Home.scss";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
 
 // Import SVG files
 // import calendarIcon from "../../assets/image-5.svg";
@@ -11,6 +12,7 @@ import qrIcon from "../../assets/qr.png"; // Non-SVG example
 import profile from "../../assets/profile-add.svg"; // Non-SVG example
 import link from "../../assets/link.svg"; // Non-SVG example
 import hospital from "../../assets/hospital.svg"; // Non-SVG example
+import AppointmentCard from "./AppointmentCard";
 
 const navItems = [
   {
@@ -37,6 +39,9 @@ const navItems = [
 
 const HomeComponent = () => {
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext); // Get auth and logout from context
+
+
   return (
     <div className="home-container">
       <section className="welcome-section">
@@ -105,21 +110,16 @@ const HomeComponent = () => {
           <h3>My Appointment</h3>
           <a href="#">See All</a>
         </div>
-        <div className="appointment-details">
-          <div className="appointment-date">
-            <img src="./assets/image-5.svg" alt="Calendar" />
-            <span>Wed Jun 20</span>
-            <span>8:00-8:30AM</span>
-          </div>
-          <div className="doctor-details">
-            <img src="./assets/image-2.svg" alt="Doctor" />
-            <div>
-              <h4>dr. Nirmala Soyza</h4>
-              <p>Orthopedic</p>
-            </div>
-          </div>
-        </div>
+        <AppointmentCard />
+
       </section>
+
+      {/* Logout Button */}
+      <div className="logout-container">
+        <button className="logout-button" onClick={logout}>
+          Logout
+        </button>
+      </div>
 
       <nav className="footer">
         {navItems.map((item, index) => (

@@ -18,23 +18,28 @@ const Login = () => {
     try {
       // Make a POST request to your backend login API
       const response = await axios.post(
-        "http://192.168.1.159:8080/api/user/login", // Replace with your actual network IP
+        "/api/user/login", // Replace with your actual network IP
         {
           email,
           password,
         }
       );
 
-      if (response && response.data) {
-        // Destructure the token and role from the response
-        const { token, role } = response.data;
+      console.log("API response:", response.data); // Log the response
 
-        if (!token || !role) {
+      if (response && response.data) {
+        // Destructure the token, role, and userId (_id in your case)
+        const { token, role, _id } = response.data; // Change userId to _id
+
+        if (!token || !role || !_id) {
           throw new Error("Invalid response data");
         }
 
+
         // Use login function to set user role and token in context and localStorage
-        login(token, role);
+        login(token, role, _id); // Pass _id to login function
+
+        console.log("User role:", role); // Log the user role for debugging
 
         // Redirect the user based on their role
         if (role === "admin") {
@@ -42,9 +47,9 @@ const Login = () => {
         } else if (role === "patient") {
           navigate("/"); // Patient dashboard
         } else if (role === "doctor") {
-          navigate("/"); // Doctor dashboard (you might want to change this to a specific route)
+          navigate("/"); // Doctor dashboard
         } else {
-          navigate("/login"); // Default redirection
+          navigate("/"); // Default redirection to home
         }
       } else {
         setErrorMessage("Invalid login credentials. Please try again.");

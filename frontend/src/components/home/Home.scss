@@ -30,14 +30,35 @@
       padding: 20px;
       height: 37vh;
       background-color: #B5D5FD; /* Can be removed if background image fully covers it */
-      background-image: url('../../assets/DoctorImg.png'); /* Ensure correct image path */
-      background-size: 45%; /* This will prevent the image from stretching */
-      background-position: right bottom; /* Positions image in the bottom-right corner */
+      background-image: url('../../assets/background.jpeg'); /* Ensure correct image path */
+      background-size: cover; /* This will prevent the image from stretching */
       background-repeat: no-repeat; /* Ensures the image doesn't repeat */
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       flex-direction: column;
-
+      position: relative; /* Required for positioning the pseudo-element */
+    
+      &::before {
+        content: ''; /* Required for the pseudo-element to display */
+        position: absolute; /* Cover the entire section */
+        top: 0;
+        // left: 0;
+        right: 0;
+        bottom: 0;
+        width: 47%;
+        background-image: url('../../assets/DoctorImg.png'); /* Path to your overlay image */
+        background-size: contain; /* Adjust based on how you want to display the overlay image */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-position: right bottom;
+        // opacity: 0.5; /* Adjust opacity to see through to the background */
+        z-index: 0; /* Behind other content */
+      }
+    
+      > * {
+        position: relative; /* Ensure content stays above the background */
+        z-index: 1; /* Bring content above the pseudo-element */
+      }
 
       .header {
         display: flex;
@@ -64,14 +85,16 @@
       }
 
       .welcome-text {
+        color: #494D54; /* Customize the color for the name */
+
         h1 {
           font-size: 28.9px;
         }
         h2 {
-          font-size: 14.9px;
+          font-size: 28.9px;
         }
         .name {
-          color: #008080; /* Customize the color for the name */
+          margin-top: -20px;
         }
         p {
           color: #bbc8d3;
@@ -193,7 +216,7 @@
       background-color: white;
       border-top: 1px solid #ddd;
       position: fixed;
-      bottom: 12px;
+      bottom: 2px;
       width: 100%;
       z-index: 10;
   
