@@ -1,0 +1,100 @@
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Sidebar from "../../components/sidebar/Sidebar"; // Ensure the correct path for Sidebar
+import Navbar from "../../components/navbar/Navbar";
+import './PatientRecords.scss'; // Assuming styles are imported
+
+const PatientRecords = () => {
+  const location = useLocation();
+  const data = location.state?.data; // Retrieve patient data from navigation state
+
+  // Extract patient information from the data structure
+  const patient = data?.user;
+  const treatments = data?.treatments;
+
+  return (
+    <div className="patient-records-page">
+      <Sidebar />
+      <div className="main-content">
+        <Navbar />
+        <div className="patient-info-container">
+          <div className="header">
+            <h2>Patient Medical Records</h2>
+          </div>
+          <div className="patient-info-box">
+            {/* Patient Info */}
+            {patient ? (
+              <div className="patient-info">
+                <img src="/path/to/patient.jpg" alt="Patient" className="patient-pic" />
+                <div className="patient-details">
+                  <h3>About Patient</h3>
+                  <p>Name: {patient.name}</p>
+                  <p>NIC: {patient.nic}</p>
+                  <p>Email: {patient.email}</p>
+                  {/* Add other patient details if needed */}
+                </div>
+              </div>
+            ) : (
+              <p>Patient details not found.</p>
+            )}
+  
+            {/* Links to Treatments and Lab Tests */}
+            <div className="treatments-labs">
+              <Link to="/treatments" className="treatment-button">Treatments</Link>
+              <Link to="/lab-tests" className="lab-button">Lab Tests</Link>
+            </div>
+  
+            {/* Health Status (Example Data) */}
+            <div className="health-status">
+              <div className="status-item">
+                <span>Heart Beat</span>
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: '93%' }}></div>
+                </div>
+              </div>
+              <div className="status-item">
+                <span>Blood Pressure</span>
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: '89%' }}></div>
+                </div>
+              </div>
+              <div className="status-item">
+                <span>Sugar</span>
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: '60%' }}></div>
+                </div>
+              </div>
+              <div className="status-item">
+                <span>Haemoglobin</span>
+                <div className="progress-bar">
+                  <div className="progress" style={{ width: '80%' }}></div>
+                </div>
+              </div>
+            </div>
+  
+            {/* Treatments List */}
+            {treatments && treatments.length > 0 ? (
+              <div className="treatments-list">
+                <h3>Treatments</h3>
+                {treatments.map((treatment) => (
+                  <div key={treatment._id} className="treatment-item">
+                    <p>Treatment Name: {treatment.treatment_Name}</p>
+                    <p>Doctor ID: {treatment.doctor_Name}</p>
+                    <p>Date: {new Date(treatment.date).toLocaleDateString()}</p>
+                    <p>Description: {treatment.description}</p>
+                    <p>Status: {treatment.status}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No treatments found.</p>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+  
+};
+
+export default PatientRecords;

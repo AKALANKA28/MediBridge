@@ -13,7 +13,7 @@ const LabTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/tests/');
+        const response = await fetch('http://localhost:8080/tests/');
         if (!response.ok) {
           throw new Error('Failed to fetch lab tests.');
         }

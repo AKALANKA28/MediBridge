@@ -10,7 +10,7 @@ const TreatmentTable = () => {
   
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/treatments/'); // Replace with your actual API endpoint
+      const response = await fetch('http://localhost:8080/treatments/'); // Replace with your actual API endpoint
       const result = await response.json();
       
       // Map the fetched data to include id property

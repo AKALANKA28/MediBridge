@@ -8,6 +8,7 @@ import New from "./pages/admin/new/New";
 import Treatment from "./pages/admin/treatments/Treatment"; 
 import TreatmentTable from './pages/admin/treatments/TreatmentTable';
 import TreatmentForm from "./pages/admin/treatments/TreatmentForm";
+import PatientRecords from './pages/Records/PatientRecords'; 
 import Lab from "./pages/admin/lab/Lab"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
@@ -40,6 +41,7 @@ function App() {
                         <Route path="treatment" element={<TreatmentTable />} /> 
                         <Route path="/treatments/new" component={<TreatmentForm />} />
                         <Route path="lab" element={<Lab />} />
+                        <Route path="/patientrecords" element={<PatientRecords />} />
           </Routes>
         );
       case "doctor":
