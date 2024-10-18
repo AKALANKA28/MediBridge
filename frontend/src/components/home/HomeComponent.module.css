@@ -1,31 +1,4 @@
-.home {
-    background-color: rgba(0, 0, 0, 0);
-    display: flex;
-    max-width: 480px;
-    width: 100%;
-    flex-direction: column;
-    overflow: hidden;
-    margin: 0 auto;
-  }
-  
-  .heroSection {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    aspect-ratio: 0.457;
-    width: 100%;
-    padding-top: 749px;
-  }
-  
-  .heroImage {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-  
+
   .navigationBar {
     position: relative;
     background-color: #fff;
