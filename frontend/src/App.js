@@ -10,6 +10,8 @@ import TreatmentTable from "./pages/admin/treatments/TreatmentTable";
 import TreatmentForm from "./pages/admin/treatments/TreatmentForm";
 import Lab from "./pages/admin/lab/Lab";
 import AnalysisScreen from "./pages/analysis/AnalysisScreen";
+import PatientRecords from './pages/Records/PatientRecords'; 
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { DarkModeContext } from "./context/drakModeContext";
@@ -54,6 +56,8 @@ function App() {
             <Route path="/treatments/new" component={<TreatmentForm />} />
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="/patientrecords" element={<PatientRecords />} />
+
           </Routes>
         );
       case "doctor":

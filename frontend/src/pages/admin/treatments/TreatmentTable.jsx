@@ -3,20 +3,19 @@ import "./TreatmentTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 
-const TreatmentTable = () => {
+const TreatmentTable = ({ onEdit }) => { // Accept onEdit as a prop
   const [data, setData] = useState([]);
-  const [isFormVisible, setIsFormVisible] = useState(false); // State to toggle form visibility
-  const [initialData, setInitialData] = useState(null); // State to hold initial data for editing
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:5000/treatments/'); // Replace with your actual API endpoint
+      const response = await fetch('http://localhost:8080/treatments/'); // Replace with your actual API endpoint
       const result = await response.json();
       
       // Map the fetched data to include id property
       const mappedData = result.map(item => ({
         id: item._id || '', // Use _id directly
-        treatment_Id: item.treatment_Id || '', // Fallback to empty string if undefined
+        treatment_Id: item.treatment_Id || '',
+        patient_Name: item.patient_Name || '', // Fallback to empty string if undefined
         treatment_Name: item.treatment_Name || '',
         doctor_Name: item.doctor_Name || '',
         date: item.date ? new Date(item.date) : null, // Parse date directly
@@ -41,9 +40,12 @@ const TreatmentTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/users/test/${params.row.id}`} style={{ textDecoration: "none" }}>
-              <div className="viewButton">View</div>
-            </Link>
+            <div 
+              className="editButton" 
+              onClick={() => onEdit(params.row)} // Call the onEdit function with the row data
+            >
+              Edit
+            </div>
             <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
               Delete
             </div>
@@ -55,6 +57,7 @@ const TreatmentTable = () => {
 
   const columns = [
     { field: "treatment_Id", headerName: "Treatment ID", width: 150 },
+    { field: "patient_Name", headerName: "Patient Name", width: 230 },
     { field: "treatment_Name", headerName: "Treatment Name", width: 230 },
     { field: "doctor_Name", headerName: "Doctor Name", width: 230 },
     {
