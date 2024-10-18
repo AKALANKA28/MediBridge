@@ -2,6 +2,11 @@
     background-color: #111;
     color: rgb(156, 156, 156);
   
+    .widget {
+      box-shadow: 2px 4px 10px 1px rgb(31 31 31 / 62%);
+      border-color: #999;
+      border-width: 10px;
+    }
     .chartGrid {
       stroke: rgba(228, 228, 228, 0.219);
     }

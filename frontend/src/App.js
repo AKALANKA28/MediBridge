@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Home from "./pages/admin/home/Home";
-import Login from "./pages/login/Login";
+import Login from "./pages/auth/Login";
 import Scanner from "./pages/QRScan/Scanner"; // Import Scanner component
 import List from "./pages/admin/list/List";
 import Single from "./pages/admin/single/Single";
@@ -16,6 +16,7 @@ import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
+import Register from "./pages/auth/Register";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -23,10 +24,17 @@ function App() {
 
   const isAuthenticated = !!auth.token;
 
-   // Render routes based on user role
-   const renderRoutes = () => {
+  // Render routes based on user role
+  const renderRoutes = () => {
     const userRole = auth.role; // Access role from auth object
-    if (!isAuthenticated) return <Login />;
+    if (!isAuthenticated)
+      return (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />{" "}
+          {/* Add Register route */}
+        </Routes>
+      );
 
     switch (userRole) {
       case "admin":

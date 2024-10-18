@@ -77,3 +77,26 @@ exports.generatePatientQRCode = async (req, res) => {
     res.status(500).json({ message: "Failed to generate QR code." });
   }
 };
+
+
+// Controller to retrieve all patients
+exports.getAllPatients = async (req, res) => {
+  try {
+    // Fetch all patient profiles and populate the necessary fields
+    const patients = await PatientProfile.find().populate([
+      {
+        path: "user",
+        select: "name email nic",
+      },
+      {
+        path: "treatments",
+        select: "treatment_Id treatment_Name date description",
+      },
+    ]);
+
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error("Error retrieving patients:", error);
+    res.status(500).json({ message: "Failed to retrieve patients." });
+  }
+};
