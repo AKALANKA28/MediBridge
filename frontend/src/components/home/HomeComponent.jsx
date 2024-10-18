@@ -13,6 +13,7 @@ import profile from "../../assets/profile-add.svg"; // Non-SVG example
 import link from "../../assets/link.svg"; // Non-SVG example
 import hospital from "../../assets/hospital.svg"; // Non-SVG example
 import AppointmentCard from "./AppointmentCard";
+import NavigationBar from "./NavigationBar";
 
 const navItems = [
   {
@@ -22,7 +23,7 @@ const navItems = [
   },
   {
     icon: "https://cdn.builder.io/api/v1/image/assets/TEMP/d3cd3e1e4a773777ae6e9acf3d21abb59ebe099c3db63af6367c875146fcd65e?placeholderIfAbsent=true&apiKey=59e835da8ea04b80ab8ace77cb34d866",
-    label: "Search",
+    label: "Appointments",
     isActive: false,
   },
   {
@@ -41,7 +42,6 @@ const HomeComponent = () => {
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext); // Get auth and logout from context
 
-
   return (
     <div className="home-container">
       <section className="welcome-section">
@@ -59,11 +59,10 @@ const HomeComponent = () => {
           </div>
         </div>
         <div className="welcome-text">
-          <h1>Welcome!</h1>
-          <h1 className="name">Akalanka</h1>
-          <p>
-            Have a nice day
-            <img src={require("../../assets/siren.png")} alt="Wink" />
+          <span className="greeting">Welcome!</span>
+          <h1 className="greeting">Akalanka</h1>
+          <p className="home-text">
+            Have a nice day 😊
           </p>
           <div className="urgent-care">
             <img src={require("../../assets/siren.png")} alt="Ambulance" />
@@ -108,10 +107,9 @@ const HomeComponent = () => {
       <section className="appointment-section">
         <div className="appointment-header">
           <h3>My Appointment</h3>
-          <a href="#">See All</a>
+          <a href="#" style={{ fontSize: "14px", fontWeight: "bold" }}>See All</a>
         </div>
         <AppointmentCard />
-
       </section>
 
       {/* Logout Button */}
@@ -121,32 +119,7 @@ const HomeComponent = () => {
         </button>
       </div>
 
-      <nav className="footer">
-        {navItems.map((item, index) => (
-          <NavItem
-            key={index}
-            icon={item.icon}
-            label={item.label}
-            isActive={item.isActive}
-          />
-        ))}
-      </nav>
-
-      {/* <footer className="footer">
-        <div className="nav-item active">
-          <img src="./assets/home.svg" alt="Home" />
-          <span>Home</span>
-        </div>
-        <div className="nav-item">
-          <img src="./assets/vuesax-linear-calendar-2.svg" alt="Calendar" />
-        </div>
-        <div className="nav-item">
-          <img src="./assets/vuesax-linear-message.svg" alt="Messages" />
-        </div>
-        <div className="nav-item">
-          <img src="./assets/vuesax-linear-profile.svg" alt="Profile" />
-        </div>
-      </footer> */}
+     <NavigationBar/>
     </div>
   );
 };

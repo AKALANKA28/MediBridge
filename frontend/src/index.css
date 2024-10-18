@@ -9,6 +9,16 @@ body {
 }
 
 
+Link{
+  text-decoration: none !important;
+  color: #0076C1;
+
+}
+
+a{
+  text-decoration: none !important;
+  color: #0076C1;
+}
 
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
