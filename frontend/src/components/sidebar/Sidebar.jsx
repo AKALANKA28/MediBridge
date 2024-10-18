@@ -57,10 +57,12 @@ const Sidebar = () => {
             <span>Delivery</span>
           </li>
           <p className="title">USEFUL</p>
+          <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
           </li>
+          </Link>
           <li>
             <NotificationsNoneIcon className="icon" />
             <span>Notifications</span>
