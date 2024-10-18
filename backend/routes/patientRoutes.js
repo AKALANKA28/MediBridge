@@ -1,28 +1,9 @@
 // routes/patientRoutes.js
-const express = require('express');
-const { registerPatient, loginPatient } = require('../controller/patientController');
+const express = require("express");
 const router = express.Router();
+const patientController = require("../controller/patientController");
 
-// Register a new patient
-router.post('/register', registerPatient);
-
-// Login patient
-router.post('/login', loginPatient);
+router.get("/:id", patientController.getPatientProfile);
+router.get("/generate-qr/:id", patientController.generatePatientQRCode);
 
 module.exports = router;
-
-
-
-
-// // routes/patientRoutes.js
-// const express = require("express");
-// const { protect, authorize } = require("../middleware/authMiddleware");
-// const { getAppointments, createAppointment } = require("../controllers/patientController");
-
-// const router = express.Router();
-
-// // Patient routes
-// router.route("/appointments").get(protect, authorize("patient"), getAppointments);
-// router.route("/appointments/new").post(protect, authorize("patient"), createAppointment);
-
-// module.exports = router;

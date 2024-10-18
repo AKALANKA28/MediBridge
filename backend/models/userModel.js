@@ -25,7 +25,9 @@ var userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    nic: {
+      type: String,
+    },
     role: {
       type: String,
       enum: ["admin", "doctor", "patient"],

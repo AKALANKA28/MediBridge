@@ -20,6 +20,12 @@ const PatientProfileSchema = new mongoose.Schema({
       status: { type: String, enum: ["pending", "completed", "canceled"], default: "pending" },
     },
   ],
+  treatments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Treatment", // Reference to the Treatment model
+    },
+  ],
 });
 
 module.exports = mongoose.model("Patient", PatientProfileSchema);
