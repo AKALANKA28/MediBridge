@@ -1,9 +1,7 @@
 import "./LabForm.scss"; // Import the appropriate stylesheet
-// import Sidebar from "../../../components/sidebar/Sidebar"; // Adjust the import path as necessary
-// import Navbar from "../../../components/navbar/Navbar"; // Adjust the import path as necessary
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined"; // Import the icon
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as yup from "yup";
 
 // Validation Schema for Lab Test
@@ -31,6 +29,7 @@ const LabSchema = yup.object({
 const LabForm = ({ handleSubmit, initialData }) => {
   const [file, setFile] = useState(null); // State for file upload
 
+  // Initialize form values with initialData if available
   const formik = useFormik({
     initialValues: {
       test_Id: initialData ? initialData.test_Id : "",
@@ -45,27 +44,38 @@ const LabForm = ({ handleSubmit, initialData }) => {
     },
   });
 
+  // Update form state when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      formik.setValues({
+        test_Id: initialData.test_Id,
+        test_Name: initialData.test_Name,
+        test_result: initialData.test_result,
+        date: initialData.date,
+        description: initialData.description,
+      });
+    }
+  }, [initialData]);
+
   return (
-    <div className="new"> {/* Main container */}
-      {/* <Sidebar /> */}
+    <div className="new">
       <div className="newContainer">
-        {/* <Navbar /> */}
         <div className="top">
-          <h1>Lab Test Form</h1> {/* Title */}
+          <h1>Lab Test Form</h1>
         </div>
         <div className="bottom">
           <div className="left">
             <img
               src={
                 file
-                  ? URL.createObjectURL(file) // Show uploaded file
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" // Default image
+                  ? URL.createObjectURL(file)
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt="No Image"
             />
           </div>
           <div className="right">
-            <form onSubmit={formik.handleSubmit}> {/* Form submission */}
+            <form onSubmit={formik.handleSubmit}>
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -73,7 +83,7 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e) => setFile(e.target.files[0])} // Handle file change
+                  onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
@@ -148,7 +158,7 @@ const LabForm = ({ handleSubmit, initialData }) => {
                   onBlur={formik.handleBlur}
                 />
               </div>
-              <button type="submit" className="btn btn-success">Submit</button> {/* Submit button */}
+              <button type="submit" className="btn btn-success">Submit</button>
             </form>
           </div>
         </div>

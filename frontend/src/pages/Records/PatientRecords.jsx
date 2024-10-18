@@ -1,16 +1,29 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import Sidebar from "../../components/sidebar/Sidebar"; // Ensure the correct path for Sidebar
+import { useNavigate, useLocation } from 'react-router-dom';
+import Sidebar from "../../components/sidebar/Sidebar"; // Ensure Sidebar path is correct
 import Navbar from "../../components/navbar/Navbar";
-import './PatientRecords.scss'; // Assuming styles are imported
+import './PatientRecords.scss'; // Assuming custom styles for the page
 
 const PatientRecords = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // Hook for programmatic navigation
   const data = location.state?.data; // Retrieve patient data from navigation state
 
   // Extract patient information from the data structure
-  const patient = data?.user;
-  const treatments = data?.treatments;
+  const patient = data?.user || data; // Adjust based on how data is structured
+  const treatments = data?.treatments || []; // Ensure it's an array for mapping
+
+  // Add your filtering criteria for treatments here
+  const filteredTreatments = treatments.filter(treatment => treatment.status === "active"); // Example condition
+
+  // Handlers for navigation
+  const handleTreatmentClick = () => {
+    navigate('/treatment'); // Navigate to the Treatments page
+  };
+
+  const handleLabClick = () => {
+    navigate('/lab'); // Navigate to the Lab Tests page
+  };
 
   return (
     <div className="patient-records-page">
@@ -37,13 +50,17 @@ const PatientRecords = () => {
             ) : (
               <p>Patient details not found.</p>
             )}
-  
+
             {/* Links to Treatments and Lab Tests */}
             <div className="treatments-labs">
-              <Link to="/treatments" className="treatment-button">Treatments</Link>
-              <Link to="/lab-tests" className="lab-button">Lab Tests</Link>
+              <button onClick={handleTreatmentClick} className="treatment-button">
+                Treatments
+              </button>
+              <button onClick={handleLabClick} className="lab-button">
+                Lab Tests
+              </button>
             </div>
-  
+
             {/* Health Status (Example Data) */}
             <div className="health-status">
               <div className="status-item">
@@ -71,9 +88,9 @@ const PatientRecords = () => {
                 </div>
               </div>
             </div>
-  
+
             {/* Treatments List */}
-            {treatments && treatments.length > 0 ? (
+            {treatments.length > 0 ? (
               <div className="treatments-list">
                 <h3>Treatments</h3>
                 {treatments.map((treatment) => (
@@ -89,12 +106,29 @@ const PatientRecords = () => {
             ) : (
               <p>No treatments found.</p>
             )}
+
+            {/* Filtered Treatments List */}
+            {filteredTreatments.length > 0 ? (
+              <div className="filtered-treatments-list">
+                <h3>Active Treatments</h3>
+                {filteredTreatments.map((treatment) => (
+                  <div key={treatment._id} className="treatment-item">
+                    <p>Treatment Name: {treatment.treatment_Name}</p>
+                    <p>Doctor ID: {treatment.doctor_Name}</p>
+                    <p>Date: {new Date(treatment.date).toLocaleDateString()}</p>
+                    <p>Description: {treatment.description}</p>
+                    <p>Status: {treatment.status}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p>No active treatments found.</p>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default PatientRecords;

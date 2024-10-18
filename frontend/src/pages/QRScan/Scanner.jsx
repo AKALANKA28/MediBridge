@@ -8,10 +8,10 @@ import axios from "axios"; // Axios for API calls
 
 function Scanner() {
   const [scannedQrUrl, setScannedQrUrl] = useState(null); // Store scanned QR code result (URL)
-  const [patientData, setPatientData] = useState(null); // Store fetched patient data
   const [loading, setLoading] = useState(false); // Loading state for patient data
   const [patientName, setPatientName] = useState(""); // Patient Name input
   const [patientNIC, setPatientNIC] = useState(""); // Patient NIC input
+  const [errorMessage, setErrorMessage] = useState(""); // Error message state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,14 +20,14 @@ function Scanner() {
       fps: 5,
     });
 
-    function success(result) {
+    const success = (result) => {
       scanner.clear(); // Stop scanning
       setScannedQrUrl(result); // Store the scanned URL result
-    }
+    };
 
-    function error(err) {
+    const error = (err) => {
       console.warn("QR code scan error:", err); // Log any errors
-    }
+    };
 
     scanner.render(success, error);
 
@@ -41,64 +41,65 @@ function Scanner() {
     const fetchPatientData = async () => {
       if (scannedQrUrl) {
         setLoading(true); // Set loading state
-  
+        setErrorMessage(""); // Clear previous error messages
+
         try {
           console.log("Scanned QR URL:", scannedQrUrl); // Log the scanned QR URL
-  
-          // Extract the patient ID from the scanned QR URL
-          const patientId = scannedQrUrl.split("/").pop();
-          console.log("Extracted Patient ID:", patientId); // Log the extracted patient ID
-  
+          const patientId = scannedQrUrl.split("/").pop(); // Extract patient ID from URL
+
           // Fetch patient profile data using the patient ID
-          const response = await axios.get(`http://localhost:8080/patient/${patientId}`);
-  
-          console.log("API Response:", response.data); // Log the API response data
-  
-          setPatientData(response.data); // Store patient data in state
-  
+          const response = await axios.get(
+            `http://localhost:8080/patient/${patientId}`
+          );
+
           // Navigate to the PatientRecords page with the fetched patient data
           navigate("/patientrecords", {
-            state: { users: response.data },
+            state: { data: response.data }, // Pass fetched data
           });
         } catch (error) {
-          console.error("Error fetching patient profile:", error); // Log the error details
-          alert("An error occurred while fetching patient data."); // Alert user
+          console.error("Error fetching patient profile:", error);
+          setErrorMessage(
+            "Failed to fetch patient data. Please check the QR code."
+          );
         } finally {
           setLoading(false); // Set loading to false after fetching
         }
       }
     };
-  
+
     fetchPatientData();
   }, [scannedQrUrl, navigate]);
-  
 
-  const handleCheckPatient = async () => {
-    if (patientName && patientNIC) {
-      setLoading(true); // Set loading state
+  async function handleCheckPatient() {
+    try {
+        const apiUrl = `http://localhost:8080/patient?name=${encodeURIComponent(patientName)}&nic=${encodeURIComponent(patientNIC)}`;
 
-      try {
-        const apiUrl = `http://localhost:8080/patients?name=${encodeURIComponent(patientName)}&nic=${encodeURIComponent(patientNIC)}`;
         const response = await axios.get(apiUrl);
 
-        if (response.status === 200) {
-          // Navigate to the PatientRecords page with the fetched patient data
-          navigate("/patientrecords", {
-            state: { users: response.data },
-          });
+        if (response.data && response.data.length > 0) {
+            const patientData = response.data[0];
+
+            const user = patientData.user || {}; // Prevent null reference
+            const filteredData = {
+                id: patientData._id,
+                name: user.name || "Unknown",
+                email: user.email || "N/A",
+                nic: user.nic || "N/A",
+                treatments: patientData.treatments || [],
+            };
+
+            navigate("/patientrecords", {
+                state: { data: filteredData },
+            });
         } else {
-          alert("Patient not found.");
+            setErrorMessage("Patient not found.");
         }
-      } catch (error) {
+    } catch (error) {
         console.error("Error fetching patient data:", error);
-        alert("An error occurred while fetching patient details.");
-      } finally {
-        setLoading(false); // Set loading to false after fetching
-      }
-    } else {
-      alert("Please enter both Patient Name and NIC.");
+        setErrorMessage("Error fetching patient data.");
     }
-  };
+}
+
 
   return (
     <div className="scan-page">
@@ -111,12 +112,23 @@ function Scanner() {
             <div className="scan-box">
               <h2>Scan The QR Code</h2>
               <div id="reader"></div> {/* QR code scanner */}
-              {loading && <p>Loading patient data...</p>} {/* Loading indicator */}
+              {loading && <p>Loading patient data...</p>}{" "}
+              {/* Loading indicator */}
+              {errorMessage && (
+                <p className="error-message">{errorMessage}</p>
+              )}{" "}
+              {/* Error message */}
             </div>
 
             <div className="scan-box">
               <h2>Enter The Patient Details</h2>
-              <form className="patient-form">
+              <form
+                className="patient-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCheckPatient();
+                }}
+              >
                 <input
                   type="text"
                   placeholder="Patient Name"
@@ -130,13 +142,15 @@ function Scanner() {
                   onChange={(e) => setPatientNIC(e.target.value)}
                 />
                 <button
-                  type="button"
+                  type="submit"
                   className="scan-button"
-                  onClick={handleCheckPatient}
+                  disabled={loading} // Disable button when loading
                 >
                   Check Patient
                 </button>
               </form>
+              {errorMessage && <p className="error-message">{errorMessage}</p>}{" "}
+              {/* Error message */}
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 exports.saveTreatment = async (req, res) => {
   const {
     treatment_Id,
+    patient_Name,
     treatment_Name,
     doctor_Name,
     date,
@@ -15,7 +16,7 @@ exports.saveTreatment = async (req, res) => {
   } = req.body;
 
   // Validate required fields
-  if (!treatment_Id || !treatment_Name || !doctor_Name || !date || !patientId) {
+  if (!treatment_Id || !patient_Name || !treatment_Name || !doctor_Name || !date || !patientId) {
     return res
       .status(400)
       .json({
@@ -32,6 +33,7 @@ exports.saveTreatment = async (req, res) => {
     // Create a new treatment document and save it to MongoDB
     const newTreatment = new Treatment({
       treatment_Id,
+      patient_Name,
       treatment_Name,
       doctor_Name,
       date,
@@ -106,24 +108,29 @@ exports.updateTreatmentById = async (req, res) => {
   }
 
   try {
+    console.log('Updating treatment with ID:', id);
+    console.log('Data to update:', updateData);
+
     // Find the treatment by ID and update it with the new data
     const updatedTreatment = await Treatment.findByIdAndUpdate(id, updateData, {
       new: true,
+      runValidators: true  // Ensure mongoose validates the updated data
     });
+
     if (!updatedTreatment) {
       return res.status(404).json({ message: "Treatment not found." });
     }
-    res
-      .status(200)
-      .json({
-        message: "Treatment updated successfully.",
-        treatment: updatedTreatment,
-      });
+
+    return res.status(200).json({
+      message: "Treatment updated successfully.",
+      treatment: updatedTreatment,
+    });
   } catch (error) {
     console.error("Failed to update treatment:", error);
-    res.status(500).json({ message: "Failed to update treatment." });
+    return res.status(500).json({ message: "Failed to update treatment." });
   }
 };
+
 
 // Controller to delete a treatment by ID
 exports.deleteTreatment = async (req, res) => {
