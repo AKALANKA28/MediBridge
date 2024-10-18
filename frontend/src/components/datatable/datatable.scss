@@ -2,6 +2,11 @@
     height: 600px;
     padding: 20px;
     
+    .datagrid {
+      border: 2px solid #ececec; // Customize border color and width
+      border-radius: 20px; // Rounded corners for the table
+    }
+    
     .datatableTitle{
       width: 100%;
       font-size: 24px;

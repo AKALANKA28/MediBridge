@@ -1,0 +1,92 @@
+.appointment-card {
+    width: 100%;
+    max-width: 347px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+  }
+  
+  .appointment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .appointment-date {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: #c3c3c5;
+  }
+  
+  .appointment-info {
+    display: flex;
+    align-items: center;
+  
+    .icon {
+      width: 17px;
+      height: 17px;
+      margin-right: 4px;
+    }
+    
+    .date, .time {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 10.9px;
+      color: #8b8b8f;
+      margin-right: 8px;
+    }
+    
+    .time {
+      color: #89898d;
+    }
+  
+    .more-options {
+      width: 5px;
+      height: 19px;
+    }
+  }
+  
+  .separator {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 8px 0;
+  }
+  
+  .appointment-details {
+    display: flex;
+    align-items: center;
+  
+    .profile-pic {
+      width: 51px;
+      height: 49px;
+      border-radius: 50%;
+      margin-right: 16px;
+    }
+  
+    .doctor-info {
+      flex-grow: 1;
+  
+      .doctor-name {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 15.5px;
+        color: #65656a;
+      }
+  
+      .specialty {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 10.5px;
+        color: #c4cad2;
+      }
+    }
+  
+    .call-icon {
+      width: 19px;
+      height: 19px;
+    }
+  }
+  

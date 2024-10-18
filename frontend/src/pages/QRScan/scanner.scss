@@ -1,0 +1,144 @@
+/* Main container for the entire page */
+.scan-page {
+  display: flex;
+  height: 100vh; /* Set to full viewport height */
+  background: linear-gradient(to right, #eef2f3, #8e9eab);
+}
+
+/* Container holding the sidebar and the main content */
+.scan-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row; /* Keep the sidebar and content side by side */
+}
+
+/* Slim sidebar styles */
+.sidebar {
+  width: 180px; /* Slimmed down sidebar width */
+  background-color: #ffffff; /* Background color */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+  padding: 20px; /* Padding for sidebar */
+  display: flex;
+  flex-direction: column; /* Stack sidebar items vertically */
+}
+
+/* Main content area holding the QR scanner and form */
+.scan-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the start */
+  padding: 20px;
+  width: calc(100% - 180px); /* Account for sidebar width */
+  /* No longer uses justify-content: center to push everything down */
+}
+
+/* The title of the page */
+.scan-title {
+  font-size: 28px; /* Increased font size for better visibility */
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Box container holding the QR scanner and the form */
+.scan-box-container {
+  display: flex;
+  justify-content: flex-start; /* Align boxes to the start */
+  width: 100%; /* Full width of the content area */
+  max-width: 1200px; /* Optional max width */
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 40px; /* Increased padding for spacing */
+  margin-top: 20px; /* Added margin to separate from title */
+}
+
+/* Individual container for QR scan and form */
+.scan-box {
+  flex: 1; /* Allow each box to grow equally */
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f9fafb;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Header inside scan box */
+.scan-box h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Styles for QR code scanning button */
+.scan-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scan-button:hover {
+  background-color: #2563eb;
+}
+
+/* Input form styles */
+.patient-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.patient-form input {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: calc(100% - 20px); /* Full width minus padding */
+}
+
+.patient-form button {
+  padding: 10px;
+  background-color: #34d399;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.patient-form button:hover {
+  background-color: #10b981;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+  .scan-box-container {
+    flex-direction: column; /* Stack boxes vertically on smaller screens */
+    width: 100%;
+    padding: 10px;
+  }
+
+  .scan-box {
+    margin-bottom: 20px; /* Space between boxes */
+  }
+
+  .sidebar {
+    width: 100%; /* Full width on smaller screens */
+    height: auto; /* Auto height for sidebar */
+  }
+
+  .scan-content {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+}

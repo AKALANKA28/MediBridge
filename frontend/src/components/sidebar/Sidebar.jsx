@@ -14,8 +14,11 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/drakModeContext";
 import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const Sidebar = () => {
+  const { logout } = useContext(AuthContext); // Get auth and logout from context
+
   const { dispatch } = useContext(DarkModeContext);
   return (
     <div className="sidebar">
@@ -42,10 +45,28 @@ const Sidebar = () => {
               <span>Users</span>
             </li>
           </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/Scanner" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
-              <span>Products</span>
+              <span>Scanner</span>
+            </li>
+          </Link>
+          <Link to="/Treatment" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Treatment</span>
+            </li>
+          </Link>
+          <Link to="/TreatmentTable" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>TreatmentTable</span>
+            </li>
+          </Link>
+          <Link to="/Lab" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Lab</span>
             </li>
           </Link>
           <li>
@@ -54,13 +75,15 @@ const Sidebar = () => {
           </li>
           <li>
             <LocalShippingIcon className="icon" />
-            <span>Delivery</span>
+            <span>payment</span>
           </li>
           <p className="title">USEFUL</p>
+          <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>
             <InsertChartIcon className="icon" />
             <span>Stats</span>
           </li>
+          </Link>
           <li>
             <NotificationsNoneIcon className="icon" />
             <span>Notifications</span>
@@ -83,10 +106,12 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <li>
+          {/* Use onClick instead of Link for Logout */}
+          <li onClick={logout} style={{ cursor: "pointer" }}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
+       
         </ul>
       </div>
       <div className="bottom">

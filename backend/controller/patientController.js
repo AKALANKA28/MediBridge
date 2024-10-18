@@ -1,57 +1,79 @@
-// controllers/patientController.js
-const Patient = require('../models/PatientModelss');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const mongoose = require("mongoose"); // Import mongoose
+const QRCode = require("qrcode");
 
-const registerPatient = async (req, res) => {
-    try {
-        const { fullName, email, password } = req.body;
-        
-        // Check if the patient already exists
-        const existingPatient = await Patient.findOne({ email });
-        if (existingPatient) return res.status(400).json({ message: 'Email already registered' });
+// const Patient = require("../models/patientModel"); // Import the Patient model
+const User = require("../models/userModel"); // Import the Patient model
+const PatientProfile = require("../models/patientModel"); // Import the Patient model
 
-        // Create new patient
-        const newPatient = new Patient({ fullName, email, password });
-        await newPatient.save();
-        
-        res.status(201).json({ message: 'Patient registered successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Error registering patient', error });
+// Controller to retrieve a patient profile with populated fields
+exports.getPatientProfile = async (req, res) => {
+  const { id } = req.params; // This should be the patientProfileId
+
+  // Validate the ID
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid patient profile ID." });
+  }
+
+  try {
+    // Find the patient profile
+    const patientProfile = await PatientProfile.findById(id).populate([
+      {
+        path: "user",
+        select: "name email nic",
+      },
+    //   {
+    //     path: "appointments.doctor",
+    //     select: "name email",
+    //   },
+      {
+        path: "treatments",
+        select: "treatment_Id treatment_Name date description",
+      },
+    ]);
+
+    if (!patientProfile) {
+      return res.status(404).json({ message: "Patient profile not found." });
     }
+
+    res.status(200).json(patientProfile);
+  } catch (error) {
+    console.error("Error retrieving patient profile:", error);
+    res.status(500).json({ message: "Failed to retrieve patient profile." });
+  }
 };
 
-const loginPatient = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+exports.generatePatientQRCode = async (req, res) => {
+  const { id } = req.params; // User ID from the request
 
-        // Find the patient by email
-        const patient = await Patient.findOne({ email });
-        if (!patient) return res.status(404).json({ message: 'Patient not found' });
+  // Validate the user ID
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid user ID." });
+  }
 
-        // Validate password
-        const isMatch = await bcrypt.compare(password, patient.password);
-        if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+  try {
+    // Find the user and populate the patientProfile
+    const user = await User.findById(id).populate("patientProfile");
 
-        // Generate JWT
-        const token = jwt.sign({ id: patient._id }, 'secretKey', { expiresIn: '1h' });
-
-        res.json({ token, patientId: patient._id });
-    } catch (error) {
-        res.status(500).json({ message: 'Error logging in', error });
+    if (!user || !user.patientProfile) {
+      return res.status(404).json({ message: "Patient profile not found." });
     }
+
+    // Create the URL for the patient profile
+    const patientProfileId = user.patientProfile._id;
+    const qrUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/patient/${patientProfileId}`;
+    // Generate QR code from URL with specified width and margin
+    const qrCode = await QRCode.toDataURL(qrUrl, {
+      width: 230, // Specify the desired width
+      margin: 1, // Add margin if necessary
+    });
+    // console.log("Generated QR URL:", qrUrl); // Debugging the QR URL
+
+    // Send back the QR code and patient profile
+    res.status(200).json({ qrCode, patient: user.patientProfile });
+  } catch (error) {
+    console.error("Error generating QR code:", error);
+    res.status(500).json({ message: "Failed to generate QR code." });
+  }
 };
-
-module.exports = { registerPatient, loginPatient };
-
-
-
-// // controllers/patientController.js
-// exports.getAppointments = async (req, res) => {
-//     // Logic for patient to get their appointments
-//   };
-  
-//   exports.createAppointment = async (req, res) => {
-//     // Logic for patient to create a new appointment
-//   };
-  
