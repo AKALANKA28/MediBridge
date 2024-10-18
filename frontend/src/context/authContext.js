@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
 
     // Set the base URL for Axios (adjust this to your environment)
     //axios.defaults.baseURL = "http://192.168.1.159:8080";
-    axios.defaults.baseURL = "http:/localhost:8080";
+    axios.defaults.baseURL = "http://localhost:8080";
 
   }, [auth.token]); // Re-run whenever the token changes
 
