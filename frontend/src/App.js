@@ -16,6 +16,10 @@ import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
+import EquipmentAnalysis from "./pages/analysis/EquipmentAnalysis";
+import EquipmentAnalysisScreen from "./pages/analysis/EquipmentAnalysisScreen";
+import WardAnalysisScreen from "./pages/analysis/WardAnalysisScreen";
+import ManageWardsScreen from "./pages/analysis/ManageWardsScreen";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -43,6 +47,10 @@ function App() {
             <Route path="/treatments/new" component={<TreatmentForm />} />
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="eqanalysis" element={<EquipmentAnalysisScreen />} />
+            <Route path="wanalysis" element={<WardAnalysisScreen />} />
+            <Route path="mwards" element={<ManageWardsScreen />} />
           </Routes>
         );
       case "doctor":

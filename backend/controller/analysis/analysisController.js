@@ -258,6 +258,67 @@ const getPeakTimesByPeriod = async (req, res) => {
   }
 };
 
+// controllers/KPIController.js
+const moment = require('moment');
+
+// Function to calculate KPIs
+const getKPIs = async (req, res) => {
+  try {
+    const today = moment().startOf('day').toDate();
+    const startOfWeek = moment().startOf('week').toDate();
+    const startOfMonth = moment().startOf('month').toDate();
+    const startOfLastWeek = moment().subtract(1, 'weeks').startOf('week').toDate();
+    const startOfLastMonth = moment().subtract(1, 'months').startOf('month').toDate();
+
+    // Total visits today
+    const totalVisitsToday = await PatientVisit.countDocuments({
+      visitDate: { $gte: today },
+    });
+
+    // Total visits this week
+    const totalVisitsThisWeek = await PatientVisit.countDocuments({
+      visitDate: { $gte: startOfWeek },
+    });
+
+    // Total visits this month
+    const totalVisitsThisMonth = await PatientVisit.countDocuments({
+      visitDate: { $gte: startOfMonth },
+    });
+
+    // Total visits last week
+    const totalVisitsLastWeek = await PatientVisit.countDocuments({
+      visitDate: { $gte: startOfLastWeek, $lt: startOfWeek },
+    });
+
+    // Total visits last month
+    const totalVisitsLastMonth = await PatientVisit.countDocuments({
+      visitDate: { $gte: startOfLastMonth, $lt: startOfMonth },
+    });
+
+    // Growth rate: (current period visits - previous period visits) / previous period visits * 100
+    const weeklyGrowthRate =
+      totalVisitsLastWeek > 0
+        ? ((totalVisitsThisWeek - totalVisitsLastWeek) / totalVisitsLastWeek) * 100
+        : 0;
+
+    const monthlyGrowthRate =
+      totalVisitsLastMonth > 0
+        ? ((totalVisitsThisMonth - totalVisitsLastMonth) / totalVisitsLastMonth) * 100
+        : 0;
+
+    // Respond with the calculated KPIs
+    res.json({
+      totalVisitsToday,
+      totalVisitsThisWeek,
+      totalVisitsThisMonth,
+      weeklyGrowthRate: weeklyGrowthRate.toFixed(2),
+      monthlyGrowthRate: monthlyGrowthRate.toFixed(2),
+    });
+  } catch (error) {
+    console.error('Error calculating KPIs:', error);
+    res.status(500).json({ error: 'Error calculating KPIs' });
+  }
+};
 
 
 module.exports = {
@@ -269,4 +330,5 @@ module.exports = {
   getPeakTimeData,
   getCurrentDayPeakTimes,
   getPeakTimesByPeriod,
+  getKPIs
 };
