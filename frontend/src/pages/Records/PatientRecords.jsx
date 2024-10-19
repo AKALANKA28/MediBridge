@@ -12,6 +12,7 @@ const PatientRecords = () => {
   // Extract patient information from the data structure
   const patient = data?.user || data; // Adjust based on how data is structured
   const treatments = data?.treatments || []; // Ensure it's an array for mapping
+  const labtests = data?.labTest || []; // Ensure it's an array for mapping
 
   // Add your filtering criteria for treatments here
   const filteredTreatments = treatments.filter(treatment => treatment.status === "active"); // Example condition

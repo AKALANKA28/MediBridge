@@ -1,12 +1,7 @@
 import Sidebar from "../../../components/patient/sidebar/Sidebar";
 import Navbar from "../../../components/patient/navbar/Navbar";
-// import "./home.scss";
-import Widget from "../../../components/widget/Widget";
-import Featured from "../../../components/patient/featured/Featured";
-import Chart from "../../../components/patient/chart/Chart";
-import Table from "../../../components/patient/table/Table";
+import "../home/home.scss";
 import QRCodeScreen from "../../../components/home/QRCode";
-// import QRCodeScreen from "../../../components/home/QRCode";
 
 const QRPage = () => {
   return (
@@ -18,7 +13,10 @@ const QRPage = () => {
         <Sidebar />
         <div className="homeContainer">
           <Navbar />
-          <QRCodeScreen/>
+          <div style={{ textAlign: "left", margin: "20px", fontWeight: "700", fontSize: "24px" }}>
+            Health Card
+          </div>
+          <QRCodeScreen />
         </div>
       </div>
     </>

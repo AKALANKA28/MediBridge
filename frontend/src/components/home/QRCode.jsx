@@ -59,7 +59,7 @@ const QRCodeScreen = () => {
   return (
     <div className="qr-code-screen-container">
       <Header />
-      
+
       <div className="qr-card-container">
         <div className="qr-header">
           <p style={{ fontSize: "12px" }}>
@@ -69,66 +69,78 @@ const QRCodeScreen = () => {
           </p>
         </div>
 
-        <div className="qr-card">
-        <img src={logo} className="qr-logo" /> {/* Add this line */}
-
-          <div className="patient-info-section">
-            {patientInfo && (
-              <>
-                <p style={{ marginBottom: "10px" }}>
-                  <strong>MediBridge Digital Health Card</strong>
-                </p>
-                <p>
-                  <strong>Name:</strong>  {patientInfo.name}C K D Nethmina Akalanka Dias
-                </p>
-                <p>
-                  <strong>Date of Birth:</strong> {patientInfo.dob}28-04-2002
-                </p>
-                <p>
-                  {/* <strong>Gender:</strong> {patientInfo.gender}Male
+        <div className="web-qr-container">
+          <div className="qr-card">
+            <img src={logo} className="qr-logo" /> {/* Add this line */}
+            <div className="patient-info-section">
+              {patientInfo && (
+                <>
+                  <p style={{ marginBottom: "10px" }}>
+                    <strong>MediBridge Digital Health Card</strong>
+                  </p>
+                  <p>
+                    <strong>Name:</strong> {patientInfo.name}C K D Nethmina
+                    Akalanka Dias
+                  </p>
+                  <p>
+                    <strong>Date of Birth:</strong> {patientInfo.dob}28-04-2002
+                  </p>
+                  <p>
+                    {/* <strong>Gender:</strong> {patientInfo.gender}Male
                   <span style={{ margin: "0 40px" }}></span> */}
-                  <strong>Blood Group:</strong> {patientInfo.bloodGroup}O+
-                </p>
-              </>
-            )}
-          </div>
-
-          <div className="qr-code-container">
-            {loading ? (
-              <p>Loading QR code...</p>
-            ) : qrCode ? (
-              <img
-                src={qrCode}
-                alt="Patient QR Code"
-                className="qr-code-image"
-              />
-            ) : (
-              <p>Failed to load QR code.</p>
-            )}
-          </div>
-
-          {/* <div className="qr-buttons">
+                    <strong>Blood Group:</strong> {patientInfo.bloodGroup}O+
+                  </p>
+                </>
+              )}
+            </div>
+            <div className="qr-code-container">
+              {loading ? (
+                <p>Loading QR code...</p>
+              ) : qrCode ? (
+                <img
+                  src={qrCode}
+                  alt="Patient QR Code"
+                  className="qr-code-image"
+                />
+              ) : (
+                <p>Failed to load QR code.</p>
+              )}
+            </div>
+            {/* <div className="qr-buttons">
             <button className="download-button">Download SMART® Health Card</button>
             <button className="print-button">Download Printable PDF</button>
           </div> */}
+          </div>
+
+          <div className="qr-info">
+            <p>
+              <strong>What is a MediBridge Health Card?</strong>
+            </p>
+            <ul>
+              <li>Holds your important medical and lab report data</li>
+              <li>
+                Can be scanned to verify that the information has not been
+                tampered with
+              </li>
+              <li>
+                <b>Dont forget</b>- Your QR code contains sensitive health
+                information. Only share it with trusted parties to protect your
+                privacy.
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <div className="qr-info">
-          <p>
-            <strong>What is a MediBridge Health Card?</strong>
-          </p>
-          <ul>
-            <li>Holds your important medical and lab report data</li>
-            <li>
-              Can be scanned to verify that the information has not been
-              tampered with
-            </li>
-            <li>
-              <b>Dont forget</b>- Your QR code contains sensitive health
-              information. Only share it with trusted parties to protect your
-              privacy.
-            </li>
-          </ul>
+        <div className="buton-container">
+          <button className="web-btn" onClick={handleDownload}>
+            Download MediBridge Health Card
+          </button>
+          <button className="web-btn" onClick={handleShare}>
+            Download Printable PDF
+          </button>
+          {/* <button className="web-btn" onClick={handleShare}>
+           Copy Link
+          </button> */}
         </div>
       </div>
       {/* Footer with download and share buttons */}
