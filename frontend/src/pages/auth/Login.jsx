@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook, FaTwitter } from "react-icons/fa"; // Import social icons
+import { FaArrowRight, FaFacebook, FaTwitter } from "react-icons/fa"; // Import social icons
 import "./login.scss"; // Import CSS for styling
 import logo from "../../assets/medibridgelogo.svg"; // Import SVG logo
 
@@ -23,7 +23,7 @@ const Login = () => {
         const { token, role, _id } = response.data;
         login(token, role, _id);
         if (role === "admin") navigate("/");
-        else if (role === "patient") navigate("/");
+        else if (role === "patient") navigate("/home");
         else if (role === "doctor") navigate("/");
         else navigate("/");
       } else {
@@ -96,6 +96,14 @@ const Login = () => {
           <FaFacebook className="social-icon facebook" />
           <FaTwitter className="social-icon twitter" />
         </div>
+        <button
+          onClick={() => navigate("/register")} // Allowing user to skip
+          className="skip-btn"
+          style={{ position: "absolute", bottom: "20px", right: "20px", fontWeight: "600"}} // Adjust positioning as necessary
+        >
+          Create a Account
+          <FaArrowRight style={{ marginLeft: "8px" }} /> {/* Arrow icon */}
+        </button>
       </div>
     </div>
   );

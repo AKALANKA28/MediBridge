@@ -27,6 +27,12 @@ var userSchema = new mongoose.Schema(
     nic: {
       type: String,
     },
+    gender: {
+      type: String,
+    },
+    dob: {
+      type: Date,
+    },
     imgUrl: {
       type: String,
     },
