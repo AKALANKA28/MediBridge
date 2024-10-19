@@ -1,6 +1,6 @@
 import React from 'react';
-import'./Header.scss';
-import image from '../../assets/Image.svg';
+import styles from './Header.scss';
+//import image from '../../assets/Image.svg';
 
 const Header = () => {
   const handleBackClick = () => {
@@ -9,10 +9,10 @@ const Header = () => {
 
   return (
     <div className="header-container">
-      <div className="header-content">
+      {/* <div className="header-content">
         <img src={image} alt="Icon" className="mobileiHeaderIcon" onClick={handleBackClick} />
         <span className="header-text">MediBridge Health Card</span>
-      </div>
+      </div> */}
     </div>
   );
 };
