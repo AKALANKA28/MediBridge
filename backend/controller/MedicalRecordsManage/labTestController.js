@@ -1,7 +1,4 @@
-const Test = require('../../models/MedicalRecordsManage/labTestModel'); // Import the Test model
-const Patient = require('../../models/patientModel');
-
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Test = require("../../models/MedicalRecordsManage/labTestModel"); // Import the Test model
 const Patient = require("../../models/patientModel"); // Import the Patient model
 
@@ -10,12 +7,10 @@ const isValidObjectId = (id) => mongoose.isValidObjectId(id);
 
 // Controller to handle saving a new test
 exports.saveTest = async (req, res) => {
-  const { test_Id, test_Name, test_result, date, description, patientId} = req.body;
-
+  const { test_Id, test_Name, test_result, date, description, patientId } =
+    req.body;
 
   // Validate required fields
-  if (!test_Id || !test_Name || !test_result || !date || !patientId) {
-    return res.status(400).json({ message: 'Please provide all required fields.' });
   if (!test_Id || !test_Name || !test_result || !date || !patientId) {
     return res
       .status(400)
@@ -34,8 +29,7 @@ exports.saveTest = async (req, res) => {
       test_Name,
       test_result,
       date,
-      description
-      
+      description,
     });
 
     const savedLabTest = await newTest.save();
@@ -148,4 +142,4 @@ exports.deleteTest = async (req, res) => {
       .status(500)
       .json({ message: "Failed to delete test.", error: err.message });
   }
-}}
+};
