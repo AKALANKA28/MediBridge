@@ -12,7 +12,7 @@ const Header = () => {
       {/* <div className="header-content">
         <img src={image} alt="Icon" className="mobileiHeaderIcon" onClick={handleBackClick} />
         <span className="header-text">MediBridge Health Card</span>
-      </div>
+      </div> */}
     </div>
   );
 };
