@@ -20,12 +20,14 @@ var userSchema = new mongoose.Schema(
       type: String,
       unique: false,
     },
-
     password: {
       type: String,
       required: true,
     },
     nic: {
+      type: String,
+    },
+    imgUrl: {
       type: String,
     },
     role: {

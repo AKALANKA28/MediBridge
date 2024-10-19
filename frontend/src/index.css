@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  padding: 0px; 
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -7,7 +8,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+
+Link{
+  text-decoration: none !important;
+  color: #0076C1;
+
+}
+
+a{
+  text-decoration: none !important;
+  color: #0076C1;
+}
+
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */

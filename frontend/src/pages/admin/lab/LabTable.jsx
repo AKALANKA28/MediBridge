@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 // Function to check if a string is a valid MongoDB ObjectId
 const isValidObjectId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
-const LabTable = () => {
+const LabTable = ({ onEdit }) => { // Accept onEdit as a prop for edit functionality
   const [data, setData] = useState([]);
 
   // Fetch all lab tests from the backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/tests/');
+        const response = await fetch('http://localhost:8080/tests/');
         if (!response.ok) {
           throw new Error('Failed to fetch lab tests.');
         }
@@ -60,7 +60,7 @@ const LabTable = () => {
     }
   };
 
-  // Define the action column for view and delete actions
+  // Define the action column for view, edit, and delete actions
   const actionColumn = [
     {
       field: "action",
@@ -69,9 +69,15 @@ const LabTable = () => {
       renderCell: (params) => {
         return (
           <div className="cellAction">
-            <Link to={`/labtests/view/${params.row.id}`} style={{ textDecoration: "none" }}>
+            {/* <Link to={`/labtests/view/${params.row.id}`} style={{ textDecoration: "none" }}>
               <div className="viewButton">View</div>
-            </Link>
+            </Link> */}
+            <div 
+              className="editButton" 
+              onClick={() => onEdit(params.row)} // Call the onEdit function with the row data
+            >
+              Edit
+            </div>
             <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
               Delete
             </div>

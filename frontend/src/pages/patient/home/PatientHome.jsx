@@ -1,10 +1,10 @@
-import Sidebar from "../../../components/sidebar/Sidebar";
-import Navbar from "../../../components/navbar/Navbar";
+import Sidebar from "../../../components/patient/sidebar/Sidebar";
+import Navbar from "../../../components/patient/navbar/Navbar";
 import "./home.scss";
 import Widget from "../../../components/widget/Widget";
-import Featured from "../../../components/featured/Featured";
-import Chart from "../../../components/chart/Chart";
-import Table from "../../../components/table/Table";
+import Featured from "../../../components/patient/featured/Featured";
+import Chart from "../../../components/patient/chart/Chart";
+import Table from "../../../components/patient/table/Table";
 import HomeComponent from "../../../components/home/HomeComponent";
 
 const PatientHome = () => {
