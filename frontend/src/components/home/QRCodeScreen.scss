@@ -103,6 +103,7 @@
   margin-bottom: 20px;
   @media (min-width: 1024px) {
     flex: 1;
+    margin-left: 20px;
   }
   p {
     margin: 5px 0;
@@ -111,6 +112,37 @@
 
   strong {
     font-weight: 600;
+  }
+}
+
+.patient-record{
+  @media (min-width: 1024px) {
+    display: flex;    }
+}
+
+.record-left-container{
+  @media (min-width: 1024px) {
+    flex: 1;
+  }
+}
+.record-right-container{
+  @media (min-width: 1024px) {
+    flex: 2;
+  }
+}
+.web-only{
+  // display: block; // Adjust as necessary
+  margin: 10px 0; // Space around the image
+  font-size: 14px;
+  max-width: 100px; // Limit the size
+  border-radius: 5%; // Optional: if you want a circular profile image
+
+  p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
@@ -232,9 +264,9 @@
     font-size: 16px; /* Larger font for web */
   }
 
-  .patient-info-section p {
-    font-size: 16px; /* Larger font for patient info */
-  }
+  // .patient-info-section p {
+  //   font-size: 16px; /* Larger font for patient info */
+  // }
 }
 
 @media (min-width: 1024px) {
