@@ -24,6 +24,8 @@ const PatientRecords = () => {
   const handleLabClick = () => {
     navigate('/lab'); // Navigate to the Lab Tests page
   };
+  console.log('Patient Image URL:', patient.imgUrl);
+  console.log('Patient Data:', data);
 
   return (
     <div className="patient-records-page">
@@ -38,7 +40,7 @@ const PatientRecords = () => {
             {/* Patient Info */}
             {patient ? (
               <div className="patient-info">
-                <img src="/path/to/patient.jpg" alt="Patient" className="patient-pic" />
+                <img src= {patient.imgUrl} alt="Patient" className="patient-pic" />
                 <div className="patient-details">
                   <h3>About Patient</h3>
                   <p>Name: {patient.name}</p>
