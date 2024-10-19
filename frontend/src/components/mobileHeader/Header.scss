@@ -20,7 +20,7 @@
     position: absolute;
     left: 0; /* This places the icon to the left of the container */
     width: 11px;
-
+z-index: 10;
     // height: 11px;
     margin-left: 5px; /* Adjusts the space from the left edge */
   }
@@ -36,3 +36,9 @@
     flex-grow: 1; /* Makes sure the text occupies the center space */
   }
   
+  /* Hide the header on web */
+@media (min-width: 768px) {
+  .header-container {
+    display: none; /* Hides the header container on larger screens */
+  }
+}
