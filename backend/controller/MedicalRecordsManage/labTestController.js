@@ -7,18 +7,15 @@ const isValidObjectId = (id) => mongoose.isValidObjectId(id);
 
 // Controller to handle saving a new test
 exports.saveTest = async (req, res) => {
-  const { test_Id, test_Name, test_result, date, description, patientId } =
-    req.body;
+  const { test_Id, test_Name, test_result, date, description, patientId } = req.body;
 
   // Validate required fields
   if (!test_Id || !test_Name || !test_result || !date || !patientId) {
-    return res
-      .status(400)
-      .json({ message: "Please provide all required fields." });
+    return res.status(400).json({ message: "Please provide all required fields." });
   }
 
   // Check if the provided patientId is a valid ObjectId
-  if (!mongoose.isValidObjectId(patientId)) {
+  if (!isValidObjectId(patientId)) {
     return res.status(400).json({ message: "Invalid patient ID." });
   }
 
@@ -34,10 +31,10 @@ exports.saveTest = async (req, res) => {
 
     const savedLabTest = await newTest.save();
 
-    // Update the patient's profile by adding the new treatment's ID
+    // Update the patient's profile by adding the new test's ID
     const updatedPatient = await Patient.findByIdAndUpdate(
       patientId,
-      { $push: { labTest: savedLabTest._id } }, // Add the treatment ID to the patient's treatments array
+      { $push: { labTests: savedLabTest._id } }, // Add the test ID to the patient's labTests array
       { new: true }
     );
 
@@ -45,12 +42,10 @@ exports.saveTest = async (req, res) => {
       return res.status(404).json({ message: "Patient not found." });
     }
 
-    res.status(201).json({ message: "Test saved successfully!" });
+    res.status(201).json({ message: "Test saved successfully!", test: savedLabTest });
   } catch (err) {
     console.error("Failed to save test:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to save test.", error: err.message });
+    res.status(500).json({ message: "Failed to save test.", error: err.message });
   }
 };
 
@@ -61,9 +56,7 @@ exports.getAllTests = async (req, res) => {
     res.status(200).json(tests);
   } catch (err) {
     console.error("Failed to retrieve tests:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to retrieve tests.", error: err.message });
+    res.status(500).json({ message: "Failed to retrieve tests.", error: err.message });
   }
 };
 
@@ -84,9 +77,7 @@ exports.getTestById = async (req, res) => {
     res.status(200).json(test);
   } catch (error) {
     console.error("Failed to retrieve test by ID:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to retrieve test.", error: error.message });
+    res.status(500).json({ message: "Failed to retrieve test.", error: error.message });
   }
 };
 
@@ -104,18 +95,17 @@ exports.updateTestById = async (req, res) => {
     // Find the test by ID and update it with the new data
     const updatedTest = await Test.findByIdAndUpdate(id, updateData, {
       new: true,
+      runValidators: true,  // Ensure Mongoose validates the updated data
     });
+
     if (!updatedTest) {
       return res.status(404).json({ message: "Test not found." });
     }
-    res
-      .status(200)
-      .json({ message: "Test updated successfully.", test: updatedTest });
+
+    res.status(200).json({ message: "Test updated successfully.", test: updatedTest });
   } catch (error) {
     console.error("Failed to update test:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to update test.", error: error.message });
+    res.status(500).json({ message: "Failed to update test.", error: error.message });
   }
 };
 
@@ -138,8 +128,6 @@ exports.deleteTest = async (req, res) => {
     res.status(200).json({ message: "Test deleted successfully." });
   } catch (err) {
     console.error("Failed to delete test:", err);
-    res
-      .status(500)
-      .json({ message: "Failed to delete test.", error: err.message });
+    res.status(500).json({ message: "Failed to delete test.", error: err.message });
   }
 };

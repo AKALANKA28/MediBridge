@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, TablePagination } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, TablePagination, Typography } from '@mui/material';
 import axios from 'axios'; 
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const TreatmentTable = () => {
   const [data, setData] = useState([]);
@@ -124,6 +124,9 @@ const TreatmentTable = () => {
 
   return (
     <div className="treatment-table">
+      <Typography variant="h4" component="h2" gutterBottom>
+        Treatment Details
+      </Typography>
       <DataGrid
         rows={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
         columns={columns}
