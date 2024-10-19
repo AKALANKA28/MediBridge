@@ -7,6 +7,7 @@ const sendEmail = require("./emailController");
 const User = require("../models/userModel");
 const PatientProfile = require("../models/patientModel");
 const DoctorProfile = require("../models/doctorModel");
+const { default: mongoose } = require("mongoose");
 
 // Register a User
 exports.registerUser = asyncHandler(async (req, res) => {
@@ -254,7 +255,10 @@ exports.getAllUsers = asyncHandler(async (req, res) => {
 //Get user by id------------------------------------------------------------------------------------------
 exports.getUserById = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongoDbId(id);
+  // Validate the ID
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid User ID." });
+  }
   try {
     const getUserById = await User.findById(id);
     res.json({
@@ -268,8 +272,10 @@ exports.getUserById = asyncHandler(async (req, res) => {
 //Update a User------------------------------------------------------------------------------------------
 exports.updatedUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  validateMongoDbId(id);
-  try {
+  // Validate the ID
+  if (!mongoose.isValidObjectId(_id)) {
+    return res.status(400).json({ message: "Invalid User ID." });
+  }  try {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
