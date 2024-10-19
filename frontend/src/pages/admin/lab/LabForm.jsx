@@ -32,28 +32,33 @@ const LabForm = ({ handleSubmit, initialData }) => {
   // Initialize form values with initialData if available
   const formik = useFormik({
     initialValues: {
-      test_Id: initialData ? initialData.test_Id : "",
-      test_Name: initialData ? initialData.test_Name : "",
-      test_result: initialData ? initialData.test_result : "",
-      date: initialData ? initialData.date : "",
-      description: initialData ? initialData.description : "",
+      test_Id: initialData?.test_Id || "",
+      test_Name: initialData?.test_Name || "",
+      test_result: initialData?.test_result || "",
+      date: initialData?.date || "",
+      description: initialData?.description || "",
     },
     validationSchema: LabSchema,
     onSubmit: (values) => {
-      handleSubmit({ ...values, file }); // Include the file in the submitted data
+      const formData = new FormData();
+      formData.append('test_Id', values.test_Id);
+      formData.append('test_Name', values.test_Name);
+      formData.append('test_result', values.test_result);
+      formData.append('date', values.date);
+      formData.append('description', values.description);
+
+      if (file) {
+        formData.append('file', file);
+      }
+
+      handleSubmit(formData); // Include the file in the submitted data
     },
   });
 
   // Update form state when initialData changes
   useEffect(() => {
     if (initialData) {
-      formik.setValues({
-        test_Id: initialData.test_Id,
-        test_Name: initialData.test_Name,
-        test_result: initialData.test_result,
-        date: initialData.date,
-        description: initialData.description,
-      });
+      formik.setValues(initialData);
     }
   }, [initialData]);
 
@@ -71,11 +76,11 @@ const LabForm = ({ handleSubmit, initialData }) => {
                   ? URL.createObjectURL(file)
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
-              alt="No Image"
+              alt="Uploaded File Preview"
             />
           </div>
           <div className="right">
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -83,18 +88,17 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 <input
                   type="file"
                   id="file"
+                  name="file"
                   onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
                 />
               </div>
               {/* Lab Test Form Fields */}
               <div className="formInput">
-                <label htmlFor="test_Id" className="form-label">Test ID</label>
+                <label htmlFor="test_Id">Test ID</label>
                 <input
                   type="text"
-                  className="form-control"
                   name="test_Id"
-                  placeholder="Test ID"
                   value={formik.values.test_Id}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -104,12 +108,10 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 )}
               </div>
               <div className="formInput">
-                <label htmlFor="test_Name" className="form-label">Test Name</label>
+                <label htmlFor="test_Name">Test Name</label>
                 <input
                   type="text"
-                  className="form-control"
                   name="test_Name"
-                  placeholder="Test Name"
                   value={formik.values.test_Name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -119,12 +121,10 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 )}
               </div>
               <div className="formInput">
-                <label htmlFor="test_result" className="form-label">Test Result</label>
+                <label htmlFor="test_result">Test Result</label>
                 <input
                   type="text"
-                  className="form-control"
                   name="test_result"
-                  placeholder="Test Result"
                   value={formik.values.test_result}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -134,10 +134,9 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 )}
               </div>
               <div className="formInput">
-                <label htmlFor="date" className="form-label">Date</label>
+                <label htmlFor="date">Date</label>
                 <input
                   type="date"
-                  className="form-control"
                   name="date"
                   value={formik.values.date}
                   onChange={formik.handleChange}
@@ -148,17 +147,18 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 )}
               </div>
               <div className="formInput">
-                <label htmlFor="description" className="form-label">Description (optional)</label>
+                <label htmlFor="description">Description</label>
                 <textarea
-                  className="form-control"
                   name="description"
-                  placeholder="Description"
                   value={formik.values.description}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                />
+                ></textarea>
+                {formik.touched.description && formik.errors.description && (
+                  <div className="error">{formik.errors.description}</div>
+                )}
               </div>
-              <button type="submit" className="btn btn-success">Submit</button>
+              <button type="submit">Submit</button>
             </form>
           </div>
         </div>

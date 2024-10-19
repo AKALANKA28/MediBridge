@@ -29,25 +29,30 @@
   }
 }
 }
+
 .qr-card-container {
   background-color: white;
   border-radius: 10px;
   padding: 20px;
   margin-top: 17px;
-  width: 100%;
-  max-width: 400px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1; /* Ensure the content is above the background */
   position: relative;
 
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 400px;
+  }
+
   // Web responsive styles
   @media (min-width: 768px) {
-    max-width: 600px; // Wider container for larger screens
+    // max-width: 600px; // Wider container for larger screens
   }
 
   @media (min-width: 1024px) {
-    max-width: 800px; // Even wider container for larger screens
-    padding: 30px; // More padding for larger screens
+    // max-width: 800px; // Even wider container for larger screens
+    padding: 25px; // More padding for larger screens
+    max-height: 82vh;
   }
 }
 
@@ -57,12 +62,28 @@
   margin-bottom: 20px;
 }
 
+.web-qr-container {
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: space-between;
+  }
+}
 .qr-card {
-  border: 1px solid #ddd;
+  border: 1px solid #a8dcfc;
   padding: 20px;
   border-radius: 10px;
   position: relative; // Ensure this is set to position the logo relative to the card
 
+  @media (min-width: 1024px) {
+    display: flex;
+    width: 100%;
+    max-width: 850px; // Even wider container for larger screens
+    margin-right: 50px;
+    padding: 15px;
+    border: 1px solid #bebebe81;
+
+    // background-color: rgba(0, 89, 145, 0.082);
+  }
   .qr-logo {
     position: absolute; // Use absolute positioning
     top: 10px; // Adjust the distance from the top as needed
@@ -70,13 +91,20 @@
     width: 25px; // Set a width for the logo
     height: auto; // Maintain aspect ratio
     z-index: 10; // Ensure the logo is above other elements
+
+    @media (min-width: 1024px) {
+      display: none;
+    }
   }
 }
 
 .patient-info-section {
   text-align: left;
   margin-bottom: 20px;
-
+  @media (min-width: 1024px) {
+    flex: 1;
+    margin-left: 20px;
+  }
   p {
     margin: 5px 0;
     font-size: 14px;
@@ -87,24 +115,93 @@
   }
 }
 
+.patient-record{
+  @media (min-width: 1024px) {
+    display: flex;    }
+}
+
+.record-left-container{
+  @media (min-width: 1024px) {
+    flex: 1;
+  }
+}
+.record-right-container{
+  @media (min-width: 1024px) {
+    flex: 2;
+  }
+}
+.web-only{
+  // display: block; // Adjust as necessary
+  margin: 10px 0; // Space around the image
+  font-size: 14px;
+  max-width: 100px; // Limit the size
+  border-radius: 5%; // Optional: if you want a circular profile image
+
+  p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 .qr-code-container {
   margin: 20px 0;
   text-align: center;
 
+  @media (min-width: 1024px) {
+    flex: 1;
+  }
   .qr-code-image {
-    max-width: 100%;
+    // max-width: 100%;
     height: auto;
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 8px;
     border-radius: 10px;
+    @media (max-width: 768px) {
+      width: 88%;
+      max-width: 400px;
+    }
+    @media (min-width: 1024px) {
+      max-width: 200%;
+      background-color: #fff;
+      height: auto;
+    }
   }
 }
 
+.buton-container {
+  @media (max-width: 768px) {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .web-btn{
+    @media (min-width: 1024px) {
+      width: 34%;
+      padding: 15px 20px;
+      background-color: #0076C1;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-right: 20px;
+      transition: background-color 0.3s;
+    }
+  }
+}
 .qr-info {
   font-size: 12px;
   text-align: left;
   margin-top: 20px;
-
+  @media (min-width: 1024px) {
+    flex: 1;
+  }
   ul {
     list-style-type: none;
     padding-left: 0;
@@ -167,9 +264,9 @@
     font-size: 16px; /* Larger font for web */
   }
 
-  .patient-info-section p {
-    font-size: 16px; /* Larger font for patient info */
-  }
+  // .patient-info-section p {
+  //   font-size: 16px; /* Larger font for patient info */
+  // }
 }
 
 @media (min-width: 1024px) {

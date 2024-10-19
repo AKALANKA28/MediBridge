@@ -1,8 +1,10 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
 
+
 // Create AuthContext with default value
 export const AuthContext = createContext({
+  
   auth: {
     isAuthenticated: false,
     role: null,
@@ -35,7 +37,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     // Set the base URL for Axios (adjust this to your environment)
-    //axios.defaults.baseURL = "http://192.168.1.159:8080";
+    // axios.defaults.baseURL = "http://192.168.1.159:8080";
     axios.defaults.baseURL = "http://localhost:8080";
 
   }, [auth.token]); // Re-run whenever the token changes
@@ -86,6 +88,7 @@ export const AuthProvider = ({ children }) => {
       token: null,
       userId: null,
     });
+      // Redirect to logout or login page after logging out
   };
 
   return (

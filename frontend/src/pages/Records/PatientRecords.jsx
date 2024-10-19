@@ -1,28 +1,49 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import Sidebar from "../../components/sidebar/Sidebar"; // Ensure Sidebar path is correct
+import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import './PatientRecords.scss'; // Assuming custom styles for the page
+import './PatientRecords.scss';
 
 const PatientRecords = () => {
   const location = useLocation();
-  const navigate = useNavigate(); // Hook for programmatic navigation
-  const data = location.state?.data; // Retrieve patient data from navigation state
+  const navigate = useNavigate();
+  const data = location.state?.data;
 
-  // Extract patient information from the data structure
-  const patient = data?.user || data; // Adjust based on how data is structured
-  const treatments = data?.treatments || []; // Ensure it's an array for mapping
+  // Log the received data for debugging purposes
+  console.log("Received data from location.state:", data);
 
-  // Add your filtering criteria for treatments here
-  const filteredTreatments = treatments.filter(treatment => treatment.status === "active"); // Example condition
+  // Extract patient data, treatments, and tests
+  const patient = data?.user || data;
+  const treatments = data?.treatments || [];
+  const tests = data?.tests || [];
 
+  // Log the extracted patient details for further debugging
+  console.log("Extracted patient data:", patient);
+  console.log("Extracted treatments:", treatments);
+  
   // Handlers for navigation
   const handleTreatmentClick = () => {
-    navigate('/treatment'); // Navigate to the Treatments page
+    const patientId = data?._id; // Corrected extraction of patientId from the `user` object
+
+    // Debug log to ensure patientId is correct before navigation
+    console.log("Navigating to treatments with patientId:", patientId);
+
+    if (!patientId) {
+      console.error("Patient ID is undefined, cannot navigate to treatments.");
+      return; // Prevent navigation if patientId is missing
+    }
+
+    // Navigate to the Treatments page with treatment details and patientId
+    navigate('/treatment', {
+      state: {
+        treatments,
+        patientId, // Ensure patientId is passed correctly
+      }
+    });
   };
 
   const handleLabClick = () => {
-    navigate('/lab'); // Navigate to the Lab Tests page
+    navigate('/lab');
   };
 
   return (
@@ -35,23 +56,19 @@ const PatientRecords = () => {
             <h2>Patient Medical Records</h2>
           </div>
           <div className="patient-info-box">
-            {/* Patient Info */}
             {patient ? (
               <div className="patient-info">
-                <img src="/path/to/patient.jpg" alt="Patient" className="patient-pic" />
+                <img src={patient.imgUrl} alt="Patient" className="patient-pic" />
                 <div className="patient-details">
                   <h3>About Patient</h3>
                   <p>Name: {patient.name}</p>
                   <p>NIC: {patient.nic}</p>
                   <p>Email: {patient.email}</p>
-                  {/* Add other patient details if needed */}
                 </div>
               </div>
             ) : (
               <p>Patient details not found.</p>
             )}
-
-            {/* Links to Treatments and Lab Tests */}
             <div className="treatments-labs">
               <button onClick={handleTreatmentClick} className="treatment-button">
                 Treatments
@@ -60,7 +77,6 @@ const PatientRecords = () => {
                 Lab Tests
               </button>
             </div>
-
             {/* Health Status (Example Data) */}
             <div className="health-status">
               <div className="status-item">
@@ -88,42 +104,7 @@ const PatientRecords = () => {
                 </div>
               </div>
             </div>
-
-            {/* Treatments List */}
-            {treatments.length > 0 ? (
-              <div className="treatments-list">
-                <h3>Treatments</h3>
-                {treatments.map((treatment) => (
-                  <div key={treatment._id} className="treatment-item">
-                    <p>Treatment Name: {treatment.treatment_Name}</p>
-                    <p>Doctor ID: {treatment.doctor_Name}</p>
-                    <p>Date: {new Date(treatment.date).toLocaleDateString()}</p>
-                    <p>Description: {treatment.description}</p>
-                    <p>Status: {treatment.status}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No treatments found.</p>
-            )}
-
-            {/* Filtered Treatments List */}
-            {filteredTreatments.length > 0 ? (
-              <div className="filtered-treatments-list">
-                <h3>Active Treatments</h3>
-                {filteredTreatments.map((treatment) => (
-                  <div key={treatment._id} className="treatment-item">
-                    <p>Treatment Name: {treatment.treatment_Name}</p>
-                    <p>Doctor ID: {treatment.doctor_Name}</p>
-                    <p>Date: {new Date(treatment.date).toLocaleDateString()}</p>
-                    <p>Description: {treatment.description}</p>
-                    <p>Status: {treatment.status}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p>No active treatments found.</p>
-            )}
+            {/* Additional Health Status and Treatment Display Logic */}
           </div>
         </div>
       </div>
