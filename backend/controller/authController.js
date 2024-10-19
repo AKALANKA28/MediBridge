@@ -264,6 +264,7 @@ exports.getAllUsers = asyncHandler(async (req, res) => {
 //Get user by id------------------------------------------------------------------------------------------
 exports.getUserById = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  // Validate the ID
   if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ message: "Invalid User ID." });
   }
@@ -280,17 +281,19 @@ exports.getUserById = asyncHandler(async (req, res) => {
 //Update a User------------------------------------------------------------------------------------------
 exports.updatedUser = asyncHandler(async (req, res) => {
   const { _id } = req.user;
+  // Validate the ID
   if (!mongoose.isValidObjectId(_id)) {
     return res.status(400).json({ message: "Invalid User ID." });
-  }
-  try {
+  }  try {
     const updatedUser = await User.findByIdAndUpdate(
       _id,
       {
         name: req?.body?.name,
         email: req?.body?.email,
         mobile: req?.body?.mobile,
-        nic: req?.body?.nic,
+        imgUrl: req?.body?.imgUrl,
+        nic: req?.body?.nic
+
       },
       {
         new: true,

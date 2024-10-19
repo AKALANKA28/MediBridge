@@ -45,7 +45,7 @@ const Sidebar = () => {
             <CreditCardIcon className="icon" />
             <span>Payments</span>
           </li>
-          <Link to="/Scanner" style={{ textDecoration: "none" }}>
+          <Link to="/qr" style={{ textDecoration: "none" }}>
             <li>
               <QrCode2Icon className="icon" />
               <span>Health Card</span>

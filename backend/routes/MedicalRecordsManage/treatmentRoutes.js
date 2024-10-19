@@ -8,6 +8,7 @@ const {
 } = require('../../controller/MedicalRecordsManage/treatmentController'); // Correct path for the controller
 
 const router = express.Router();
+const { authMiddleware, isAdmin } = require('../../middlewares/authMiddleware');
 
 // Route to save a new treatment schedule
 router.post('/add', saveTreatment);
@@ -19,7 +20,7 @@ router.get('/', getAllTreatments);
 router.get('/treatments/:id', getTreatmentById);
 
 // Route to update a treatment by ID
-router.put('/treatments/:id', updateTreatmentById);
+router.put('/update/:id', authMiddleware, updateTreatmentById);
 
 // Route to delete a treatment by ID
 router.delete('/treatments/:id', deleteTreatment);

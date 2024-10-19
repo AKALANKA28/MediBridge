@@ -10,6 +10,8 @@ import TreatmentTable from "./pages/admin/treatments/TreatmentTable";
 import TreatmentForm from "./pages/admin/treatments/TreatmentForm";
 import Lab from "./pages/admin/lab/Lab";
 import AnalysisScreen from "./pages/analysis/AnalysisScreen";
+import PatientRecords from './pages/Records/PatientRecords'; 
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { DarkModeContext } from "./context/drakModeContext";
@@ -18,6 +20,7 @@ import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
 import Register from "./pages/auth/Register";
 import PatientDetails from "./pages/auth/PatientDetails";
+import QRPage from "./pages/patient/qrPage/QRPage";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -54,6 +57,8 @@ function App() {
             <Route path="/treatments/new" component={<TreatmentForm />} />
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="/patientrecords" element={<PatientRecords />} />
+
           </Routes>
         );
       case "doctor":
@@ -66,6 +71,8 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
+            <Route path="/qr" element={<QRPage />} />
+
           </Routes>
         );
       default:
