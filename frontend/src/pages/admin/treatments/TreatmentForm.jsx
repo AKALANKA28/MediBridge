@@ -42,7 +42,21 @@ const TreatmentForm = ({ handleSubmit, initialData }) => {
     },
     validationSchema: TreatmentSchema,
     onSubmit: (values) => {
-      handleSubmit({ ...values, file }); // Include the file in the submitted data
+      // Use FormData to handle both text and file data
+      const formData = new FormData();
+      formData.append('treatment_Id', values.treatment_Id);
+      formData.append('patient_Name', values.patient_Name);
+      formData.append('treatment_Name', values.treatment_Name);
+      formData.append('doctor_Name', values.doctor_Name);
+      formData.append('date', values.date);
+      formData.append('description', values.description);
+
+      // Add the file to the FormData if it exists
+      if (file) {
+        formData.append('file', file);
+      }
+
+      handleSubmit(formData); // Include the FormData in the submitted data
     },
   });
 
@@ -74,11 +88,11 @@ const TreatmentForm = ({ handleSubmit, initialData }) => {
                   ? URL.createObjectURL(file)
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
-              alt=""
+              alt="Uploaded File Preview"
             />
           </div>
           <div className="right">
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} encType="multipart/form-data">
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
@@ -86,6 +100,7 @@ const TreatmentForm = ({ handleSubmit, initialData }) => {
                 <input
                   type="file"
                   id="file"
+                  name="file"
                   onChange={(e) => setFile(e.target.files[0])}
                   style={{ display: "none" }}
                 />

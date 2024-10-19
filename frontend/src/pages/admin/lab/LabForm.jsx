@@ -40,6 +40,7 @@ const LabForm = ({ handleSubmit, initialData }) => {
     },
     validationSchema: LabSchema,
     onSubmit: (values) => {
+      console.log('Form Submitted:', { ...values, file }); // Debugging log
       handleSubmit({ ...values, file }); // Include the file in the submitted data
     },
   });
@@ -83,7 +84,10 @@ const LabForm = ({ handleSubmit, initialData }) => {
                 <input
                   type="file"
                   id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  onChange={(e) => {
+                    console.log(e.target.files[0]); // Debugging log
+                    setFile(e.target.files[0]);
+                  }}
                   style={{ display: "none" }}
                 />
               </div>

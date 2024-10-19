@@ -1,8 +1,10 @@
 .datatable {
   height: 600px;
   padding: 20px;
-  
-  .datatableTitle{
+  overflow-x: auto; /* Ensures horizontal scrolling on smaller screens */
+  white-space: nowrap; /* Prevents text wrapping in table cells */
+
+  .datatableTitle {
     width: 100%;
     font-size: 24px;
     color: gray;
@@ -11,7 +13,7 @@
     align-items: center;
     justify-content: space-between;
 
-    .link{
+    .link {
       text-decoration: none;
       color: green;
       font-size: 16px;
@@ -32,13 +34,13 @@
       height: 32px;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 20px;
+      margin-right: 5px; /* Further reduced space between image and text */
     }
   }
 
   .cellWithStatus {
-    padding: 5px;
-    border-radius: 5px;
+    padding: 2px; /* Reduced padding further */
+    border-radius: 3px;
 
     &.active {
       background-color: rgba(0, 128, 0, 0.05);
@@ -57,22 +59,73 @@
   .cellAction {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 5px; /* Further reduced gap between action buttons */
 
-    .viewButton {
-      padding: 2px 5px;
-      border-radius: 5px;
-      color: darkblue;
-      border: 1px dotted rgba(0, 0, 139, 0.596);
+    .viewButton, .deleteButton {
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 12px; /* Reduced button font size for compactness */
       cursor: pointer;
     }
-    
+
+    .viewButton {
+      color: darkblue;
+      border: 1px dotted rgba(0, 0, 139, 0.596);
+    }
+
     .deleteButton {
-      padding: 2px 5px;
-      border-radius: 5px;
       color: crimson;
       border: 1px dotted rgba(220, 20, 60, 0.6);
-      cursor: pointer;
+    }
+  }
+
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse; /* Ensures no gaps between table cells */
+  }
+
+  th, td {
+    padding: 3px 5px; /* Minimized padding even further */
+    text-align: left;
+    white-space: nowrap; /* Prevents text wrapping in cells */
+  }
+
+  th {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  td {
+    font-size: 14px; /* Slightly smaller font for table content */
+  }
+
+  /* Adjust column width for uniformity */
+  th, td {
+    min-width: 40px; /* Set minimum width to reduce column space further */
+  }
+
+  /* Responsiveness for smaller screens */
+  @media (max-width: 768px) {
+    .datatable {
+      overflow-x: scroll; /* Enable horizontal scrolling */
+    }
+
+    table {
+      width: 100%; /* Ensure table fits within container */
+    }
+
+    th, td {
+      font-size: 12px; /* Smaller font for better display on small screens */
+      padding: 3px; /* Further reduce padding on smaller screens */
+    }
+
+    .cellAction {
+      gap: 3px; /* Reduced space between action buttons on small screens */
+      .viewButton, .deleteButton {
+        padding: 2px 3px; /* Smaller padding for compact action buttons */
+        font-size: 10px;
+      }
     }
   }
 }
