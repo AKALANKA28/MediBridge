@@ -28,16 +28,17 @@
       display: flex;
       justify-content: space-between;
       padding: 20px;
-      height: 37vh;
+      height: 42vh;
       background-color: #B5D5FD; /* Can be removed if background image fully covers it */
       background-image: url('../../assets/background.jpeg'); /* Ensure correct image path */
       background-size: cover; /* This will prevent the image from stretching */
       background-repeat: no-repeat; /* Ensures the image doesn't repeat */
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
+      // border-bottom-left-radius: 10px;
+      // border-bottom-right-radius: 10px;
       flex-direction: column;
       position: relative; /* Required for positioning the pseudo-element */
-    
+      z-index: 1; /* Ensure the welcome section isn't overlapping other elements */
+
       &::before {
         content: ''; /* Required for the pseudo-element to display */
         position: absolute; /* Cover the entire section */
@@ -86,19 +87,18 @@
 
       .welcome-text {
         color: #494D54; /* Customize the color for the name */
+        .greeting {
+          font-size: 28.9px;
+          font-weight: 500;
+          font-size: 40px;
+          margin-top: 0px;
+        }
+        .home-text {
+          color: #8b98a3;
+          margin-bottom: 50px;
+          margin-top: -15px;
+        }
 
-        h1 {
-          font-size: 28.9px;
-        }
-        h2 {
-          font-size: 28.9px;
-        }
-        .name {
-          margin-top: -20px;
-        }
-        p {
-          color: #bbc8d3;
-        }
       }
   
       .urgent-care {
@@ -109,7 +109,7 @@
         border-radius: 25px;
         padding: 16px 20px;
         margin-left: 5px;
-        width: 30%;
+        width: 40%;
   
         .urgent-care-button {
           background-color: #ED2727;
@@ -122,7 +122,9 @@
   
     .services-section {
       padding: 20px;
-  
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+       z-index: 5;
       h3 {
         font-size: 14.5px;
       }
@@ -167,45 +169,9 @@
         h3 {
           font-size: 14.9px;
         }
-        a {
-          color: #0076c1;
-        }
       }
   
-      .appointment-details {
-        display: flex;
-        align-items: center;
-        margin-top: 15px;
-        border: 1px solid #dcdcdc;
-        border-radius: 5px;
-        padding: 10px;
-  
-        .appointment-date {
-          flex: 1;
-          display: flex;
-          align-items: center;
-  
-          span {
-            margin-left: 5px;
-            color: #8b8b8b;
-          }
-        }
-        .doctor-details {
-          display: flex;
-          align-items: center;
-  
-          h4 {
-            margin: 0;
-            font-size: 15.5px;
-            color: #65656a;
-          }
-          p {
-            margin: 0;
-            font-size: 10.5px;
-            color: #c4cad2;
-          }
-        }
-      }
+   
     }
   
     .footer {
@@ -225,6 +191,11 @@
         flex-direction: column;
         align-items: center;
   
+        .nav-link {
+          text-decoration: none; // Remove underline
+          display: flex; // Make the link display flex for proper alignment
+          align-items: center;
+        }
         img {
           margin-bottom: 5px;
         }

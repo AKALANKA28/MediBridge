@@ -1,35 +1,180 @@
+@media (max-width: 768px) {
+
 .qr-code-screen-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  background-color: #fff;
+  position: relative; /* Ensure that the background image can be positioned relative to this container */
+  min-height: 100vh; /* Ensure the container takes up the full height of the viewport */
+  
+  /* Add background image */
+  &:before {
+    content: "";
+    position: absolute;
+    left: 0%;
+    top: 0;
+    bottom: 0;
+    width: 50%; /* Adjust width based on how much space you want the image to cover */
+    background-image: url('../../assets/background.png'); /* Replace with your image path */
+    background-size: cover;
+    background-position: right top;
+    background-repeat: no-repeat;
+    z-index: 1; /* Ensure the image stays behind the content */
+    @media (min-width: 768px) {
+     display: none;; // Wider container for larger screens
+    }
+  
+  }
+}
+}
+.qr-card-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 17px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1; /* Ensure the content is above the background */
+  position: relative;
 
+  // Web responsive styles
+  @media (min-width: 768px) {
+    max-width: 600px; // Wider container for larger screens
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 800px; // Even wider container for larger screens
+    padding: 30px; // More padding for larger screens
+  }
 }
 
-// Other classes remain unchanged
-.qr-code-display-container {
+.qr-header p {
+  font-size: 14px;
+  margin-top: 0px;
   margin-bottom: 20px;
-  margin-top: 20px;
+}
+
+.qr-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative; // Ensure this is set to position the logo relative to the card
+
+  .qr-logo {
+    position: absolute; // Use absolute positioning
+    top: 10px; // Adjust the distance from the top as needed
+    right: 10px; // Adjust the distance from the right as needed
+    width: 25px; // Set a width for the logo
+    height: auto; // Maintain aspect ratio
+    z-index: 10; // Ensure the logo is above other elements
+  }
+}
+
+.patient-info-section {
+  text-align: left;
+  margin-bottom: 20px;
+
+  p {
+    margin: 5px 0;
+    font-size: 14px;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+.qr-code-container {
+  margin: 20px 0;
   text-align: center;
 
-  .qr-code-title {
-    margin-bottom: 10px; // Space between heading and QR code
-    color: #333; // Change the heading color if needed
-  }
-
   .qr-code-image {
-    max-width: 100%; // Makes the image responsive
-    height: auto; // Maintain aspect ratio
-    border-radius: 10px; // Optional rounded corners
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+  }
+}
+
+.qr-info {
+  font-size: 12px;
+  text-align: left;
+  margin-top: 20px;
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+
+    li {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.qr-footer {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 15px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 20;
+}
+
+.footer-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.footer-btn svg {
+  margin-right: 5px;
+}
+
+/* Web Responsive Styles */
+@media (min-width: 768px) {
+  .qr-code-screen-container {
+    flex-direction: row; /* Change layout to row for larger screens */
+    justify-content: space-between; /* Space out content */
+    // padding: 40px; /* Increased padding for larger screens */
   }
 
-  .qr-code-loading-text {
-    font-size: 16px; // Optional font size adjustment
-    color: #555; // Optional text color
+  .qr-card-container {
+    margin: 20px; /* Margin between card containers */
+    flex: 1; /* Allow the container to grow */
   }
 
-  .qr-code-error-text {
-    font-size: 16px; // Optional font size adjustment
-    color: red; // Highlight error messages
+  .qr-footer {
+    display: none;
+  }
+
+  .qr-header p {
+    font-size: 16px; /* Larger font for web */
+  }
+
+  .patient-info-section p {
+    font-size: 16px; /* Larger font for patient info */
+  }
+}
+
+@media (min-width: 1024px) {
+  .qr-footer {
+    gap: 30px; /* More gap for larger screens */
+    padding: 25px; /* Even more padding for footer */
   }
 }

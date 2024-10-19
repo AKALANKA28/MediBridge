@@ -1,17 +1,19 @@
 .appointment-card {
     width: 100%;
-    max-width: 347px;
+    max-width: 390px;
     border-radius: 8px;
     background-color: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     padding: 16px;
+    border-left: #0076C1 solid 5px;
   }
   
   .appointment-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
+    margin-bottom: 0px;
+    
   }
   
   .appointment-date {
@@ -24,7 +26,7 @@
   .appointment-info {
     display: flex;
     align-items: center;
-  
+    margin-top: 10px;
     .icon {
       width: 17px;
       height: 17px;
@@ -58,7 +60,7 @@
   .appointment-details {
     display: flex;
     align-items: center;
-  
+    
     .profile-pic {
       width: 51px;
       height: 49px;
@@ -68,7 +70,9 @@
   
     .doctor-info {
       flex-grow: 1;
-  
+      display: flex;
+      flex-direction: column;
+      border: none;
       .doctor-name {
         font-family: 'Inter', sans-serif;
         font-weight: 600;

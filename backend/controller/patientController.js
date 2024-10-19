@@ -19,7 +19,7 @@ exports.getPatientProfile = async (req, res) => {
     const patientProfile = await PatientProfile.findById(id).populate([
       {
         path: "user",
-        select: "name email nic",
+        select: "name email nic imgUrl mobile",
       },
     //   {
     //     path: "appointments.doctor",
@@ -79,25 +79,11 @@ exports.generatePatientQRCode = async (req, res) => {
 };
 
 
+// Controller to retrieve all patients
 exports.getAllPatients = async (req, res) => {
-  const { 'user.name': name, 'user.nic': nic } = req.query; // Extract query parameters
-
   try {
-    // Create a query object to filter patients
-    const query = {};
-    
-    // If name is provided, add to the query
-    if (name) {
-      query['user.name'] = name; 
-    }
-
-    // If NIC is provided, add to the query
-    if (nic) {
-      query['user.nic'] = nic;
-    }
-
-    // Fetch patient profiles based on query
-    const patients = await PatientProfile.find(query).populate([
+    // Fetch all patient profiles and populate the necessary fields
+    const patients = await PatientProfile.find().populate([
       {
         path: "user",
         select: "name email nic",
@@ -108,15 +94,9 @@ exports.getAllPatients = async (req, res) => {
       },
     ]);
 
-    // Check if patients are found
-    if (patients.length === 0) {
-      return res.status(404).json({ message: "No patients found." });
-    }
-
     res.status(200).json(patients);
   } catch (error) {
     console.error("Error retrieving patients:", error);
     res.status(500).json({ message: "Failed to retrieve patients." });
   }
 };
-
