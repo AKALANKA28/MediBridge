@@ -75,7 +75,7 @@ function App() {
       case "patient":
         return (
           <Routes>
-            <Route path="/home" element={<PatientHome />} />
+            <Route path="/" element={<PatientHome />} />
             <Route path="users" element={<List />} />
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
