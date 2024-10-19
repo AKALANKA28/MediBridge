@@ -6,15 +6,20 @@ import StoreIcon from "@mui/icons-material/Store";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import QrCode2Icon from '@mui/icons-material/QrCode2';
-import { Link } from "react-router-dom";
+import QrCode2Icon from "@mui/icons-material/QrCode2";
+import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../../context/drakModeContext";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
 
 const Sidebar = () => {
   const { logout } = useContext(AuthContext); // Get auth and logout from context
+  const navigate = useNavigate(); // Initialize navigate for redirection
 
+  const handleLogout = () => {
+    logout(); // Call the logout function from AuthContext
+    navigate("/"); // Redirect to the login page after logout
+  };
   const { dispatch } = useContext(DarkModeContext);
   return (
     <div className="sidebar">
@@ -27,32 +32,31 @@ const Sidebar = () => {
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link   to="/" style={{ textDecoration: "none" }}>
-          <li>
-            <DashboardIcon className="icon" />
-            <span>Dashboard</span>
-          </li>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <li>
+              <DashboardIcon className="icon" />
+              <span>Dashboard</span>
+            </li>
           </Link>
-         
+
           <p className="title">LISTS</p>
           <Link to="/users" style={{ textDecoration: "none" }}>
+            <Link to="/health-card" style={{ textDecoration: "none" }}>
+              <li>
+                <QrCode2Icon className="icon" />
+                <span>Health Card</span>
+              </li>
+            </Link>
             <li>
               <PersonOutlineIcon className="icon" />
               <span>Appointments</span>
             </li>
-          </Link> 
+          </Link>
           <li>
             <CreditCardIcon className="icon" />
             <span>Payments</span>
           </li>
-          <Link to="/qr" style={{ textDecoration: "none" }}>
-            <li>
-              <QrCode2Icon className="icon" />
-              <span>Health Card</span>
-            </li>
-          </Link>
-         
-        
+
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
@@ -63,11 +67,10 @@ const Sidebar = () => {
             <span>Settings</span>
           </li>
           {/* Use onClick instead of Link for Logout */}
-          <li onClick={logout} style={{ cursor: "pointer" }}>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>
-       
         </ul>
       </div>
       <div className="bottom">
