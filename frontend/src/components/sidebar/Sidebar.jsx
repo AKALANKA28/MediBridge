@@ -87,7 +87,25 @@ const Sidebar = () => {
           <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>
             <InsertChartIcon className="icon" />
-            <span>Stats</span>
+            <span>Patient Visits</span>
+          </li>
+          </Link>
+          <Link to="/eqanalysis" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Resources</span>
+          </li>
+          </Link>
+          <Link to="/wanalysis" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Wards</span>
+          </li>
+          </Link>
+          <Link to="/mwards" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Manage Wards</span>
           </li>
           </Link>
           <li>

@@ -3,7 +3,7 @@ const Patient = require('../../models/patientModel'); // Import the Patient mode
 
 const mongoose = require("mongoose");
 
-// Controller to handle saving a new treatment and updating patient profile
+// Controller to handle saving a new treatment
 exports.saveTreatment = async (req, res) => {
   const {
     treatment_Id,
@@ -62,15 +62,14 @@ exports.saveTreatment = async (req, res) => {
     res.status(500).json({ message: "Failed to save treatment schedule." });
   }
 };
-
 // Controller to retrieve all treatments
 exports.getAllTreatments = async (req, res) => {
   try {
     const treatments = await Treatment.find();
-    res.status(200).json(treatments);
+    return res.status(200).json(treatments);
   } catch (err) {
     console.error("Failed to retrieve treatments:", err);
-    res.status(500).json({ message: "Failed to retrieve treatments." });
+    return res.status(500).json({ message: "Failed to retrieve treatments." });
   }
 };
 
@@ -88,10 +87,10 @@ exports.getTreatmentById = async (req, res) => {
     if (!treatment) {
       return res.status(404).json({ message: "Treatment not found." });
     }
-    res.status(200).json(treatment);
+    return res.status(200).json(treatment);
   } catch (error) {
     console.error("Failed to retrieve treatment by ID:", error);
-    res.status(500).json({ message: "Failed to retrieve treatment." });
+    return res.status(500).json({ message: "Failed to retrieve treatment." });
   }
 };
 
@@ -112,7 +111,7 @@ exports.updateTreatmentById = async (req, res) => {
     // Find the treatment by ID and update it with the new data
     const updatedTreatment = await Treatment.findByIdAndUpdate(id, updateData, {
       new: true,
-      runValidators: true  // Ensure mongoose validates the updated data
+      runValidators: true  // Ensure Mongoose validates the updated data
     });
 
     if (!updatedTreatment) {
@@ -128,7 +127,6 @@ exports.updateTreatmentById = async (req, res) => {
     return res.status(500).json({ message: "Failed to update treatment." });
   }
 };
-
 
 // Controller to delete a treatment by ID
 exports.deleteTreatment = async (req, res) => {
@@ -146,9 +144,9 @@ exports.deleteTreatment = async (req, res) => {
       return res.status(404).json({ message: "Treatment not found." });
     }
 
-    res.status(200).json({ message: "Treatment deleted successfully." });
+    return res.status(200).json({ message: "Treatment deleted successfully." });
   } catch (err) {
     console.error("Failed to delete treatment:", err);
-    res.status(500).json({ message: "Failed to delete treatment." });
+    return res.status(500).json({ message: "Failed to delete treatment." });
   }
 };

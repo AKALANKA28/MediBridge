@@ -1,0 +1,80 @@
+.equipment-table-container {
+    padding: 20px;
+  }
+  
+  .equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .equipment-table th,
+  .equipment-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .log-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .form-field {
+    margin-bottom: 10px;
+  }
+  
+  .form-field label {
+    margin-bottom: 5px;
+  }
+  
+  .logs-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .logs-table th,
+  .logs-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .close-popup {
+    background: #607F0E;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .pie-chart-container {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .pie-chart-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  

@@ -3,64 +3,71 @@ import Sidebar from "../../../components/sidebar/Sidebar";
 import Navbar from "../../../components/navbar/Navbar";
 import TreatmentTable from "./TreatmentTable";
 import TreatmentForm from "./TreatmentForm";
-import { useState, useEffect } from "react"; // Import useEffect for fetching data
+import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom'; 
+import axios from 'axios'; // Import axios
 
 const Treatment = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [initialData, setInitialData] = useState(null);
-  const [treatments, setTreatments] = useState([]); // State to hold treatment data
+  const [treatments, setTreatments] = useState([]);
+  const location = useLocation();
+  const patientId = location.state?.patientId; 
+// console.log(patientId);
 
-  // Fetch treatments data on mount
+  // Fetch treatments data on component mount
   useEffect(() => {
     const fetchTreatments = async () => {
-      const response = await fetch('http://localhost:8080/treatments/'); // Replace with your actual API endpoint
-      const result = await response.json();
-      setTreatments(result); // Update state with fetched treatments
+      try {
+        const response = await axios.get('/treatments/'); // Use axios to fetch treatments
+        setTreatments(response.data); // Directly set response data
+      } catch (error) {
+        console.error("Error fetching treatments:", error);
+      }
     };
-
     fetchTreatments();
   }, []);
 
-  const handleFormSubmit = async (data) => {
-    // Handle form submission logic here
-    console.log("Submitted data:", data);
-
-    // If editing, update the treatment details
-    if (initialData) {
-      // Send update request to API
-      await fetch(`http://localhost:8080/treatments/${initialData.id}`, {
-        method: 'PUT',
+  // Handle form submission for adding/updating treatments
+  const handleFormSubmit = async (formData) => {
+    console.log("Submitting FormData:", formData);
+  
+    try {
+      let response;
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data', // Important to set this
         },
-        body: JSON.stringify(data), // Send the updated data
-      });
-      // Update local state with new treatment data
-      setTreatments(prev =>
-        prev.map(item => (item._id === initialData.id ? { ...item, ...data } : item))
+      };
+  
+      if (initialData) {
+        response = await axios.put(`/treatments/${initialData.treatment_Id}`, formData, config);
+      } else {
+        response = await axios.post('/treatments/add', formData, config);
+      }
+  
+      setTreatments((prev) =>
+        initialData
+          ? prev.map(item => (item.treatment_Id === initialData.treatment_Id ? response.data : item))
+          : [...prev, response.data]
       );
-    } else {
-      // Add new treatment (you might want to implement this part)
-      await fetch('http://localhost:8080/treatments/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), // Send the new treatment data
-      });
-      // Fetch updated treatments to display the latest list
-      const response = await fetch('http://localhost:8080/treatments/');
-      const result = await response.json();
-      setTreatments(result);
+  
+      // Refresh treatments list
+      const updatedTreatmentsResponse = await axios.get('/treatments/');
+      setTreatments(updatedTreatmentsResponse.data);
+    } catch (error) {
+      console.error("Error submitting form:", error.response ? error.response.data : error.message);
+    } finally {
+      setIsFormVisible(false);
+      setInitialData(null);
     }
-
-    setIsFormVisible(false); // Hide the form after submission
-    setInitialData(null); // Reset initial data
   };
+  
 
+  // Handle editing a treatment entry
   const handleEdit = (data) => {
-    setInitialData(data); // Set the data to be edited
-    setIsFormVisible(true); // Show the form for editing
+    setInitialData(data);
+    setIsFormVisible(true);
   };
 
   return (
@@ -70,9 +77,13 @@ const Treatment = () => {
         <Navbar />
         <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button>
         {isFormVisible && (
-          <TreatmentForm handleSubmit={handleFormSubmit} initialData={initialData} /> 
+          <TreatmentForm
+            handleSubmit={handleFormSubmit}
+            initialData={initialData}
+            patientId={patientId}
+          />
         )}
-        <TreatmentTable data={treatments} onEdit={handleEdit} /> {/* Pass treatment data to TreatmentTable */}
+        <TreatmentTable data={treatments} onEdit={handleEdit} />
       </div>
     </div>
   );
