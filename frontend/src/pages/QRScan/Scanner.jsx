@@ -70,36 +70,41 @@ function Scanner() {
     fetchPatientData();
   }, [scannedQrUrl, navigate]);
 
-  async function handleCheckPatient() {
+  // Check patient by name and NIC
+  const handleCheckPatient = async (e) => {
+    e.preventDefault(); // Prevent form submission
+    setLoading(true); // Set loading state
+    setErrorMessage(""); // Clear previous error messages
+
     try {
-        const apiUrl = `http://localhost:8080/patient?name=${encodeURIComponent(patientName)}&nic=${encodeURIComponent(patientNIC)}`;
+      const apiUrl = `/patient?name=${encodeURIComponent(patientName)}&nic=${encodeURIComponent(patientNIC)}`;
+      const response = await axios.get(apiUrl);
 
-        const response = await axios.get(apiUrl);
+      if (response.data && response.data.length > 0) {
+        const patientData = response.data[0];
 
-        if (response.data && response.data.length > 0) {
-            const patientData = response.data[0];
+        const user = patientData.user || {}; // Prevent null reference
+        const filteredData = {
+          id: patientData._id,
+          name: user.name || "Unknown",
+          email: user.email || "N/A",
+          nic: user.nic || "N/A",
+          treatments: patientData.treatments || [],
+        };
 
-            const user = patientData.user || {}; // Prevent null reference
-            const filteredData = {
-                id: patientData._id,
-                name: user.name || "Unknown",
-                email: user.email || "N/A",
-                nic: user.nic || "N/A",
-                treatments: patientData.treatments || [],
-            };
-
-            navigate("/patientrecords", {
-                state: { data: filteredData },
-            });
-        } else {
-            setErrorMessage("Patient not found.");
-        }
+        navigate("/patientrecords", {
+          state: { data: filteredData },
+        });
+      } else {
+        setErrorMessage("Patient not found.");
+      }
     } catch (error) {
-        console.error("Error fetching patient data:", error);
-        setErrorMessage("Error fetching patient data.");
+      console.error("Error fetching patient data:", error);
+      setErrorMessage("Error fetching patient data.");
+    } finally {
+      setLoading(false); // Set loading to false after fetching
     }
-}
-
+  };
 
   return (
     <div className="scan-page">
@@ -124,10 +129,7 @@ function Scanner() {
               <h2>Enter The Patient Details</h2>
               <form
                 className="patient-form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleCheckPatient();
-                }}
+                onSubmit={handleCheckPatient}
               >
                 <input
                   type="text"

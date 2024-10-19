@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./TreatmentTable.scss";
 import { DataGrid } from "@mui/x-data-grid";
 import { useLocation, Link } from "react-router-dom";
+import axios from 'axios'; // Import axios
 
 const TreatmentTable = () => {
   const [data, setData] = useState([]);
@@ -35,25 +36,22 @@ const TreatmentTable = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/treatments/'); // Your API endpoint
-      if (!response.ok) throw new Error('Network response was not ok');
-      const result = await response.json();
-      setData(result.map(item => ({ ...item, id: item._id || '' })).filter(item => item.id));
+      const response = await axios.get('/treatments/'); // Your API endpoint
+      setData(response.data.map(item => ({ ...item, id: item._id || '' })).filter(item => item.id));
     } catch (error) {
-      console.error("Error fetching treatments:", error);
+      console.error("Error fetching treatments:", error.response ? error.response.data : error.message);
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/treatments/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) throw new Error('Network response was not ok');
-      // Refresh the data after deletion
-      fetchData();
+      const response = await axios.delete(`/treatments/${id}`);
+      if (response.status === 200) {
+        // Refresh the data after deletion
+        fetchData();
+      }
     } catch (error) {
-      console.error("Error deleting treatment:", error);
+      console.error("Error deleting treatment:", error.response ? error.response.data : error.message);
     }
   };
 

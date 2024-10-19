@@ -9,17 +9,35 @@ const PatientRecords = () => {
   const navigate = useNavigate();
   const data = location.state?.data;
 
+  // Log the received data for debugging purposes
+  console.log("Received data from location.state:", data);
+
+  // Extract patient data, treatments, and tests
   const patient = data?.user || data;
   const treatments = data?.treatments || [];
   const tests = data?.tests || [];
 
+  // Log the extracted patient details for further debugging
+  console.log("Extracted patient data:", patient);
+  console.log("Extracted treatments:", treatments);
+  
   // Handlers for navigation
   const handleTreatmentClick = () => {
+    const patientId = data?._id; // Corrected extraction of patientId from the `user` object
+
+    // Debug log to ensure patientId is correct before navigation
+    console.log("Navigating to treatments with patientId:", patientId);
+
+    if (!patientId) {
+      console.error("Patient ID is undefined, cannot navigate to treatments.");
+      return; // Prevent navigation if patientId is missing
+    }
+
     // Navigate to the Treatments page with treatment details and patientId
     navigate('/treatment', {
       state: {
         treatments,
-        patientId: patient?.id || patient?.patientId // Adjust based on how patient ID is structured
+        patientId, // Ensure patientId is passed correctly
       }
     });
   };
@@ -59,8 +77,8 @@ const PatientRecords = () => {
                 Lab Tests
               </button>
             </div>
-             {/* Health Status (Example Data) */}
-             <div className="health-status">
+            {/* Health Status (Example Data) */}
+            <div className="health-status">
               <div className="status-item">
                 <span>Heart Beat</span>
                 <div className="progress-bar">
