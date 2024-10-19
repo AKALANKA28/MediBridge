@@ -13,7 +13,9 @@ const Treatment = () => {
   const [treatments, setTreatments] = useState([]);
   const location = useLocation();
   const patientId = location.state?.patientId; 
+// console.log(patientId);
 
+  // Fetch treatments data on component mount
   useEffect(() => {
     const fetchTreatments = async () => {
       try {
@@ -26,30 +28,31 @@ const Treatment = () => {
     fetchTreatments();
   }, []);
 
+  // Handle form submission for adding/updating treatments
   const handleFormSubmit = async (formData) => {
-    console.log("Submitting FormData:", formData); // This should be logging FormData
-  
-    // If formData is not appearing correctly, iterate over its entries to debug
-    for (const [key, value] of formData.entries()) {
-      console.log(`Key: ${key}, Value: ${value}`);
-    }
+    console.log("Submitting FormData:", formData);
   
     try {
       let response;
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data', // Important to set this
+        },
+      };
+  
       if (initialData) {
-        response = await axios.put(`/treatments/${initialData.treatment_Id}`, formData);
+        response = await axios.put(`/treatments/${initialData.treatment_Id}`, formData, config);
       } else {
-        response = await axios.post('/treatments/add', formData);
+        response = await axios.post('/treatments/add', formData, config);
       }
   
-      // Updating state as before...
       setTreatments((prev) =>
         initialData
           ? prev.map(item => (item.treatment_Id === initialData.treatment_Id ? response.data : item))
           : [...prev, response.data]
       );
   
-      // Fetch updated treatments
+      // Refresh treatments list
       const updatedTreatmentsResponse = await axios.get('/treatments/');
       setTreatments(updatedTreatmentsResponse.data);
     } catch (error) {
@@ -60,8 +63,8 @@ const Treatment = () => {
     }
   };
   
-  
 
+  // Handle editing a treatment entry
   const handleEdit = (data) => {
     setInitialData(data);
     setIsFormVisible(true);

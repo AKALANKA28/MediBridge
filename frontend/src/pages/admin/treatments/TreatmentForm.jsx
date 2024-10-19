@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from "react";
-import "./TreatmentForm.scss";
+import React, { useState } from "react";
+import axios from "axios";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Paper,
+  FormControl,
+} from "@mui/material";
 
-const TreatmentForm = ({ handleSubmit, initialData, patientId }) => {
+const TreatmentForm = ({ initialData, patientId }) => {
   const [formData, setFormData] = useState({
     treatment_Id: initialData?.treatment_Id || "",
     treatment_Name: initialData?.treatment_Name || "",
@@ -9,18 +17,6 @@ const TreatmentForm = ({ handleSubmit, initialData, patientId }) => {
     date: initialData?.date || "",
     description: initialData?.description || "",
   });
-
-  useEffect(() => {
-    if (initialData) {
-      setFormData({
-        treatment_Id: initialData.treatment_Id,
-        treatment_Name: initialData.treatment_Name,
-        doctor_Name: initialData.doctor_Name,
-        date: initialData.date,
-        description: initialData.description,
-      });
-    }
-  }, [initialData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -30,97 +26,107 @@ const TreatmentForm = ({ handleSubmit, initialData, patientId }) => {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-  
-    // Create FormData object to submit
-    const submitData = new FormData();
-    submitData.append("treatment_Id", formData.treatment_Id);
-    submitData.append("treatment_Name", formData.treatment_Name);
-    submitData.append("doctor_Name", formData.doctor_Name);
-    submitData.append("date", formData.date);
-    submitData.append("description", formData.description);
-    submitData.append("patientId", patientId); // Include patientId if needed
 
-    // Log the FormData entries for debugging
-    console.log("FormData object entries:");
-    for (const [key, value] of submitData.entries()) {
-      console.log(`${key}: ${value}`);
+    // Ensure patientId is included
+    if (!patientId) {
+      alert("Patient ID is required");
+      return;
     }
-  
-    // Call the submit function passed from the parent
-    handleSubmit(submitData);
+
+    const submitData = {
+      ...formData,
+      patientId, // Include patientId in the submitted data
+    };
+
+    // Log the data to be submitted
+    console.log("Submitting data:", submitData);
+
+    try {
+      // Send the form data to the backend
+      const response = await axios.post("http://localhost:8080/treatments/add", submitData);
+      alert(response.data.message || "Treatment added successfully");
+    } catch (error) {
+      console.error("Error adding treatment:", error);
+      alert("Failed to add treatment");
+    }
   };
-  
+
   return (
-    <div className="new">
-      <div className="newContainer">
-        <div className="top">
-          <h1>Treatment Form</h1>
-        </div>
-        <div className="bottom">
-          <div className="right">
-            <form onSubmit={handleFormSubmit}>
-              <div className="formInput">
-                <label htmlFor="treatment_Id">Treatment ID</label>
-                <input
-                  type="text"
-                  name="treatment_Id"
-                  value={formData.treatment_Id}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+    <Paper elevation={3} sx={{ padding: 3, maxWidth: 500, margin: "auto", marginTop: 4 }}>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Treatment Form
+      </Typography>
+      <form onSubmit={handleFormSubmit}>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Treatment ID"
+            name="treatment_Id"
+            value={formData.treatment_Id}
+            onChange={handleInputChange}
+            required
+            variant="outlined"
+          />
+        </FormControl>
 
-              <div className="formInput">
-                <label htmlFor="treatment_Name">Treatment Name</label>
-                <input
-                  type="text"
-                  name="treatment_Name"
-                  value={formData.treatment_Name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Treatment Name"
+            name="treatment_Name"
+            value={formData.treatment_Name}
+            onChange={handleInputChange}
+            required
+            variant="outlined"
+          />
+        </FormControl>
 
-              <div className="formInput">
-                <label htmlFor="doctor_Name">Doctor Name</label>
-                <input
-                  type="text"
-                  name="doctor_Name"
-                  value={formData.doctor_Name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Doctor Name"
+            name="doctor_Name"
+            value={formData.doctor_Name}
+            onChange={handleInputChange}
+            required
+            variant="outlined"
+          />
+        </FormControl>
 
-              <div className="formInput">
-                <label htmlFor="date">Date</label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Date"
+            name="date"
+            type="date"
+            value={formData.date}
+            onChange={handleInputChange}
+            required
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant="outlined"
+          />
+        </FormControl>
 
-              <div className="formInput">
-                <label htmlFor="description">Description</label>
-                <textarea
-                  name="description"
-                  value={formData.description}
-                  onChange={handleInputChange}
-                  required
-                ></textarea>
-              </div>
+        <FormControl fullWidth margin="normal">
+          <TextField
+            label="Description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+            required
+            multiline
+            rows={4}
+            variant="outlined"
+          />
+        </FormControl>
 
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+        <Box sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </Box>
+      </form>
+    </Paper>
   );
 };
 

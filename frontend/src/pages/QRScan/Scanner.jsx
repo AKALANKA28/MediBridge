@@ -49,7 +49,7 @@ function Scanner() {
 
           // Fetch patient profile data using the patient ID
           const response = await axios.get(
-            `http://localhost:8080/patient/${patientId}`
+            `/patient/${patientId}`
           );
 
           // Navigate to the PatientRecords page with the fetched patient data
