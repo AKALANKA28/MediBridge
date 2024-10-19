@@ -22,33 +22,27 @@ const Treatment = () => {
   }, []);
 
   const handleFormSubmit = async (data) => {
-    // Handle form submission logic here
     console.log("Submitted data:", data);
 
-    // If editing, update the treatment details
     if (initialData) {
-      // Send update request to API
       await fetch(`http://localhost:8080/treatments/${initialData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Send the updated data
+        body: JSON.stringify(data),
       });
-      // Update local state with new treatment data
       setTreatments(prev =>
         prev.map(item => (item._id === initialData.id ? { ...item, ...data } : item))
       );
     } else {
-      // Add new treatment (you might want to implement this part)
       await fetch('http://localhost:8080/treatments/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data), // Send the new treatment data
+        body: JSON.stringify(data),
       });
-      // Fetch updated treatments to display the latest list
       const response = await fetch('http://localhost:8080/treatments/');
       const result = await response.json();
       setTreatments(result);
@@ -70,9 +64,13 @@ const Treatment = () => {
         <Navbar />
         <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button>
         {isFormVisible && (
-          <TreatmentForm handleSubmit={handleFormSubmit} initialData={initialData} /> 
+          <TreatmentForm 
+            handleSubmit={handleFormSubmit} 
+            initialData={initialData} 
+            patientId={initialData ? initialData.patientId : ""} // Pass patientId to the form
+          /> 
         )}
-        <TreatmentTable data={treatments} onEdit={handleEdit} /> {/* Pass treatment data to TreatmentTable */}
+        <TreatmentTable data={treatments} onEdit={handleEdit} />
       </div>
     </div>
   );

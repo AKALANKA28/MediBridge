@@ -6,9 +6,9 @@ const TreatmentSchema = new mongoose.Schema({
     ref: "Patient", // reference to User or Patient model
   },
   treatment_Id: { type: String, required: true, unique: true },
-  patient_Name: { type: String },
+  // patient_Name: { type: String },
   treatment_Name: { type: String },
-  doctor_Name: { type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }, // reference to doctor
+  doctor_Name: { type: String }, // reference to doctor
   date: { type: Date },
   description: { type: String },
   // status: {

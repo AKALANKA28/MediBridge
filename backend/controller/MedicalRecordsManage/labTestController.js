@@ -1,4 +1,6 @@
 const Test = require('../../models/MedicalRecordsManage/labTestModel'); // Import the Test model
+const Patient = require('../../models/patientModel');
+
 const mongoose = require('mongoose');
 
 // Utility function to check valid ObjectId
@@ -6,10 +8,10 @@ const isValidObjectId = (id) => mongoose.isValidObjectId(id);
 
 // Controller to handle saving a new test
 exports.saveTest = async (req, res) => {
-  const { test_Id, test_Name, test_result, date, description } = req.body;
+  const { test_Id, test_Name, test_result, date, description, patientId} = req.body;
 
   // Validate required fields
-  if (!test_Id || !test_Name || !test_result || !date) {
+  if (!test_Id || !test_Name || !test_result || !date || !patientId) {
     return res.status(400).json({ message: 'Please provide all required fields.' });
   }
 
@@ -21,6 +23,7 @@ exports.saveTest = async (req, res) => {
       test_result,
       date,
       description
+      
     });
 
     await newTest.save();

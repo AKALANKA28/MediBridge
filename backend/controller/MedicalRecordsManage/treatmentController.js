@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 exports.saveTreatment = async (req, res) => {
   const {
     treatment_Id,
-    patient_Name,
+    // patient_Name,
     treatment_Name,
     doctor_Name,
     date,
@@ -16,7 +16,7 @@ exports.saveTreatment = async (req, res) => {
   } = req.body;
 
   // Validate required fields
-  if (!treatment_Id || !patient_Name || !treatment_Name || !doctor_Name || !date || !patientId) {
+  if (!treatment_Id || !treatment_Name || !doctor_Name || !date || !patientId) {
     return res
       .status(400)
       .json({
@@ -33,7 +33,7 @@ exports.saveTreatment = async (req, res) => {
     // Create a new treatment document and save it to MongoDB
     const newTreatment = new Treatment({
       treatment_Id,
-      patient_Name,
+      // patient_Name,
       treatment_Name,
       doctor_Name,
       date,

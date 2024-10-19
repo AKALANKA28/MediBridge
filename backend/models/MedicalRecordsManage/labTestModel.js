@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 
 const TestSchema = new mongoose.Schema({
+    patientId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Patient", // reference to User or Patient model
+  },
+
+// const TestSchema = new mongoose.Schema({
     
     test_Id: { type: String, required: true, unique: true },
     test_Name: { type: String, required: true },
