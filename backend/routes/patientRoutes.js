@@ -5,5 +5,6 @@ const patientController = require("../controller/patientController");
 
 router.get("/:id", patientController.getPatientProfile);
 router.get("/generate-qr/:id", patientController.generatePatientQRCode);
+router.get('/', patientController.getAllPatients);
 
 module.exports = router;

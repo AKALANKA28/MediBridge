@@ -1,0 +1,203 @@
+// Variables for easy color customization
+$primary-color: #0076C1;
+$error-color: red;
+$input-border-color: #e6e6e6;
+$input-padding: 30px; // Maintained padding
+$button-padding:  15px 20px;
+$social-icon-size: 1.9rem;
+
+* {
+  box-sizing: border-box; // Ensure padding is included in width and height
+}
+
+.login-page {
+  display: flex;
+  height: 100vh;
+  background-color: #f7f7f7;
+  overflow: hidden; // Prevent overflow
+
+  // Left side for background image
+  .login-left {
+    flex: 2.2; // Maintained original flex ratio
+    background: url('https://via.placeholder.com/600x800') no-repeat center center;
+    background-size: cover;
+
+    // Hide on smaller devices
+    @media (max-width: 768px) {
+      display: none; // Hide left side on small screens
+    }
+  }
+
+  // Right side for form
+  .login-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; // Center content vertically
+    padding: 0 50px; // Maintain padding
+    background-color: #fff;
+
+    // Responsive styles for small screens
+    @media (max-width: 768px) {
+      padding: 20px; // Reduced padding for smaller screens
+      flex: 1; // Ensure it takes up the full space
+      justify-content: flex-start; // Align items to the top
+    }
+    .logo-container {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+    }
+
+    .logo {
+      width: 100%; // Adjust size as needed
+      height: auto; // Maintain aspect ratio
+    }
+
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 35px;
+      text-align: center;
+      font-weight: 400;
+    }
+
+    // Input field styling
+    .login-input {
+      width: 100%;
+      padding: $input-padding; // Maintained padding
+      margin-bottom: 15px;
+      border: 1px solid $input-border-color;
+      border-radius: 4px;
+      font-size: 1rem;
+      border-radius: 10px;
+
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
+      }
+    }
+
+    .password-input {
+      position: relative;
+      margin-bottom: 20px; // Space between fields
+    
+      input {
+        width: 100%; // Full width of the container
+        padding-right: 40px; // Space for the icon
+      }
+    
+      .eye-icon {
+        position: absolute;
+        right: 0px; // Position the icon inside the input
+        top: 47%;
+        transform: translateY(-50%); // Center vertically
+        cursor: pointer; // Pointer cursor on hover
+        color: #888; // Icon color
+        z-index: 1; // Ensure icon is above the input
+      }
+    }
+    
+    // Options (remember me & forgot password)
+    .login-options {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+
+      .forgot-password {
+        color: $primary-color;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    // Login button styling
+    .login-btn {
+      width: 100%;
+      padding: $button-padding;
+      background-color: $primary-color;
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:disabled {
+        background-color: #1b1b1b;
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    // Error message styling
+    .error-message {
+      color: $error-color;
+      margin-top: 10px;
+      text-align: center; // Center align error messages
+    }
+
+    .or-text{
+      text-align: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      font-size: 15px;
+      font-weight: 400;
+      color: #999999;
+    }
+    .skip-btn {
+      background-color: transparent; // Make it visually distinct
+      color: $primary-color; // Example color
+      font-size: 12.5px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center; // Center align the text and icon
+      position: absolute; // Absolute positioning allows it to be placed in the bottom right corner
+    }
+    
+    // Social login section
+    .social-login {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+
+      p {
+        margin-right: 10px;
+      }
+
+      .social-icon {
+        font-size: $social-icon-size;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+
+        &.facebook {
+          color: #3b5998;
+
+          &:hover {
+            color: lighten(#3b5998, 10%);
+          }
+        }
+
+        &.twitter {
+          color: #00acee;
+
+          &:hover {
+            color: lighten(#00acee, 10%);
+          }
+        }
+      }
+    }
+  }
+}

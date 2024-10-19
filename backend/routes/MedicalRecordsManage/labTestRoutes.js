@@ -15,12 +15,12 @@ router.post('/add', saveTest);
 router.get('/', getAllTests);
 
 // Route to retrieve a test by ID
-router.get('/:id', getTestById);
+router.get('/labs/:id', getTestById);
 
 // Route to update a test by ID
-router.put('/:id', updateTestById);
+router.put('/update/:id', updateTestById);
 
 // Route to delete a test by ID
-router.delete('/:id', deleteTest);
+router.delete('/labs/:id', deleteTest);
 
 module.exports = router;

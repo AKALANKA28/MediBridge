@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Home from "./pages/admin/home/Home";
-import Login from "./pages/login/Login";
+import Login from "./pages/auth/Login";
 import Scanner from "./pages/QRScan/Scanner"; // Import Scanner component
 import List from "./pages/admin/list/List";
 import Single from "./pages/admin/single/Single";
@@ -10,12 +10,17 @@ import TreatmentTable from "./pages/admin/treatments/TreatmentTable";
 import TreatmentForm from "./pages/admin/treatments/TreatmentForm";
 import Lab from "./pages/admin/lab/Lab";
 import AnalysisScreen from "./pages/analysis/AnalysisScreen";
+import PatientRecords from './pages/Records/PatientRecords'; 
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { DarkModeContext } from "./context/drakModeContext";
 import { AuthContext } from "./context/authContext";
 import PatientHome from "./pages/patient/home/PatientHome";
 import QRCodeScreen from "./components/home/QRCode";
+import Register from "./pages/auth/Register";
+import PatientDetails from "./pages/auth/PatientDetails";
+import QRPage from "./pages/patient/qrPage/QRPage";
 import EquipmentAnalysis from "./pages/analysis/EquipmentAnalysis";
 import EquipmentAnalysisScreen from "./pages/analysis/EquipmentAnalysisScreen";
 import WardAnalysisScreen from "./pages/analysis/WardAnalysisScreen";
@@ -27,10 +32,19 @@ function App() {
 
   const isAuthenticated = !!auth.token;
 
-   // Render routes based on user role
-   const renderRoutes = () => {
+  // Render routes based on user role
+  const renderRoutes = () => {
     const userRole = auth.role; // Access role from auth object
-    if (!isAuthenticated) return <Login />;
+    if (!isAuthenticated)
+      return (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/patient-details" element={<PatientDetails />} />
+
+          {/* Add Register route */}
+        </Routes>
+      );
 
     switch (userRole) {
       case "admin":
@@ -47,6 +61,7 @@ function App() {
             <Route path="/treatments/new" component={<TreatmentForm />} />
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="/patientrecords" element={<PatientRecords />} />
             <Route path="analysis" element={<AnalysisScreen />} />
             <Route path="eqanalysis" element={<EquipmentAnalysisScreen />} />
             <Route path="wanalysis" element={<WardAnalysisScreen />} />
@@ -63,6 +78,8 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
+            <Route path="/qr" element={<QRPage />} />
+
           </Routes>
         );
       default:

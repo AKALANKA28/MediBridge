@@ -1,0 +1,105 @@
+.patient-records-page {
+    display: flex;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .patient-info-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .patient-info-box {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .patient-info {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .patient-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .patient-details h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .patient-details p {
+    margin: 5px 0;
+    font-size: 16px;
+  }
+  
+  .treatments-labs {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .treatment-button, .lab-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .treatment-button:hover, .lab-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .health-status {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  .progress-bar {
+    width: 70%;
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .progress {
+    height: 100%;
+    background-color: #34d399;
+    border-radius: 5px;
+  }
+  
+  .progress-bar .progress {
+    transition: width 0.4s ease;
+  }
+  

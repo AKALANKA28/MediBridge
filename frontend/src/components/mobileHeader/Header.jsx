@@ -11,8 +11,8 @@ const Header = () => {
     <div className="header-container">
       {/* <div className="header-content">
         <img src={image} alt="Icon" className="mobileiHeaderIcon" onClick={handleBackClick} />
-        <span className="header-text">Digital Health Card</span>
-      </div> */}
+        <span className="header-text">MediBridge Health Card</span>
+      </div>
     </div>
   );
 };
