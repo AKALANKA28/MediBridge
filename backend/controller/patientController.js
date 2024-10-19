@@ -19,7 +19,7 @@ exports.getPatientProfile = async (req, res) => {
     const patientProfile = await PatientProfile.findById(id).populate([
       {
         path: "user",
-        select: "name email nic",
+        select: "name email nic imgUrl mobile",
       },
     //   {
     //     path: "appointments.doctor",
