@@ -13,7 +13,7 @@ const PatientHome = () => {
       <div className="homeComponent">
         <HomeComponent />
       </div>
-      <div className="home">
+      <div className="home2">
         <Sidebar />
         <div className="homeContainer">
           <Navbar />

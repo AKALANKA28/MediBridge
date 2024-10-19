@@ -1,77 +1,116 @@
 .new {
-    width: 100%;
-    display: flex;
-  
-    .newContainer {
-      flex: 6;
-  
-      .top,
-      .bottom {
-        -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-        box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  width: 100%;
+  display: flex;
+  flex-direction: column; /* Ensure vertical stacking on smaller screens */
+  overflow-x: hidden; /* Prevent horizontal overflow */
+
+  .newContainer {
+    flex: 6;
+    padding: 20px;
+    margin: 0 auto; /* Center the container */
+    max-width: 1200px; /* Set a maximum width to prevent it from going out of the screen */
+    
+    .top,
+    .bottom {
+      -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+      box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+      padding: 10px;
+      margin: 20px 0; /* Ensure margins don't push content out of the screen */
+      display: flex;
+      flex-wrap: wrap; /* Allow wrapping to keep content within bounds */
+      justify-content: space-between; /* Adjust positioning for responsiveness */
+
+      h1 {
+        color: lightgray;
+        font-size: 20px;
+        width: 100%; /* Ensure heading takes full width */
+        text-align: center;
+      }
+
+      .left {
+        flex: 1;
+        text-align: center;
+        margin: auto;
+
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+
+      .right {
+        flex: 2;
         padding: 10px;
-        margin: 20px;
-        display: flex;
-  
-        h1 {
-          color: lightgray;
-          font-size: 20px;
-        }
-  
-        .left {
-          flex: 1;
-          text-align: center;
-  
-          img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-        }
-  
-        .right {
-          flex: 2;
-  
-          form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: space-around;
-  
-            .formInput {
-              width: 40%;
-  
-              label {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-  
-                .icon {
-                  cursor: pointer;
-                }
-              }
-  
-              input {
-                width: 100%;
-                padding: 5px;
-                border: none;
-                border-bottom: 1px solid gray;
+
+        form {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 20px; /* Reduce gap to keep form elements more compact */
+          justify-content: space-between; /* Align form elements */
+          width: 100%; /* Ensure form fits within the container */
+
+          .formInput {
+            width: 45%; /* Ensure inputs do not go out of bounds */
+
+            label {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+
+              .icon {
+                cursor: pointer;
               }
             }
-  
-            button {
-              width: 150px;
-              padding: 10px;
+
+            input {
+              width: 100%;
+              padding: 5px;
               border: none;
-              background-color: teal;
-              color: white;
-              font-weight: bold;
-              cursor: pointer;
-              margin-top: 10px;
+              border-bottom: 1px solid gray;
+            }
+          }
+
+          button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  /* Ensure responsiveness */
+  @media (max-width: 768px) {
+    .newContainer {
+      padding: 10px;
+
+      .top,
+      .bottom {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        padding: 15px;
+
+        .right {
+          form {
+            gap: 10px; /* Further reduce gap for smaller screens */
+            .formInput {
+              width: 100%; /* Ensure form inputs take full width */
+            }
+
+            button {
+              width: 100%; /* Button should take full width on small screens */
+              padding: 10px;
             }
           }
         }
       }
     }
   }
+}
