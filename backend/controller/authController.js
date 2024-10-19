@@ -30,23 +30,34 @@ exports.registerUser = asyncHandler(async (req, res) => {
     // Check the role and create a profile accordingly
     if (role === "doctor") {
       console.log("Creating doctor profile...");
-      
+
       // Create doctor profile and associate it with the user
-      const doctorProfile = await DoctorProfile.create({ user: newUser._id, ...rest });
+      const doctorProfile = await DoctorProfile.create({
+        user: newUser._id,
+        ...rest,
+      });
       console.log("Doctor profile created:", doctorProfile);
-      
+
       // Update the user to reference the created doctor profile
-      await User.findByIdAndUpdate(newUser._id, { doctorProfile: doctorProfile._id }, { new: true });
+      await User.findByIdAndUpdate(
+        newUser._id,
+        { doctorProfile: doctorProfile._id },
+        { new: true }
+      );
       console.log("Linked user to doctor profile:", doctorProfile._id);
     } else if (role === "patient") {
       console.log("Creating patient profile...");
-      
+
       // Create the patient profile and associate it with the user
       const newPatient = await PatientProfile.create({ user: newUser._id });
       console.log("Patient profile created:", newPatient);
 
       // Link the user back to the patient profile
-      await User.findByIdAndUpdate(newUser._id, { patientProfile: newPatient._id }, { new: true });
+      await User.findByIdAndUpdate(
+        newUser._id,
+        { patientProfile: newPatient._id },
+        { new: true }
+      );
       console.log("Linked user to patient profile:", newPatient._id);
     } else {
       console.log("Creating user with non-profile role:", role);
@@ -120,33 +131,31 @@ exports.loginAdmin = asyncHandler(async (req, res) => {
 
   const findAdmin = await User.findOne({ email });
   if (!findAdmin || findAdmin.role !== "admin") {
-      res.status(403);
-      throw new Error("Not Authorized");
+    res.status(403);
+    throw new Error("Not Authorized");
   }
 
   if (await findAdmin.isPasswordMatched(password)) {
-      const refreshToken = generateRefreshToken(findAdmin._id);
-      await User.findByIdAndUpdate(findAdmin._id, { refreshToken });
+    const refreshToken = generateRefreshToken(findAdmin._id);
+    await User.findByIdAndUpdate(findAdmin._id, { refreshToken });
 
-      res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          maxAge: 72 * 60 * 60 * 1000,
-      });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 72 * 60 * 60 * 1000,
+    });
 
-      res.status(200).json({
-          _id: findAdmin._id,
-          name: findAdmin.name,
-          email: findAdmin.email,
-          token: generateToken(findAdmin._id),
-      });
+    res.status(200).json({
+      _id: findAdmin._id,
+      name: findAdmin.name,
+      email: findAdmin.email,
+      token: generateToken(findAdmin._id),
+    });
   } else {
-      res.status(401);
-      throw new Error("Invalid Credentials");
+    res.status(401);
+    throw new Error("Invalid Credentials");
   }
 });
-
-
 
 // Logout a User
 exports.logout = asyncHandler(async (req, res) => {
