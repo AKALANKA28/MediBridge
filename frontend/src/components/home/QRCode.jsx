@@ -88,7 +88,6 @@ const QRCodeScreen = () => {
                   <p style={{ marginBottom: "10px" }}>
                     <strong>MediBridge Digital Health Card</strong>
                   </p>
-
                   <div className="patient-record">
                     <div className="record-left-container">
                       {userInfo && userInfo.imgUrl && (
@@ -121,6 +120,24 @@ const QRCodeScreen = () => {
                         {userInfo ? userInfo.mobile : "Loading..."}
                       </p>
                     </div>
+                  </div>
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
+                  </div>
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
+                  </div>{" "}
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
                   </div>
                 </>
               )}
