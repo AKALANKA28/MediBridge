@@ -83,6 +83,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "babel-jest": "^29.7.0",
     "react-router-dom": "^6.26.2"
   }
 }
