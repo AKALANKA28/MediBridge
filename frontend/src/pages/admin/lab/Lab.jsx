@@ -1,65 +1,71 @@
 import "../list/list.scss";
 import Sidebar from "../../../components/sidebar/Sidebar";
 import Navbar from "../../../components/navbar/Navbar";
-import LabTable from "./LabTable"; // Import LabTable
-import LabForm from "./LabForm"; // Import LabForm
-import { useState, useEffect } from "react"; // Import useEffect for fetching data
+import LabTable from "./LabTable";
+import LabForm from "./LabForm";
+import { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom'; 
+import axios from 'axios'; // Import axios
 
 const Lab = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [initialData, setInitialData] = useState(null);
-  const [labs, setLabs] = useState([]); // State to hold lab data
+  const [labs, setLabs] = useState([]);
+  const location = useLocation();
+  const patientId = location.state?.patientId; 
 
-  // Fetch labs data on mount
+  // Fetch lab tests data on component mount
   useEffect(() => {
     const fetchLabs = async () => {
-      const response = await fetch('http://localhost:8080/labs/'); // Replace with your actual API endpoint
-      const result = await response.json();
-      setLabs(result); // Update state with fetched labs
+      try {
+        const response = await axios.get('/tests/'); // Use axios to fetch labs
+        setLabs(response.data); // Directly set response data
+      } catch (error) {
+        console.error("Error fetching lab tests:", error);
+      }
     };
-
     fetchLabs();
   }, []);
 
-  const handleFormSubmit = async (data) => {
-    console.log("Submitted data:", data);
-
-    // If editing, update the lab details
-    if (initialData) {
-      // Send update request to API
-      await fetch(`http://localhost:8080/labs/${initialData.id}`, {
-        method: 'PUT',
+  // Handle form submission for adding/updating labs
+  const handleFormSubmit = async (formData) => {
+    console.log("Submitting FormData:", formData);
+  
+    try {
+      let response;
+      const config = {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data', // Important to set this
         },
-        body: JSON.stringify(data), // Send the updated data
-      });
-      // Update local state with new lab data
-      setLabs(prev =>
-        prev.map(item => (item._id === initialData.id ? { ...item, ...data } : item))
+      };
+  
+      if (initialData) {
+        response = await axios.put(`/tests/${initialData.lab_Id}`, formData, config);
+      } else {
+        response = await axios.post('/tests/add', formData, config);
+      }
+  
+      setLabs((prev) =>
+        initialData
+          ? prev.map(item => (item.lab_Id === initialData.lab_Id ? response.data : item))
+          : [...prev, response.data]
       );
-    } else {
-      // Add new lab
-      await fetch('http://localhost:8080/labs/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), // Send the new lab data
-      });
-      // Fetch updated labs to display the latest list
-      const response = await fetch('http://localhost:8080/labs/');
-      const result = await response.json();
-      setLabs(result);
+  
+      // Refresh labs list
+      const updatedLabsResponse = await axios.get('/tests/');
+      setLabs(updatedLabsResponse.data);
+    } catch (error) {
+      console.error("Error submitting form:", error.response ? error.response.data : error.message);
+    } finally {
+      setIsFormVisible(false);
+      setInitialData(null);
     }
-
-    setIsFormVisible(false); // Hide the form after submission
-    setInitialData(null); // Reset initial data
   };
 
+  // Handle editing a lab test entry
   const handleEdit = (data) => {
-    setInitialData(data); // Set the data to be edited
-    setIsFormVisible(true); // Show the form for editing
+    setInitialData(data);
+    setIsFormVisible(true);
   };
 
   return (
@@ -67,15 +73,16 @@ const Lab = () => {
       <Sidebar />
       <div className="listContainer">
         <Navbar />
-        <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button> 
+        {/* Add New button is here, for table page only */}
+        <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New Lab Test</button>
         {isFormVisible && (
-          <LabForm 
-            handleSubmit={handleFormSubmit} 
-            initialData={initialData} 
-            patientId={initialData ? initialData.patientId : ""} // Pass patientId to the form
-          /> 
+          <LabForm
+            handleSubmit={handleFormSubmit}
+            initialData={initialData}
+            patientId={patientId}
+          />
         )}
-        <LabTable data={labs} onEdit={handleEdit} /> {/* Pass lab data to LabTable */}
+        <LabTable data={labs} onEdit={handleEdit} />
       </div>
     </div>
   );
