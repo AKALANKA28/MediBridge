@@ -10,4 +10,6 @@ module.exports = {
   transformIgnorePatterns: [
     "/node_modules/(?!axios)", // Ensure axios is transformed
   ],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+
 };
