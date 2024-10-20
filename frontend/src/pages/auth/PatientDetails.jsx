@@ -1,34 +1,60 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./login.scss"; // Import CSS for styling
-import logo from "../../assets/medibridgelogo.svg"; // Import SVG logo
-import { FaArrowRight } from "react-icons/fa"; // Import the arrow icon
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import "./login.scss";
+import logo from "../../assets/medibridgelogo.svg";
+import { FaArrowRight } from "react-icons/fa";
 
 const PatientDetails = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const userId = location.state?.userId; // Get the user ID passed from the Register component
+  console.log( "name",userId);
+  
   const [nic, setNic] = useState("");
   const [mobile, setMobile] = useState("");
   const [dob, setDob] = useState("");
   const [gender, setGender] = useState("");
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleContinue = () => {
-    // You can add further validation if necessary
+  const handleContinue = async () => {
     if (!nic || !mobile || !dob || !gender) {
       setErrorMessage("Please fill in all fields.");
       return;
     }
 
-    // Assuming you're saving the details to your context or API
-    // For example: savePatientDetails({ nic, mobile, dob, gender });
+    setLoading(true);
+    setErrorMessage("");
 
-    navigate("/nextScreen"); // Navigate to the next screen after successful entry
+    try {
+      // Send a PUT request to update user details
+      const response = await axios.put(`http://localhost:8080/api/user/update/${userId}`, {
+        nic,
+        mobile,
+        dob,
+        gender,
+        userId
+      }
+    );
+
+      if (response.status === 200) {
+        console.log("User details updated successfully:", response.data);
+        navigate("/"); // Navigate to the next screen after successful update
+      } else {
+        setErrorMessage("Failed to update user details. Please try again.");
+      }
+    } catch (error) {
+      setErrorMessage("An error occurred while updating user details. Please try again.");
+      console.error("Update error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login-page">
-      {/* Left side with image */}
       <div className="login-left">
         <img
           src="https://via.placeholder.com/600x800" // Replace with actual image URL
@@ -36,7 +62,6 @@ const PatientDetails = () => {
         />
       </div>
 
-      {/* Right side with patient details form */}
       <div className="login-right">
         <div className="logo-container">
           <img src={logo} alt="Logo" className="logo" />
@@ -86,22 +111,28 @@ const PatientDetails = () => {
         <div className="login-options">
           <button
             onClick={handleContinue}
-            disabled={loading || !nic || !mobile || !dob || !gender}
+            // disabled={loading || !nic || !mobile || !dob || !gender}
             className="login-btn"
           >
             {loading ? "Saving..." : "Continue"}
           </button>
         </div>
         
-        {/* Skip button positioned at the bottom right */}
         <button
-          onClick={() => navigate("/nextScreen")} // Allowing user to skip
-          className="skip-btn"
+          onClick={() => navigate("/")} // Allowing user to skip
+          className="skip-btn1"
           style={{ position: "absolute", bottom: "20px", right: "20px", fontWeight: "600"}} // Adjust positioning as necessary
         >
           Skip for now
           <FaArrowRight style={{ marginLeft: "8px" }} /> {/* Arrow icon */}
-
+        </button>
+        <button
+          onClick={() => navigate("/medical-conditions")} // Allowing user to skip
+          className="skip-btn2"
+          style={{ position: "absolute", bottom: "20px", right: "20px", fontWeight: "600"}} // Adjust positioning as necessary
+        >
+          Skip for now
+          <FaArrowRight style={{ marginLeft: "8px" }} /> {/* Arrow icon */}
         </button>
       </div>
     </div>

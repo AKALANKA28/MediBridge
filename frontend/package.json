@@ -14,7 +14,6 @@
     "@react-pdf/renderer": "^3.4.0",
     "@reduxjs/toolkit": "^2.2.3",
     "@stripe/stripe-js": "^3.3.0",
-    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.16.2",
@@ -87,6 +86,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.25.8",
     "@babel/preset-react": "^7.25.7",
+    "@testing-library/jest-dom": "^6.6.2",
     "babel-jest": "^29.7.0",
     "react-router-dom": "^6.26.2"
   }
