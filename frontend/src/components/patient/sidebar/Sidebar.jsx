@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../../context/drakModeContext";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/authContext";
-
+import logo from "../../../assets/medibridgelogo.svg";
 const Sidebar = () => {
   const { logout } = useContext(AuthContext); // Get auth and logout from context
   const navigate = useNavigate(); // Initialize navigate for redirection
@@ -25,23 +25,15 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="top">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">MediBridge</span>
+          <img src={logo} alt="Logo" className="logo" style={{ cursor: "pointer", marginTop: "10px" }} />
         </Link>
       </div>
       <hr />
       <div className="center">
         <ul>
           <p className="title">MAIN</p>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <li>
-              <DashboardIcon className="icon" />
-              <span>Dashboard</span>
-            </li>
-          </Link>
-
-          <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
-            <Link to="/health-card" style={{ textDecoration: "none" }}>
+          <Link to="" style={{ textDecoration: "none" }}>
+            <Link to="/" style={{ textDecoration: "none" }}>
               <li>
                 <QrCode2Icon className="icon" />
                 <span>Health Card</span>

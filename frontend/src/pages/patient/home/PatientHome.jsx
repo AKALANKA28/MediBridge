@@ -6,6 +6,7 @@ import Featured from "../../../components/patient/featured/Featured";
 import Chart from "../../../components/patient/chart/Chart";
 import Table from "../../../components/patient/table/Table";
 import HomeComponent from "../../../components/home/HomeComponent";
+import QRCodeScreen from "../../../components/home/QRCode";
 
 const PatientHome = () => {
   return (
@@ -13,26 +14,18 @@ const PatientHome = () => {
       <div className="homeComponent">
         <HomeComponent />
       </div>
-      <div className="home2">
+      <div className="      home2
+">
         <Sidebar />
         <div className="homeContainer">
           <Navbar />
-          <div className="widgets">
-            <Widget type="user" />
-            <Widget type="order" />
-            <Widget type="earning" />
-            {/* <Widget type="balance" /> */}
+          <div style={{ textAlign: "left", margin: "20px", fontWeight: "700", fontSize: "24px" }}>
+            Health Card
           </div>
-          <div className="charts">
-            <Featured />
-            <Chart title="Last 6 Months (Revenue)" aspect={2 / 1} />
-          </div>
-          <div className="listContainer">
-            <div className="listTitle">Latest Transactions</div>
-            <Table />
-          </div>
+          <QRCodeScreen />
         </div>
       </div>
+      home2
     </>
   );
 };

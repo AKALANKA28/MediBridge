@@ -80,8 +80,7 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
-            <Route path="/health-card" element={<QRPage />} />
-
+            {/* <Route path="/health-card" element={<QRPage />} /> */}
           </Routes>
         );
       default:

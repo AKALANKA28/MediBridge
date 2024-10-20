@@ -30,6 +30,11 @@
 }
 }
 
+.extratext{
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
 .qr-card-container {
   background-color: white;
   border-radius: 10px;
