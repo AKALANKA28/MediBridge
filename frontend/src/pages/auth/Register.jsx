@@ -91,7 +91,7 @@ const Register = () => {
       {/* Left side with image */}
       <div className="login-left">
         <img
-          src="https://via.placeholder.com/600x800" // Replace with actual image URL
+          src={require("../../assets/registerImg.jpg")} // Replace with actual image URL
           alt="login background"
         />
       </div>
@@ -162,7 +162,7 @@ const Register = () => {
           <FaTwitter className="social-icon twitter" />
         </div>
         <button
-          onClick={() => navigate("/patient-details")} // Allowing user to skip
+          onClick={() => navigate("/")} // Allowing user to skip
           className="skip-btn"
           style={{
             position: "absolute",

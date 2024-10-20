@@ -84,12 +84,11 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
-            <Route path="/health-card" element={<QRPage />} />
+            {/* <Route path="/health-card" element={<QRPage />} /> */}
             <Route path="/payment" element={<PaymentForm />} />
             <Route path="/appoinment" element={<AppointmentForm />} />
             <Route path="/appoinmentList" element={<AppointmentList />} />
             <Route path="/paymentOpt" element={<PaymentOpt />} />
-
           </Routes>
         );
       default:
