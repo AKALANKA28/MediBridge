@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect"; // Ensure this is added for jest-dom matchers
+import "@testing-library/jest-dom"; // Correct import
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -28,8 +28,6 @@ describe("Login Component", () => {
     axios.post.mockClear();
   });
 
-  
-
   test("renders login form correctly", () => {
     renderWithContext(
       <Router>
@@ -49,7 +47,6 @@ describe("Login Component", () => {
     expect(screen.getByText(/or sign up using/i)).toBeInTheDocument();
     expect(screen.getByText(/Remember me/i)).toBeInTheDocument();
   });
-
 
 
 
@@ -109,8 +106,6 @@ describe("Login Component", () => {
       ).toBeInTheDocument()
     );
   });
-
-
 
 
   test("displays error for incorrect email format", () => {
