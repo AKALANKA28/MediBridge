@@ -1,3 +1,4 @@
+// Import necessary hooks and components
 import "../table/table.scss";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import VisitReportButton from "./VisitReportButton";
 
 // Filter Component
 const FilterBar = ({ onFilter }) => {
@@ -28,10 +30,7 @@ const FilterBar = ({ onFilter }) => {
     onFilter({ startDate: '', endDate: '', department: '', type: '' });
   };
 
-  // Ensure that the user cannot select a future date for start or end date
   const today = new Date().toISOString().split('T')[0]; // Today's date in 'YYYY-MM-DD' format
-
-  // Ensure the end date cannot be before the selected start date
   const minEndDate = startDate || today;
 
   return (
@@ -52,7 +51,7 @@ const FilterBar = ({ onFilter }) => {
           type="date"
           id="endDate"
           value={endDate}
-          min={minEndDate} // The end date cannot be before the start date
+          min={minEndDate}
           max={today}
           onChange={(e) => setEndDate(e.target.value)}
         />
@@ -70,6 +69,7 @@ const FilterBar = ({ onFilter }) => {
       </select>
       <button onClick={handleApplyFilter}>Apply Filter</button>
       <button onClick={handleResetFilter}>Reset Filters</button>
+      <VisitReportButton/>
     </div>
   );
 };
@@ -77,6 +77,9 @@ const FilterBar = ({ onFilter }) => {
 const List = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Pagination state
+
+  const recordsPerPage = 10; // Number of records to show per page
 
   // Fetch patient visit data from API
   useEffect(() => {
@@ -118,6 +121,25 @@ const List = () => {
     }
 
     setFilteredData(filtered);
+    setCurrentPage(1); // Reset to the first page after filtering
+  };
+
+  // Calculate the indexes for the current page data
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredData.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  // Pagination controls
+  const nextPage = () => {
+    if (currentPage < Math.ceil(filteredData.length / recordsPerPage)) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   return (
@@ -135,7 +157,7 @@ const List = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData.map((row) => (
+            {currentRecords.map((row) => (
               <TableRow key={row._id}>
                 <TableCell className="tableCell">{row.patientID}</TableCell>
                 <TableCell className="tableCell">{new Date(row.visitDate).toLocaleDateString()}</TableCell>
@@ -147,6 +169,13 @@ const List = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* Pagination controls */}
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1}>Previous</button>
+        <span> Page {currentPage} of {Math.ceil(filteredData.length / recordsPerPage)} </span>
+        <button onClick={nextPage} disabled={currentPage === Math.ceil(filteredData.length / recordsPerPage)}>Next</button>
+      </div>
     </div>
   );
 };

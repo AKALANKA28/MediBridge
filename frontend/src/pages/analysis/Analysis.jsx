@@ -6,6 +6,8 @@ import VisitsDatatable from '../../components/analysis/VisitsDatatable';
 import DayPeakTimeChart from '../../components/analysis/DayPeakTimeChart';
 import PeriodPeakTimeChart from "../../components/analysis/PeriodPeakTimeChart";
 import VisitKPISection from "../../components/analysis/VisitKPISection";
+import ReportButtons from "../../components/analysis/ReportButtons";
+import VisitReportButton from "../../components/analysis/VisitReportButton";
 
 
 
@@ -34,9 +36,9 @@ const Analysis = () => {
 
     <div className="analysis-container">
       <h1>Analysis Dashboard</h1>
-      <div className="kpi-section">
-        <VisitKPISection />
-      </div>
+      {/* <div className="kpi-section">
+        <VisitReportButton />
+      </div> */}
       <div className="charts-container">
         <div className="chart">
           <DayPeakTimeChart data={data}/>

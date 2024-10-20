@@ -21,6 +21,7 @@ import {
   DialogActions,
   Typography,
 } from '@mui/material';
+import EquipmentReportButton from '../../components/analysis/EquipmentReportButton'
 
 const EquipmentTable = () => {
   const [equipmentList, setEquipmentList] = useState([]);
@@ -103,6 +104,7 @@ const EquipmentTable = () => {
       </Typography> */}
 
       <TableContainer component={Paper}>
+      <EquipmentReportButton/>
         <Table>
           <TableHead>
             <TableRow>

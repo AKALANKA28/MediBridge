@@ -9,6 +9,7 @@ const labTestRoutes = require('./routes/MedicalRecordsManage/labTestRoutes');
 const analysisRoutes = require('./routes/analysis/analysisRoutes');
 const equipmentRoutes = require('./routes/analysis/equipmentRoutes');
 const wardRoutes = require('./routes/analysis/wardRoutes');
+const reportRoutes = require('./routes/analysis/reportRoutes');
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use('/tests', labTestRoutes); // Ensure this is included
 app.use('/api/analysis',analysisRoutes);
 app.use('/api/equipment',equipmentRoutes);
 app.use('/api/ward',wardRoutes);
+app.use('/api/reports', reportRoutes);
 
 // const PORT = process.env.PORT || 5000;
 // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
