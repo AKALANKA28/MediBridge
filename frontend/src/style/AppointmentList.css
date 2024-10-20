@@ -1,4 +1,14 @@
 /* General styles for the container */
+.listContainer {
+    background-image: url('../assets/background.png');
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    min-height: 50vh; /* Ensures the background covers the full height of the page */
+    display: flex;
+    flex-direction: column;
+  }
+
 .appointment-list-container {
   max-width: 800px;
   margin: 0 auto;

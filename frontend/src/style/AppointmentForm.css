@@ -1,6 +1,6 @@
 /* General styles for the container */
 .appointment-form-container {
-    max-width: 500px; /* Increased width for desktop */
+    max-width: 700px; /* Increased width for desktop */
     margin: 0 auto;
     margin-top: 20px;
     padding: 40px 50px; /* More generous padding for desktop */

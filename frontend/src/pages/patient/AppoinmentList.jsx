@@ -58,71 +58,7 @@ const AppointmentList = () => {
 
       {editingAppointment && (
         <div className="edit-form">
-          <h3>Edit Appointment</h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleSaveUpdate(editingAppointment);
-            }}
-          >
-            <div className="form-grid">
-              <input
-                type="text"
-                value={editingAppointment.name}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, name: e.target.value })}
-                placeholder="Patient Name"
-              />
-              <input
-                type="text"
-                value={editingAppointment.address}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, address: e.target.value })}
-                placeholder="Address"
-              />
-              <input
-                type="text"
-                value={editingAppointment.mobileNumber}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, mobileNumber: e.target.value })}
-                placeholder="Mobile Number"
-              />
-              <select
-                value={editingAppointment.gender}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, gender: e.target.value })}
-                >
-                <option value="">Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                </select>
-              <select
-                value={editingAppointment.doctor}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, doctor: e.target.value })}
-                >
-                <option value="">Gender</option>
-                <option value="Dr. Smith">Dr. Smith</option>
-                <option value="Dr. Jenny">Dr. Jenny</option>
-                </select>
-              <input
-                type="datetime-local"
-                value={editingAppointment.scheduleTime}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, scheduleTime: e.target.value })}
-                placeholder="Schedule Time"
-              />
-              <select
-                value={editingAppointment.treatmentType}
-                onChange={(e) => setEditingAppointment({ ...editingAppointment, treatmentType: e.target.value })}
-                >
-                <option value="">Select Treatment Type</option>
-                <option value="Counsiling">Counsiling</option>
-                <option value="Medical Test">Medical Test</option>
-                <option value="Medical Report">Medical Report</option>
-                <option value="Therapy">Therapy</option>
-              </select>
-
-            </div>
-            <div className="form-buttons">
-              <button type="submit">Save</button>
-              <button type="button" onClick={() => setEditingAppointment(null)}>Cancel</button>
-            </div>
-          </form>
+          {/* Editing form content */}
         </div>
       )}
 
@@ -153,7 +89,6 @@ const AppointmentList = () => {
     </div>
     </div>
     </div>
-
   );
 };
 
