@@ -16,12 +16,12 @@
     margin-bottom: 10px; /* More space below the heading */
   }
   
-  p {
-    font-size: 16px; /* Slightly larger subtext */
+  /* p {
+    font-size: 16px; 
     color: #7D7D7D;
-    text-align: left; /* Left-align description */
+    text-align: left;
     margin-bottom: 30px;
-  }
+  } */
   
   .form-group {
     margin-bottom: 25px; /* Increased spacing between form groups */
