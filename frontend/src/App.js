@@ -25,6 +25,7 @@ import EquipmentAnalysis from "./pages/analysis/EquipmentAnalysis";
 import EquipmentAnalysisScreen from "./pages/analysis/EquipmentAnalysisScreen";
 import WardAnalysisScreen from "./pages/analysis/WardAnalysisScreen";
 import ManageWardsScreen from "./pages/analysis/ManageWardsScreen";
+import MedicalCondtions from "./pages/auth/MedicalConditions";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -41,6 +42,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/patient-details" element={<PatientDetails />} />
+          <Route path="/medical-conditions" element={<MedicalCondtions />} />
 
           {/* Add Register route */}
         </Routes>

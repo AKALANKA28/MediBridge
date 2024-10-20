@@ -1,51 +1,91 @@
 import React, { useState, useEffect } from "react";
-import Widget from "../widget/Widget"; // Assuming Widget component is imported from another file
 import axios from "axios";
+import { Card, CardContent, Typography, Box } from "@mui/material";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
+// Define the KPI section component
 const VisitKPISection = () => {
   const [kpiData, setKPIData] = useState({
     totalVisitsToday: 0,
     totalVisitsWeek: 0,
     totalVisitsMonth: 0,
-    visitGrowthRate: 0,
+    patientVisitGrowthRate: 0,
   });
 
+  // Fetch KPI data from your API
   useEffect(() => {
     const fetchKPIData = async () => {
       try {
-        const response = await axios.get("/api/kpi/patient-visits"); // Assuming this is the correct endpoint
-        setKPIData(response.data);
+        const response = await axios.get("/api/analysis/kpi"); // Example API endpoint
+        setKPIData(response.data); // Update the state with fetched data
       } catch (error) {
-        console.error("Error fetching KPI data", error);
+        console.error("Error fetching KPI data", error); // Handle any errors
       }
     };
 
-    fetchKPIData();
+    fetchKPIData(); // Fetch data on component mount
   }, []);
 
   return (
-    <div className="kpi-section">
-      <Widget
-        type="user"
-        amount={kpiData.totalVisitsToday}
-        diff={kpiData.visitGrowthRate} // You can customize this as per your growth rate logic
-      />
-      <Widget
-        type="order"
-        amount={kpiData.totalVisitsWeek}
-        diff={kpiData.visitGrowthRate} // Same growth rate here if needed, else customize
-      />
-      <Widget
-        type="earning"
-        amount={kpiData.totalVisitsMonth}
-        diff={kpiData.visitGrowthRate} // Customize diff if you want a different logic
-      />
-      <Widget
-        type="balance"
-        amount={kpiData.visitGrowthRate}
-        diff={kpiData.visitGrowthRate} // You can show growth rate here or use a different logic
-      />
-    </div>
+    <Box sx={{ display: "flex", gap: 4, justifyContent: "center", marginTop: 2 }}>
+      {/* Total Visits Today */}
+      <Card sx={{ minWidth: 200, backgroundColor: "lightblue", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h6">Total Visits Today</Typography>
+          <Typography variant="h5" color="textPrimary">
+            {kpiData.totalVisitsToday}
+          </Typography>
+          <Box display="flex" alignItems="center">
+            <KeyboardArrowUpIcon color="success" />
+            <Typography color="success">
+              {kpiData.patientVisitGrowthRate}%
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+
+      {/* Total Visits This Week */}
+      <Card sx={{ minWidth: 200, backgroundColor: "lightgreen", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h6">Total Visits This Week</Typography>
+          <Typography variant="h5" color="textPrimary">
+            {kpiData.totalVisitsWeek}
+          </Typography>
+          <Box display="flex" alignItems="center">
+            <KeyboardArrowUpIcon color="success" />
+            <Typography color="success">
+              {kpiData.patientVisitGrowthRate}%
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+
+      {/* Total Visits This Month */}
+      <Card sx={{ minWidth: 200, backgroundColor: "lightcoral", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h6">Total Visits This Month</Typography>
+          <Typography variant="h5" color="textPrimary">
+            {kpiData.totalVisitsMonth}
+          </Typography>
+          <Box display="flex" alignItems="center">
+            <KeyboardArrowUpIcon color="success" />
+            <Typography color="success">
+              {kpiData.patientVisitGrowthRate}%
+            </Typography>
+          </Box>
+        </CardContent>
+      </Card>
+
+      {/* Patient Visit Growth Rate */}
+      <Card sx={{ minWidth: 200, backgroundColor: "lightyellow", padding: 2 }}>
+        <CardContent>
+          <Typography variant="h6">Patient Visit Growth Rate</Typography>
+          <Typography variant="h5" color="textPrimary">
+            {kpiData.patientVisitGrowthRate}%
+          </Typography>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

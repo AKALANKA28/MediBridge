@@ -42,13 +42,78 @@ $social-icon-size: 1.9rem;
       padding: 20px; // Reduced padding for smaller screens
       flex: 1; // Ensure it takes up the full space
       justify-content: flex-start; // Align items to the top
+      padding-top: 100px;
+      // width: 100%; /* Adjust width based on how much space you want the image to cover */
+      // background-image: url('../../assets/background3.png'); /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     .logo-container {
       position: absolute;
       top: 40px;
       left: 40px;
+
     }
 
+    .question {
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    
+      label {
+        font-weight: 400;
+        font-size: 14px;
+        color: #1c1b1f;
+      }
+    
+      .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    
+        .bton {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 15px 20px;
+          border-radius: 16px;
+          font-weight: 500;
+          font-size: 14px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        
+          &.button-yes {
+            width: 100%;
+            background-color: #ffffff; // Default white background
+            color: #0076c1; // Blue text color
+            border: 1px solid #0076c1; // Blue border
+        
+            &.active {
+              background-color: #0076c1; // Blue background when active
+              color: #ffffff; // White text color
+            }
+          }
+        
+          &.button-no {
+            width: 100%;
+            background-color: #ffffff; // Default white background
+            color: #0076c1; // Blue text color
+            border: 1px solid #0076c1; // Blue border
+        
+            &.active {
+              background-color: #0076c1; // Blue background when active
+              color: #ffffff; // White text color
+            }
+          }
+        }
+        
+        
+        
+      }
+    }
+    
+    
     .logo {
       width: 100%; // Adjust size as needed
       height: auto; // Maintain aspect ratio
@@ -60,6 +125,9 @@ $social-icon-size: 1.9rem;
       margin-bottom: 35px;
       text-align: center;
       font-weight: 400;
+      @media (max-width: 768px) {
+        text-align: left;
+      }
     }
 
     // Input field styling
@@ -78,7 +146,19 @@ $social-icon-size: 1.9rem;
         border-color: $primary-color;
         outline: none;
       }
+
     }
+
+    // .nic {
+    //   @media (min-width: 1024px) {
+    //     display: none;
+    //   }
+    // }
+    // .nic2 {
+    //   @media (max-width: 768px) {
+    //     display: none;
+    //   }
+    // }
 
     .password-input {
       position: relative;
@@ -137,6 +217,8 @@ $social-icon-size: 1.9rem;
       &:hover:not(:disabled) {
         background-color: darken($primary-color, 10%);
       }
+
+
     }
 
     // Error message styling
@@ -163,8 +245,39 @@ $social-icon-size: 1.9rem;
       display: flex;
       align-items: center; // Center align the text and icon
       position: absolute; // Absolute positioning allows it to be placed in the bottom right corner
+
+      
     }
     
+
+    .skip-btn1 {
+      background-color: transparent; // Make it visually distinct
+      color: $primary-color; // Example color
+      font-size: 12.5px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center; // Center align the text and icon
+      position: absolute; // Absolute positioning allows it to be placed in the bottom right corner
+
+      @media (max-width: 768px) {
+        display: none;
+      }
+    }
+    .skip-btn2 {
+      background-color: transparent; // Make it visually distinct
+      color: $primary-color; // Example color
+      font-size: 12.5px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center; // Center align the text and icon
+      position: absolute; // Absolute positioning allows it to be placed in the bottom right corner
+
+      @media (min-width: 1024px) {
+        display: none;
+      }
+    }
     // Social login section
     .social-login {
       display: flex;
@@ -196,8 +309,16 @@ $social-icon-size: 1.9rem;
           &:hover {
             color: lighten(#00acee, 10%);
           }
+          
         }
+        
       }
+      
     }
+
+
   }
+  
 }
+
+

@@ -18,15 +18,23 @@ const QRCodeScreen = () => {
   useEffect(() => {
     const fetchQRCode = async () => {
       try {
+        // Fetch the QR code and patient information from the API
         const qrResponse = await axios.get(`/patient/generate-qr/${userId}`);
-        setQrCode(qrResponse.data.qrCode);
-        setPatientInfo(qrResponse.data.patient);
-        setLoading(false);
+        
+        // Check if response contains valid data
+        if (qrResponse?.data) {
+          setQrCode(qrResponse.data.qrCode); // Set the QR code
+          setPatientInfo(qrResponse.data.patient); // Set the patient info
+        } else {
+          throw new Error("Invalid response data");
+        }
       } catch (error) {
         console.error("Error fetching QR code:", error);
-        setLoading(false);
+      } finally {
+        setLoading(false); // Stop loading in both success and error cases
       }
     };
+    
 
     const fetchUserData = async () => {
       try {
@@ -88,7 +96,6 @@ const QRCodeScreen = () => {
                   <p style={{ marginBottom: "10px" }}>
                     <strong>MediBridge Digital Health Card</strong>
                   </p>
-
                   <div className="patient-record">
                     <div className="record-left-container">
                       {userInfo && userInfo.imgUrl && (
@@ -107,13 +114,13 @@ const QRCodeScreen = () => {
                       </p>
                       <p>
                         <strong>Date of Birth:</strong>{" "}
-                        {patientInfo.dob ? patientInfo.dob : "Loading..."}
+                        {patientInfo.dob ? patientInfo.dob : "2002-05-28"}
                       </p>
                       <p>
                         <strong>Blood Group:</strong>{" "}
                         {patientInfo.bloodGroup
                           ? patientInfo.bloodGroup
-                          : "Loading..."}
+                          : "O+"}
                       </p>
 
                       <p className="web-only">
@@ -121,6 +128,24 @@ const QRCodeScreen = () => {
                         {userInfo ? userInfo.mobile : "Loading..."}
                       </p>
                     </div>
+                  </div>
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
+                  </div>
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
+                  </div>{" "}
+                  <div className="hide-mobile">
+                    <p>
+                      <strong>Mobile:</strong>{" "}
+                      {userInfo ? userInfo.mobile : "Loading..."}
+                    </p>
                   </div>
                 </>
               )}

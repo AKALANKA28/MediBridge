@@ -280,28 +280,44 @@ exports.getUserById = asyncHandler(async (req, res) => {
 
 //Update a User------------------------------------------------------------------------------------------
 exports.updatedUser = asyncHandler(async (req, res) => {
-  const { _id } = req.user;
-  // Validate the ID
-  if (!mongoose.isValidObjectId(_id)) {
-    return res.status(400).json({ message: "Invalid User ID." });
-  }  try {
-    const updatedUser = await User.findByIdAndUpdate(
-      _id,
-      {
-        name: req?.body?.name,
-        email: req?.body?.email,
-        mobile: req?.body?.mobile,
-        imgUrl: req?.body?.imgUrl,
-        nic: req?.body?.nic
+  const { userId } = req.body; // Expect userId in request body
 
+  // Check if userId is provided
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required." });
+  }
+
+  // Validate the ID
+  if (!mongoose.isValidObjectId(userId)) {
+    return res.status(400).json({ message: "Invalid User ID." });
+  }
+
+  try {
+    // Find and update user details using the provided userId
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        name: req.body?.name,
+        email: req.body?.email,
+        mobile: req.body?.mobile,
+        imgUrl: req.body?.imgUrl,
+        nic: req.body?.nic,
+        dob: req.body?.dob,
+        gender: req.body?.gender,
       },
       {
         new: true,
       }
     );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
     res.json(updatedUser);
   } catch (error) {
-    throw new Error(error);
+    console.error("Update error:", error); // Log error for debugging
+    res.status(500).json({ message: "Server error, please try again." });
   }
 });
 
