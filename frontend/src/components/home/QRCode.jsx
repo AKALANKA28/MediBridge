@@ -20,7 +20,7 @@ const QRCodeScreen = () => {
       try {
         // Fetch the QR code and patient information from the API
         const qrResponse = await axios.get(`/patient/generate-qr/${userId}`);
-        
+
         // Check if response contains valid data
         if (qrResponse?.data) {
           setQrCode(qrResponse.data.qrCode); // Set the QR code
@@ -34,7 +34,6 @@ const QRCodeScreen = () => {
         setLoading(false); // Stop loading in both success and error cases
       }
     };
-    
 
     const fetchUserData = async () => {
       try {
@@ -118,9 +117,7 @@ const QRCodeScreen = () => {
                       </p>
                       <p>
                         <strong>Blood Group:</strong>{" "}
-                        {patientInfo.bloodGroup
-                          ? patientInfo.bloodGroup
-                          : "O+"}
+                        {patientInfo.bloodGroup ? patientInfo.bloodGroup : "O+"}
                       </p>
 
                       <p className="web-only">
@@ -130,22 +127,27 @@ const QRCodeScreen = () => {
                     </div>
                   </div>
                   <div className="hide-mobile">
-                    <p>
-                      <strong>Mobile:</strong>{" "}
-                      {userInfo ? userInfo.mobile : "Loading..."}
-                    </p>
-                  </div>
-                  <div className="hide-mobile">
-                    <p>
-                      <strong>Mobile:</strong>{" "}
-                      {userInfo ? userInfo.mobile : "Loading..."}
-                    </p>
-                  </div>{" "}
-                  <div className="hide-mobile">
-                    <p>
-                      <strong>Mobile:</strong>{" "}
-                      {userInfo ? userInfo.mobile : "Loading..."}
-                    </p>
+                    <div className="mobile-info">
+                      <strong className="web-text">Allergies:</strong>
+                      <div className="vertical-line"></div>
+                      <span className="mobile-data">
+                      {"Don't Have any Allergies"}
+                      </span>
+                    </div>
+                    <div className="mobile-info">
+                      <strong className="web-text">Surgeries:</strong>
+                      <div className="vertical-line"></div>
+                      <span className="mobile-data">
+                      {"Don't Have any Surgeries."}
+                      </span>
+                    </div>
+                    <div className="mobile-info">
+                      <strong className="web-text">Medical Condtions:</strong>
+                      <div className="vertical-line"></div>
+                      <span className="mobile-data">
+                        {"No Medical Conditions"}
+                      </span>
+                    </div>
                   </div>
                 </>
               )}
