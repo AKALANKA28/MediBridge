@@ -5,6 +5,8 @@ import Header from "../mobileHeader/Header";
 import { useAuth } from "../../context/authContext"; // Adjust the path as needed
 import { FiDownload, FiShare2 } from "react-icons/fi"; // Icons for download and share
 import logo from "../../assets/logo.svg"; // Non-SVG example
+import WarningIcon from "@mui/icons-material/Warning";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 const QRCodeScreen = () => {
   const { auth } = useAuth();
@@ -183,6 +185,10 @@ const QRCodeScreen = () => {
                 privacy.
               </li>
             </ul>
+            <p className="extratext" style={{ marginTop: "30px", fontSize: "10px" }}>
+            This health card is powered by MediBridge. At this time, it is not yet compatible with any external app or service. 
+            Please visit https://medibridge.health for updates on future compatibility.
+            </p>
           </div>
         </div>
 

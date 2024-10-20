@@ -57,7 +57,7 @@ const PatientDetails = () => {
     <div className="login-page">
       <div className="login-left">
         <img
-          src="https://via.placeholder.com/600x800" // Replace with actual image URL
+          src={require("../../assets/registerImg.jpg")} // Replace with actual image URL
           alt="patient details background"
         />
       </div>
