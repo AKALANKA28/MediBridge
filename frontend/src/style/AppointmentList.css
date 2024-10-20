@@ -1,0 +1,202 @@
+/* General styles for the container */
+.appointment-list-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  z-index: 2;
+}
+
+h2 {
+  font-size: 28px;
+  color: #3A2D63;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  color: #7D7D7D;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.appointment-card {
+  background-color: #F9F9F9;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.appointment-card h3 {
+  color: #3A2D63;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.appointment-card p {
+  font-size: 16px;
+  color: #4D4D4D;
+  margin-bottom: 5px;
+}
+
+.appointment-card strong {
+  font-weight: bold;
+}
+
+.appointment-card:hover {
+  transform: translateY(-5px);
+}
+
+@media (min-width: 768px) {
+  .appointment-list-container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointment-list-container {
+    padding: 15px;
+  }
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-buttons button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.action-buttons button:last-child {
+  background-color: #F44336;
+  color: white;
+}
+
+.action-buttons button:hover {
+  opacity: 0.9;
+}
+
+/* Edit Form Styling */
+.edit-form {
+  background-color: #F9F9F9;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #CCCCCC;
+  border-radius: 8px;
+}
+
+.edit-form button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  background-color: #3A2D63;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-form button:last-child {
+  background-color: #F44336;
+}
+/* Container for the form grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 20px; /* Space between grid items */
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  /* Appointment list grid layout */
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 20px;
+  }
+  
+  .appointment-card {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .action-buttons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .action-buttons button:first-child {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .action-buttons button:last-child {
+    background-color: #F44336;
+    color: white;
+  }
+  
+  .action-buttons button:hover {
+    opacity: 0.9;
+  }
+  
+  .edit-form {
+    background-color: #F9F9F9;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .edit-form input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+  }
+  

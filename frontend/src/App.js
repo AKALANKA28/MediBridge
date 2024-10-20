@@ -21,6 +21,10 @@ import QRCodeScreen from "./components/home/QRCode";
 import Register from "./pages/auth/Register";
 import PatientDetails from "./pages/auth/PatientDetails";
 import QRPage from "./pages/patient/qrPage/QRPage";
+import PaymentForm from "./pages/patient/paymentForm";
+import AppointmentForm from "./pages/patient/AppointmentForm";
+import AppointmentList from "./pages/patient/AppoinmentList";
+import PaymentOpt from "./pages/patient/PaymentOpt2";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -58,6 +62,11 @@ function App() {
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
             <Route path="/patientrecords" element={<PatientRecords />} />
+            <Route path="/payment" element={<PaymentForm />} />
+            <Route path="/appoinment" element={<AppointmentForm />} />
+            <Route path="/appoinmentList" element={<AppointmentList />} />
+            <Route path="/paymentOpt" element={<PaymentOpt />} />
+
 
           </Routes>
         );
