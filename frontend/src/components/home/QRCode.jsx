@@ -18,15 +18,23 @@ const QRCodeScreen = () => {
   useEffect(() => {
     const fetchQRCode = async () => {
       try {
+        // Fetch the QR code and patient information from the API
         const qrResponse = await axios.get(`/patient/generate-qr/${userId}`);
-        setQrCode(qrResponse.data.qrCode);
-        setPatientInfo(qrResponse.data.patient);
-        setLoading(false);
+        
+        // Check if response contains valid data
+        if (qrResponse?.data) {
+          setQrCode(qrResponse.data.qrCode); // Set the QR code
+          setPatientInfo(qrResponse.data.patient); // Set the patient info
+        } else {
+          throw new Error("Invalid response data");
+        }
       } catch (error) {
         console.error("Error fetching QR code:", error);
-        setLoading(false);
+      } finally {
+        setLoading(false); // Stop loading in both success and error cases
       }
     };
+    
 
     const fetchUserData = async () => {
       try {
