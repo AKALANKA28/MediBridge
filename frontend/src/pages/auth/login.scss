@@ -21,7 +21,7 @@ $social-icon-size: 1.9rem;
     flex: 2.2; // Maintained original flex ratio
     background: url('https://via.placeholder.com/600x800') no-repeat center center;
     background-size: cover;
-
+    max-width: 950px;
     // Hide on smaller devices
     @media (max-width: 768px) {
       display: none; // Hide left side on small screens

@@ -1,0 +1,115 @@
+.payment-page {
+    display: flex;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background: linear-gradient(145deg, #f3f4f7, #ebecf0);
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .profile {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .profile-pic {
+    border-radius: 50%;
+    width: 80px;
+    margin-bottom: 10px;
+  }
+  
+  .menu {
+    width: 100%;
+  }
+  
+  .menu-item {
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    text-align: left;
+    border-radius: 8px;
+  }
+  
+  .menu-item.selected {
+    background-color: #edf1fc;
+    color: #4a90e2;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex-grow: 1;
+    padding: 30px;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .payment-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .payment-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .payment-form input,
+  .card-element {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .pay-btn {
+    background-color: #00c853;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+  }
+  
+  .other-payment-btn {
+    background-color: #008cff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .pay-btn:hover,
+  .other-payment-btn:hover {
+    opacity: 0.8;
+  }
+  

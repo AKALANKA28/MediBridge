@@ -7,40 +7,35 @@ import "./login.scss"; // Import CSS for styling
 import logo from "../../assets/medibridgelogo.svg"; // Import SVG logo
 
 const MedicalConditions = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [nic, setNic] = useState("");
-  const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
   const [surgery1, setSurgery1] = useState("no"); // Default to "no"
   const [surgery2, setSurgery2] = useState("no"); // Default to "no"
   const [surgeryDetails1, setSurgeryDetails1] = useState(""); // Details for the first question
   const [surgeryDetails2, setSurgeryDetails2] = useState(""); // Details for the second question
+  const { auth } = useContext(AuthContext); // Get auth context to access user ID
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleRegister = async () => {
+  const handleUpdate = async () => {
     setLoading(true);
     setErrorMessage("");
 
     try {
-      const response = await axios.post("/api/user/register", {
-        name,
-        email,
-        password,
-        nic,
-        role: "patient", // Add the role here
+      const response = await axios.put(`/api/user/update/${auth.userId}`, {
+        surgery1,
+        surgery2,
+        surgeryDetails1,
+        surgeryDetails2,
       });
+
       if (response && response.data) {
-        const { token, role, _id } = response.data;
-        login(token, role, _id);
-        navigate("/patient-details", { state: { userId: _id } }); // Pass user ID
+        // Assuming the response contains updated user information or a success message
+        navigate("/"); // Redirect to home page upon success
       } else {
-        setErrorMessage("Registration failed. Please try again.");
+        setErrorMessage("Update failed. Please try again.");
       }
     } catch (error) {
-      setErrorMessage("Registration failed. Please check your details.");
+      setErrorMessage("Update failed. Please check your details.");
     } finally {
       setLoading(false);
     }
@@ -125,12 +120,12 @@ const MedicalConditions = () => {
           onChange={(e) => setSurgeryDetails2(e.target.value)}
         />
 
-        <button onClick={handleRegister} className="login-btn">
-          {loading ? "Continuing..." : "Continue"}
+        <button onClick={handleUpdate} className="login-btn">
+          {loading ? "Continuing..." : "Continue"} {/* Change button text to "Update" */}
         </button>
 
         <button
-          onClick={() => navigate("/home")} // Allowing user to skip
+          onClick={() => navigate("/")} // Allowing user to skip
           className="skip-btn"
           style={{
             position: "absolute",

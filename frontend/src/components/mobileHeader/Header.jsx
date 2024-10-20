@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.scss';
-import image from '../../assets/Image.svg';
+import image from '../../assets/image.svg';
 
 const Header = () => {
   const handleBackClick = () => {

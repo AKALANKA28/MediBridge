@@ -41,7 +41,7 @@ const Login = () => {
       {/* Left side with image */}
       <div className="login-left">
         <img
-          src="https://via.placeholder.com/600x800" // Replace with actual image URL
+          src={require("../../assets/loginImg.jpg")} // Replace with actual image URL
           alt="login background"
         />
       </div>
