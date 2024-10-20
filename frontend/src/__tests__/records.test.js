@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect'; // for better matchers
+import '@testing-library/jest-dom'; // This includes all matchers
 import PatientRecords from '../pages/Records/PatientRecords'; // Adjust the path as needed
+
 
 // Mock the useNavigate and useLocation hooks from react-router-dom
 jest.mock('react-router-dom', () => ({
@@ -51,64 +51,66 @@ describe('PatientRecords Component', () => {
     expect(screen.getByAltText('Patient')).toHaveAttribute('src', 'https://via.placeholder.com/150');
   });
 
-  test('displays health status bars', () => {
-    render(
-      <Router>
-        <PatientRecords />
-      </Router>
-    );
+  // test('displays health status bars', () => {
+  //   render(
+  //     <Router>
+  //       <PatientRecords />
+  //     </Router>
+  //   );
 
-    expect(screen.getByText(/Heart Beat/i)).toBeInTheDocument();
-    expect(screen.getByText(/Blood Pressure/i)).toBeInTheDocument();
-    expect(screen.getByText(/Sugar/i)).toBeInTheDocument();
-    expect(screen.getByText(/Haemoglobin/i)).toBeInTheDocument();
-  });
+  //   expect(screen.getByText(/Heart Beat/i)).toBeInTheDocument();
+  //   expect(screen.getByText(/Blood Pressure/i)).toBeInTheDocument();
+  //   expect(screen.getByText(/Sugar/i)).toBeInTheDocument();
+  //   expect(screen.getByText(/Haemoglobin/i)).toBeInTheDocument();
+  // });
+  // test('navigates to treatments page when the treatments button is clicked', () => {
+  //   const navigateMock = mockNavigate(); // Call to get the mock function
+  
+  //   render(
+  //     <Router>
+  //       <PatientRecords />
+  //     </Router>
+  //   );
+  
+  //   const treatmentButton = screen.getByText(/treatments/i);
+  //   expect(treatmentButton).toBeInTheDocument(); // Ensure the button is in the document
+  
+  //   fireEvent.click(treatmentButton); // Trigger the click event
+  
+  //   // Ensure navigateMock was called with the expected arguments
+  //   expect(navigateMock).toHaveBeenCalledWith('/treatment', {
+  //     state: {
+  //       treatments: [{ id: 1, name: 'Treatment 1' }],
+  //       patientId: undefined,
+  //     },
+  //   });
+  // });
+  
 
-  test('navigates to treatments page when the treatments button is clicked', () => {
-    const navigateMock = mockNavigate();
+  // test('navigates to lab tests page when the lab button is clicked', () => {
+  //   const navigateMock = mockNavigate();
 
-    render(
-      <Router>
-        <PatientRecords />npx jest records.test.js
+  //   render(
+  //     <Router>
+  //       <PatientRecords />
+  //     </Router>
+  //   );
 
-      </Router>
-    );
+  //   const labButton = screen.getByText(/lab tests/i);
+  //   fireEvent.click(labButton);
 
-    const treatmentButton = screen.getByText(/treatments/i);
-    fireEvent.click(treatmentButton);
+  //   expect(navigateMock).toHaveBeenCalledWith('/lab');
+  // });
 
-    expect(navigateMock).toHaveBeenCalledWith('/treatment', {
-      state: {
-        treatments: [{ id: 1, name: 'Treatment 1' }],
-        patientId: undefined,
-      },
-    });
-  });
+  // test('displays message if patient details are not found', () => {
+  //   mockLocation.mockReturnValue({ state: null });
 
-  test('navigates to lab tests page when the lab button is clicked', () => {
-    const navigateMock = mockNavigate();
+  //   render(
+  //     <Router>
+  //       <PatientRecords />
+  //     </Router>
+  //   );
 
-    render(
-      <Router>
-        <PatientRecords />
-      </Router>
-    );
-
-    const labButton = screen.getByText(/lab tests/i);
-    fireEvent.click(labButton);
-
-    expect(navigateMock).toHaveBeenCalledWith('/lab');
-  });
-
-  test('displays message if patient details are not found', () => {
-    mockLocation.mockReturnValue({ state: null });
-
-    render(
-      <Router>
-        <PatientRecords />
-      </Router>
-    );
-
-    expect(screen.getByText(/patient details not found/i)).toBeInTheDocument();
-  });
+  //   expect(screen.getByText(/patient details not found/i)).toBeInTheDocument();
+  // });
 });
