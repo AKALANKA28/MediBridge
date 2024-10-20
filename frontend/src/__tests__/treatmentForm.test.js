@@ -21,15 +21,7 @@ describe("TreatmentForm", () => {
         mock.reset(); // Reset mock after each test
     });
 
-    // test("renders the form with initial data", () => {
-    //     render(<TreatmentForm initialData={initialData} patientId={mockPatientId} />);
-
-    //     expect(screen.getByLabelText(/treatment id/i)).toHaveValue(initialData.treatment_Id);
-    //     expect(screen.getByLabelText(/treatment name/i)).toHaveValue(initialData.treatment_Name);
-    //     expect(screen.getByLabelText(/doctor name/i)).toHaveValue(initialData.doctor_Name);
-    //     expect(screen.getByLabelText(/date/i)).toHaveValue(initialData.date);
-    //     expect(screen.getByLabelText(/description/i)).toHaveValue(initialData.description);
-    // });
+  
 
     test("shows an alert when submitting without a patient ID", async () => {
         render(<TreatmentForm initialData={initialData} patientId={null} />);

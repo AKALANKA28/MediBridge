@@ -47,44 +47,44 @@ const Sidebar = () => {
           </Link>
          
           <p className="title">LISTS</p>
-          <Link to="/users" style={{ textDecoration: "none" }}>
+          {/* <Link to="/users" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
               <span>Users</span>
             </li>
-          </Link>
+          </Link> */}
           <Link to="/Scanner" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <SettingsSystemDaydreamOutlinedIcon className="icon"/>
               <span>Scanner</span>
             </li>
           </Link>
           <Link to="/Treatment" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <CreditCardIcon className="icon" />
               <span>Treatment</span>
             </li>
           </Link>
-          <Link to="/TreatmentTable" style={{ textDecoration: "none" }}>
+          {/* <Link to="/TreatmentTable" style={{ textDecoration: "none" }}>
             <li>
               <StoreIcon className="icon" />
               <span>TreatmentTable</span>
             </li>
-          </Link>
+          </Link> */}
           <Link to="/Lab" style={{ textDecoration: "none" }}>
             <li>
-              <StoreIcon className="icon" />
+              <CreditCardIcon className="icon"/>
               <span>Lab</span>
             </li>
           </Link>
-          <li>
+          {/* <li>
             <CreditCardIcon className="icon" />
             <span>Orders</span>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <LocalShippingIcon className="icon" />
             <span>payment</span>
-          </li>
+          </li> */}
           <p className="title">USEFUL</p>
           <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>

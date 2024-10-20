@@ -19,12 +19,6 @@ beforeEach(() => {
   jest.clearAllMocks(); // Clear any previous mocks
 });
 
-// test("renders Scanner component with necessary elements", () => {
-//   renderScanner();
-//   expect(screen.getByText(/Manage Patient Medical Records/i)).toBeInTheDocument();
-//   expect(screen.getByText(/Scan The QR Code/i)).toBeInTheDocument();
-//   expect(screen.getByText(/Enter The Patient Details/i)).toBeInTheDocument();
-// });
 
 test("fetches patient data on successful scan", async () => {
   // Mock response from API

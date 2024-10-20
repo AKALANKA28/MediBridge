@@ -12,8 +12,9 @@ function Scanner() {
   const [patientName, setPatientName] = useState(""); // Patient Name input
   const [patientNIC, setPatientNIC] = useState(""); // Patient NIC input
   const [errorMessage, setErrorMessage] = useState(""); // Error message state
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Navigation hook from React Router
 
+  // 1. **Singleton Pattern**: The `Html5QrcodeScanner` is instantiated once and reused, encapsulating QR code scanning functionality.
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
       qrbox: { width: 250, height: 250 },
@@ -29,14 +30,14 @@ function Scanner() {
       console.warn("QR code scan error:", err); // Log any errors
     };
 
-    scanner.render(success, error);
+    scanner.render(success, error); // Start rendering the scanner
 
     return () => {
       scanner.clear(); // Cleanup on component unmount
     };
-  }, []);
+  }, []); // Empty dependency array means this runs once after the first render
 
-  // Fetch patient data when scannedQrUrl changes
+  // 2. **Observer Pattern**: The component observes changes in `scannedQrUrl` and fetches patient data accordingly.
   useEffect(() => {
     const fetchPatientData = async () => {
       if (scannedQrUrl) {
@@ -68,9 +69,9 @@ function Scanner() {
     };
 
     fetchPatientData();
-  }, [scannedQrUrl, navigate]);
+  }, [scannedQrUrl, navigate]); // Dependencies include scanned QR URL and navigation
 
-  // Check patient by name and NIC
+  // 3. **Command Pattern**: The `handleCheckPatient` function encapsulates a command to check patient data based on user input.
   const handleCheckPatient = async (e) => {
     e.preventDefault(); // Prevent form submission
     setLoading(true); // Set loading state

@@ -1,7 +1,9 @@
 const Treatment = require("../../models/MedicalRecordsManage/treatmentModel"); // Import the Treatment model
 const Patient = require('../../models/patientModel'); // Import the Patient model
-
 const mongoose = require("mongoose");
+
+// **Controller Pattern**: This code defines a series of functions that serve as controllers for handling HTTP requests.
+
 
 // Controller to handle saving a new treatment
 exports.saveTreatment = async (req, res) => {
@@ -14,7 +16,7 @@ exports.saveTreatment = async (req, res) => {
     patientId,
   } = req.body;
 
-  // Validate required fields
+  // **Validation Pattern**: Validates required fields before proceeding with processing.
   if (!treatment_Id  || !treatment_Name || !doctor_Name || !date || !patientId) {
     return res
       .status(400)
@@ -29,7 +31,7 @@ exports.saveTreatment = async (req, res) => {
   }
 
   try {
-    // Create a new treatment document and save it to MongoDB
+    // **Repository Pattern**: Uses the Treatment model to create a new treatment document.
     const newTreatment = new Treatment({
       treatment_Id,
       treatment_Name,
@@ -40,7 +42,7 @@ exports.saveTreatment = async (req, res) => {
 
     const savedTreatment = await newTreatment.save();
 
-    // Update the patient's profile by adding the new treatment's ID
+    // **Update Pattern**: Updates the patient’s profile by adding the new treatment's ID.
     const updatedPatient = await Patient.findByIdAndUpdate(
       patientId,
       { $push: { treatments: savedTreatment._id } }, // Add the treatment ID to the patient's treatments array
@@ -59,16 +61,20 @@ exports.saveTreatment = async (req, res) => {
       });
   } catch (err) {
     console.error("Failed to save treatment schedule:", err);
+    // **Error Handling Pattern**: Catches errors and sends a response accordingly.
     res.status(500).json({ message: "Failed to save treatment schedule." });
   }
 };
+
 // Controller to retrieve all treatments
 exports.getAllTreatments = async (req, res) => {
   try {
+    // **Repository Pattern**: Uses the Treatment model to fetch all treatments.
     const treatments = await Treatment.find();
     return res.status(200).json(treatments);
   } catch (err) {
     console.error("Failed to retrieve treatments:", err);
+    // **Error Handling Pattern**: Catches errors and sends a response accordingly.
     return res.status(500).json({ message: "Failed to retrieve treatments." });
   }
 };
@@ -83,6 +89,7 @@ exports.getTreatmentById = async (req, res) => {
   }
 
   try {
+    // **Repository Pattern**: Uses the Treatment model to find a treatment by ID.
     const treatment = await Treatment.findById(id);
     if (!treatment) {
       return res.status(404).json({ message: "Treatment not found." });
@@ -90,6 +97,7 @@ exports.getTreatmentById = async (req, res) => {
     return res.status(200).json(treatment);
   } catch (error) {
     console.error("Failed to retrieve treatment by ID:", error);
+    // **Error Handling Pattern**: Catches errors and sends a response accordingly.
     return res.status(500).json({ message: "Failed to retrieve treatment." });
   }
 };
@@ -108,7 +116,7 @@ exports.updateTreatmentById = async (req, res) => {
     console.log('Updating treatment with ID:', id);
     console.log('Data to update:', updateData);
 
-    // Find the treatment by ID and update it with the new data
+    // **Repository Pattern**: Uses the Treatment model to find and update a treatment by ID.
     const updatedTreatment = await Treatment.findByIdAndUpdate(id, updateData, {
       new: true,
       runValidators: true  // Ensure Mongoose validates the updated data
@@ -124,6 +132,7 @@ exports.updateTreatmentById = async (req, res) => {
     });
   } catch (error) {
     console.error("Failed to update treatment:", error);
+    // **Error Handling Pattern**: Catches errors and sends a response accordingly.
     return res.status(500).json({ message: "Failed to update treatment." });
   }
 };
@@ -138,6 +147,7 @@ exports.deleteTreatment = async (req, res) => {
   }
 
   try {
+    // **Repository Pattern**: Uses the Treatment model to find and delete a treatment by ID.
     const result = await Treatment.findByIdAndDelete(id);
 
     if (!result) {
@@ -147,6 +157,7 @@ exports.deleteTreatment = async (req, res) => {
     return res.status(200).json({ message: "Treatment deleted successfully." });
   } catch (err) {
     console.error("Failed to delete treatment:", err);
+    // **Error Handling Pattern**: Catches errors and sends a response accordingly.
     return res.status(500).json({ message: "Failed to delete treatment." });
   }
 };
