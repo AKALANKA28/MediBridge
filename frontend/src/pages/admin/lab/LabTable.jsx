@@ -1,78 +1,96 @@
-import React from "react";
-import axios from "axios"; // Add this line to import axios
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Button,
-  Typography, // Import Typography
-} from "@mui/material";
+import React, { useEffect, useState } from 'react';
+import "./LabTable.scss"; // Ensure you have the corresponding styles
+import { DataGrid } from "@mui/x-data-grid";
+import { useLocation, Link } from "react-router-dom";
 
-const LabTable = ({ data, onEdit }) => {
-  const handleEdit = (item) => {
-    onEdit(item);
-  };
+const LabTable = () => {
+  const [data, setData] = useState([]);
+  const location = useLocation();
+  const { tests } = location.state || {}; // Receive lab tests
 
-  const handleDelete = async (labId) => {
-    // Implement delete logic here (e.g., make an API call to delete the lab test)
+  const columns = [
+    { field: "test_Id", headerName: "Test ID", width: 150 },
+    { field: "test_Name", headerName: "Test Name", width: 230 },
+    { field: "test_result", headerName: "Test Result", width: 230 },
+    { field: "date", headerName: "Date", width: 150 },
+    { field: "description", headerName: "Description", width: 230 },
+  ];
+
+  useEffect(() => {
+    // Use passed lab tests if available, otherwise fetch from API
+    if (tests) {
+      setData(tests.map(test => ({
+        id: test._id || '',
+        test_Id: test.test_Id || '',
+        test_Name: test.test_Name || '',
+        test_result: test.test_result || '',
+        date: test.date ? new Date(test.date).toLocaleDateString() : 'N/A',
+        description: test.description || '',
+      })));
+    } else {
+      fetchData();
+    }
+  }, [tests]);
+
+  const fetchData = async () => {
     try {
-      const response = await axios.delete(`http://localhost:8080/tests/delete/${labId}`);
-      alert(response.data.message || "Lab test deleted successfully");
-      // Optionally, refresh the data or notify the parent component to refresh
+      const response = await fetch('http://localhost:8080/tests/'); // Your API endpoint for lab tests
+      if (!response.ok) {
+        throw new Error('Failed to fetch lab tests.');
+      }
+      const result = await response.json();
+      setData(result.map(item => ({ ...item, id: item._id || '' })).filter(item => item.id));
     } catch (error) {
-      console.error("Error deleting lab test:", error);
-      alert("Failed to delete lab test");
+      console.error('Error fetching lab tests:', error);
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:8080/tests/${id}`, { // Adjust the endpoint for delete
+        method: 'DELETE',
+      });
+      // Refresh the data after deletion
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting lab test:", error);
+    }
+  };
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <Link to={`/labtestform`} state={{ initialData: params.row }}>
+              Edit
+            </Link>
+            <button onClick={() => handleDelete(params.row.id)}>Delete</button>
+          </div>
+        );
+      },
+    },
+  ];
+
   return (
-    <Paper sx={{ marginTop: 3, padding: 2 }}>
-      <Typography variant="h4" component="h2" gutterBottom>
-        Lab Test Details
-      </Typography>
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Lab Test ID</TableCell>
-              <TableCell>Test Name</TableCell>
-              <TableCell>Test Results</TableCell>
-              <TableCell>Date</TableCell>
-              <TableCell>Description</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((item) => (
-              <TableRow key={item.test_Id}>
-                <TableCell>{item.test_Id}</TableCell>
-                <TableCell>{item.test_Name}</TableCell>
-                <TableCell>{item.test_result}</TableCell>
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.description}</TableCell>
-                <TableCell>
-                  <Button variant="contained" color="primary" onClick={() => handleEdit(item)}>
-                    Edit
-                  </Button>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDelete(item.test_Id)}
-                    style={{ marginLeft: '10px' }}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+    <div className="lab-table">
+      <div className="datatableTitle">
+        Add New Test
+        <Link to="/labtests/new" className="link">
+          Add New
+        </Link>
+      </div>
+      <DataGrid 
+        rows={data} 
+        columns={columns.concat(actionColumn)} 
+        pageSize={5} 
+        checkboxSelection // This enables the checkbox selection
+        getRowId={(row) => row.id} // Use MongoDB _id as row ID
+      />
+    </div>
   );
 };
 

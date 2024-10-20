@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, TablePagination, Typography, Paper, TableContainer, Table, TableHead, TableRow, TableCell } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, TablePagination } from '@mui/material';
 import axios from 'axios'; 
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 const TreatmentTable = () => {
   const [data, setData] = useState([]);
@@ -24,7 +24,7 @@ const TreatmentTable = () => {
         doctor_Name: treatment.doctor_Name || '',
         date: treatment.date ? new Date(treatment.date).toLocaleDateString() : '',
         description: treatment.description || '',
-        status: treatment.status || 'Pending',
+        status: treatment.status || 'Pending',  // Assuming there's a status field
         patientId: patientId || '',
       })));
     } else {
@@ -115,17 +115,8 @@ const TreatmentTable = () => {
       width: 200,
       renderCell: params => (
         <div className="cellAction">
-          <Button variant="contained" onClick={() => handleDialogOpen(params.row)} color="primary">
-            Edit
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => handleDelete(params.row.id)}
-            style={{ marginLeft: '10px' }}
-          >
-            Delete
-          </Button>
+          <Button variant="outlined" onClick={() => handleDialogOpen(params.row)}>Edit</Button>
+          <Button color="secondary" onClick={() => handleDelete(params.row.id)}>Delete</Button>
         </div>
       )
     }
@@ -133,27 +124,22 @@ const TreatmentTable = () => {
 
   return (
     <div className="treatment-table">
-      <Paper sx={{ marginTop: 3, padding: 2 }}>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Treatment Details
-        </Typography>
-        <DataGrid
-          rows={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
-          columns={columns}
-          pageSize={rowsPerPage}
-          checkboxSelection
-          autoHeight
-        />
+      <DataGrid
+        rows={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+        columns={columns}
+        pageSize={rowsPerPage}
+        checkboxSelection
+        autoHeight
+      />
 
-        <TablePagination
-          component="div"
-          count={data.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
+      <TablePagination
+        component="div"
+        count={data.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
 
       {/* Treatment Edit Dialog */}
       <Dialog open={openDialog} onClose={handleDialogClose}>

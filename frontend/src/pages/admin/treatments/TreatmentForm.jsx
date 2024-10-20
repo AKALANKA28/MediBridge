@@ -1,5 +1,5 @@
-import React, { useState } from "react"; // Import React and hooks
-import axios from "axios"; // Import axios for HTTP requests
+import React, { useState } from "react";
+import axios from "axios";
 import {
   TextField,
   Button,
@@ -7,47 +7,25 @@ import {
   Typography,
   Paper,
   FormControl,
-  FormHelperText,
-} from "@mui/material"; // Material UI components
+} from "@mui/material";
 
 const TreatmentForm = ({ initialData, patientId }) => {
-  // State management for form data and errors (State Pattern)
   const [formData, setFormData] = useState({
-    treatment_Id: initialData?.treatment_Id || "", // Initialize with existing data or empty
+    treatment_Id: initialData?.treatment_Id || "",
     treatment_Name: initialData?.treatment_Name || "",
     doctor_Name: initialData?.doctor_Name || "",
     date: initialData?.date || "",
     description: initialData?.description || "",
   });
-  
-  const [errors, setErrors] = useState({}); // State for form errors (State Pattern)
 
-  // Handle input change and clear errors
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    
-    // Clear error for the current input when user starts typing
-    setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Validate form fields
-  const validateForm = () => {
-    const newErrors = {};
-    // Check for empty fields
-    Object.keys(formData).forEach((key) => {
-      if (!formData[key]) {
-        newErrors[key] = "This field is required"; // Set error for empty fields
-      }
-    });
-    // Return errors if there are any
-    return newErrors;
-  };
-
-  // Handle form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,13 +40,6 @@ const TreatmentForm = ({ initialData, patientId }) => {
       patientId, // Include patientId in the submitted data
     };
 
-    // Validate form before submission
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors); // Set validation errors
-      return; // Exit if there are validation errors
-    }
-
     // Log the data to be submitted
     console.log("Submitting data:", submitData);
 
@@ -76,14 +47,6 @@ const TreatmentForm = ({ initialData, patientId }) => {
       // Send the form data to the backend
       const response = await axios.post("http://localhost:8080/treatments/add", submitData);
       alert(response.data.message || "Treatment added successfully");
-      // Optionally reset form data after successful submission
-      setFormData({
-        treatment_Id: "",
-        treatment_Name: "",
-        doctor_Name: "",
-        date: "",
-        description: "",
-      });
     } catch (error) {
       console.error("Error adding treatment:", error);
       alert("Failed to add treatment");
@@ -96,8 +59,7 @@ const TreatmentForm = ({ initialData, patientId }) => {
         Treatment Form
       </Typography>
       <form onSubmit={handleFormSubmit}>
-        {/* Treatment ID Input */}
-        <FormControl fullWidth margin="normal" error={!!errors.treatment_Id}>
+        <FormControl fullWidth margin="normal">
           <TextField
             label="Treatment ID"
             name="treatment_Id"
@@ -106,11 +68,9 @@ const TreatmentForm = ({ initialData, patientId }) => {
             required
             variant="outlined"
           />
-          {errors.treatment_Id && <FormHelperText>{errors.treatment_Id}</FormHelperText>}
         </FormControl>
 
-        {/* Treatment Name Input */}
-        <FormControl fullWidth margin="normal" error={!!errors.treatment_Name}>
+        <FormControl fullWidth margin="normal">
           <TextField
             label="Treatment Name"
             name="treatment_Name"
@@ -119,11 +79,9 @@ const TreatmentForm = ({ initialData, patientId }) => {
             required
             variant="outlined"
           />
-          {errors.treatment_Name && <FormHelperText>{errors.treatment_Name}</FormHelperText>}
         </FormControl>
 
-        {/* Doctor Name Input */}
-        <FormControl fullWidth margin="normal" error={!!errors.doctor_Name}>
+        <FormControl fullWidth margin="normal">
           <TextField
             label="Doctor Name"
             name="doctor_Name"
@@ -132,11 +90,9 @@ const TreatmentForm = ({ initialData, patientId }) => {
             required
             variant="outlined"
           />
-          {errors.doctor_Name && <FormHelperText>{errors.doctor_Name}</FormHelperText>}
         </FormControl>
 
-        {/* Date Input */}
-        <FormControl fullWidth margin="normal" error={!!errors.date}>
+        <FormControl fullWidth margin="normal">
           <TextField
             label="Date"
             name="date"
@@ -149,27 +105,23 @@ const TreatmentForm = ({ initialData, patientId }) => {
             }}
             variant="outlined"
           />
-          {errors.date && <FormHelperText>{errors.date}</FormHelperText>}
         </FormControl>
 
-        {/* Description Input */}
-        <FormControl fullWidth margin="normal" error={!!errors.description}>
+        <FormControl fullWidth margin="normal">
           <TextField
             label="Description"
             name="description"
             value={formData.description}
             onChange={handleInputChange}
             required
-            variant="outlined"
             multiline
             rows={4}
+            variant="outlined"
           />
-          {errors.description && <FormHelperText>{errors.description}</FormHelperText>}
         </FormControl>
 
-        {/* Submit Button */}
-        <Box mt={2}>
-          <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Box sx={{ marginTop: 2 }}>
+          <Button variant="contained" color="primary" type="submit" fullWidth>
             Submit
           </Button>
         </Box>
@@ -178,4 +130,4 @@ const TreatmentForm = ({ initialData, patientId }) => {
   );
 };
 
-export default TreatmentForm; // Export the TreatmentForm component
+export default TreatmentForm;
