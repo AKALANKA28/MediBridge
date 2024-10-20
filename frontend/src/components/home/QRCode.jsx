@@ -110,7 +110,7 @@ const QRCodeScreen = () => {
                     <div className="record-right-container">
                       <p>
                         <strong>Name:</strong>{" "}
-                        {userInfo ? userInfo.name : "Loading..."}
+                        {userInfo ? userInfo.name : "Akalanka Dias"}
                       </p>
                       <p>
                         <strong>Date of Birth:</strong>{" "}
