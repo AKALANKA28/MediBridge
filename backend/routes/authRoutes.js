@@ -15,7 +15,7 @@ router.get("/refresh", userController.handleRefreshToken);                     /
 router.get("/logout", userController.logout);                                  // User logout
 router.get('/', userController.getAllUsers);                                   // Get all users (admin)
 router.get("/get/:id", authMiddleware, userController.getUserById);            // Get user by ID
-router.put("/update/:id", authMiddleware, userController.updatedUser);         // Update user profile
+router.put("/update/:id", userController.updatedUser);         // Update user profile
 // router.put("/block/:id", authMiddleware, isAdmin, userController.blockUser);   // Block user (admin)
 // router.put("/unblock/:id", authMiddleware, isAdmin, userController.unblockUser); // Unblock user (admin)
 router.delete("/delete/:id",authMiddleware, userController.deleteUser); 

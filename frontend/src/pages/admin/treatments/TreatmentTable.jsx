@@ -1,91 +1,207 @@
 import React, { useEffect, useState } from 'react';
-import "./TreatmentTable.scss";
-import { DataGrid } from "@mui/x-data-grid";
-import { Link } from "react-router-dom";
+import { DataGrid } from '@mui/x-data-grid';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField, Select, MenuItem, TablePagination } from '@mui/material';
+import axios from 'axios'; 
+import { useLocation, Link } from 'react-router-dom';
 
-const TreatmentTable = ({ onEdit }) => { // Accept onEdit as a prop
+const TreatmentTable = () => {
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [selectedTreatment, setSelectedTreatment] = useState(null);
+  const [status, setStatus] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+
+  const location = useLocation();
+  const { treatments, patientId } = location.state || {};
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/treatments/'); // Replace with your actual API endpoint
-      const result = await response.json();
-      
-      // Map the fetched data to include id property
-      const mappedData = result.map(item => ({
-        id: item._id || '', // Use _id directly
-        treatment_Id: item.treatment_Id || '',
-        patient_Name: item.patient_Name || '', // Fallback to empty string if undefined
-        treatment_Name: item.treatment_Name || '',
-        doctor_Name: item.doctor_Name || '',
-        date: item.date ? new Date(item.date) : null, // Parse date directly
-        description: item.description || '',
-      })).filter(item => item.id); // Filter out items without an id
+    if (treatments) {
+      setData(treatments.map(treatment => ({
+        id: treatment._id || '',
+        treatment_Id: treatment.treatment_Id || '',
+        treatment_Name: treatment.treatment_Name || '',
+        doctor_Name: treatment.doctor_Name || '',
+        date: treatment.date ? new Date(treatment.date).toLocaleDateString() : '',
+        description: treatment.description || '',
+        status: treatment.status || 'Pending',  // Assuming there's a status field
+        patientId: patientId || '',
+      })));
+    } else {
+      fetchData();
+    }
+  }, [treatments]);
 
-      setData(mappedData);
-    };
-
-    fetchData();
-  }, []);
-
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('/treatments/');
+      setData(response.data.map(item => ({
+        ...item, 
+        id: item._id || '',
+        status: item.status || 'Pending'
+      })).filter(item => item.id));
+    } catch (error) {
+      console.error("Error fetching treatments:", error.response ? error.response.data : error.message);
+    }
   };
 
-  const actionColumn = [
-    {
-      field: "action",
-      headerName: "Action",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="cellAction">
-            <div 
-              className="editButton" 
-              onClick={() => onEdit(params.row)} // Call the onEdit function with the row data
-            >
-              Edit
-            </div>
-            <div className="deleteButton" onClick={() => handleDelete(params.row.id)}>
-              Delete
-            </div>
-          </div>
-        );
-      },
-    },
-  ];
+  const handleStatusChange = async (treatmentId, newStatus) => {
+    try {
+      await axios.put(`/treatments/status/${treatmentId}`, { status: newStatus });
+      setData(prevData =>
+        prevData.map(treatment =>
+          treatment.id === treatmentId ? { ...treatment, status: newStatus } : treatment
+        )
+      );
+    } catch (error) {
+      console.error('Error updating status', error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`/treatments/${id}`);
+      fetchData();
+    } catch (error) {
+      console.error("Error deleting treatment:", error.response ? error.response.data : error.message);
+    }
+  };
+
+  const handleDialogOpen = treatment => {
+    setSelectedTreatment(treatment);
+    setStatus(treatment.status);
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+    setSelectedTreatment(null);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const columns = [
-    { field: "treatment_Id", headerName: "Treatment ID", width: 150 },
-    { field: "patient_Name", headerName: "Patient Name", width: 230 },
-    { field: "treatment_Name", headerName: "Treatment Name", width: 230 },
-    { field: "doctor_Name", headerName: "Doctor Name", width: 230 },
+    { field: 'treatment_Id', headerName: 'Treatment ID', width: 150 },
+    { field: 'treatment_Name', headerName: 'Treatment Name', width: 200 },
+    { field: 'doctor_Name', headerName: 'Doctor Name', width: 200 },
+    { field: 'date', headerName: 'Date', width: 150 },
+    { field: 'description', headerName: 'Description', width: 250 },
     {
-      field: "date",
-      headerName: "Date",
+      field: 'status',
+      headerName: 'Status',
       width: 150,
-      renderCell: (params) => (params.row.date ? new Date(params.row.date).toLocaleDateString() : 'N/A'), // Handle null dates
+      renderCell: params => (
+        <Select
+          value={params.row.status}
+          onChange={e => handleStatusChange(params.row.id, e.target.value)}
+          fullWidth
+        >
+          <MenuItem value="Pending">Pending</MenuItem>
+          <MenuItem value="Completed">Completed</MenuItem>
+          <MenuItem value="Cancelled">Cancelled</MenuItem>
+        </Select>
+      )
     },
-    { field: "description", headerName: "Description", width: 230 },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 200,
+      renderCell: params => (
+        <div className="cellAction">
+          <Button variant="outlined" onClick={() => handleDialogOpen(params.row)}>Edit</Button>
+          <Button color="secondary" onClick={() => handleDelete(params.row.id)}>Delete</Button>
+        </div>
+      )
+    }
   ];
 
   return (
-    <div className="datatable">
-      <div className="datatableTitle">
-        Add New Treatment
-        <Link to="/treatments/new" className="link">
-          Add New
-        </Link>
-      </div>
+    <div className="treatment-table">
       <DataGrid
-        className="datagrid"
-        rows={data}
-        columns={columns.concat(actionColumn)}
-        pageSize={9}
-        rowsPerPageOptions={[9]}
+        rows={data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)}
+        columns={columns}
+        pageSize={rowsPerPage}
         checkboxSelection
-        getRowId={(row) => row.id} // Use id directly
+        autoHeight
       />
+
+      <TablePagination
+        component="div"
+        count={data.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+
+      {/* Treatment Edit Dialog */}
+      <Dialog open={openDialog} onClose={handleDialogClose}>
+        {selectedTreatment && (
+          <>
+            <DialogTitle>Edit Treatment: {selectedTreatment.treatment_Name}</DialogTitle>
+            <DialogContent>
+              <TextField
+                label="Treatment Name"
+                value={selectedTreatment.treatment_Name}
+                fullWidth
+                margin="normal"
+                disabled
+              />
+              <TextField
+                label="Doctor Name"
+                value={selectedTreatment.doctor_Name}
+                fullWidth
+                margin="normal"
+                disabled
+              />
+              <TextField
+                label="Date"
+                value={new Date(selectedTreatment.date).toLocaleDateString()}
+                fullWidth
+                margin="normal"
+                disabled
+              />
+              <TextField
+                label="Description"
+                value={selectedTreatment.description}
+                fullWidth
+                margin="normal"
+                disabled
+              />
+              <Select
+                label="Status"
+                value={status}
+                onChange={e => setStatus(e.target.value)}
+                fullWidth
+                margin="normal"
+              >
+                <MenuItem value="Pending">Pending</MenuItem>
+                <MenuItem value="Completed">Completed</MenuItem>
+                <MenuItem value="Cancelled">Cancelled</MenuItem>
+              </Select>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleDialogClose} color="secondary">Cancel</Button>
+              <Button
+                onClick={() => {
+                  handleStatusChange(selectedTreatment.id, status);
+                  handleDialogClose();
+                }}
+                color="primary"
+              >
+                Save
+              </Button>
+            </DialogActions>
+          </>
+        )}
+      </Dialog>
     </div>
   );
 };

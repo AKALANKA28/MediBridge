@@ -21,6 +21,11 @@ import QRCodeScreen from "./components/home/QRCode";
 import Register from "./pages/auth/Register";
 import PatientDetails from "./pages/auth/PatientDetails";
 import QRPage from "./pages/patient/qrPage/QRPage";
+import EquipmentAnalysis from "./pages/analysis/EquipmentAnalysis";
+import EquipmentAnalysisScreen from "./pages/analysis/EquipmentAnalysisScreen";
+import WardAnalysisScreen from "./pages/analysis/WardAnalysisScreen";
+import ManageWardsScreen from "./pages/analysis/ManageWardsScreen";
+import MedicalCondtions from "./pages/auth/MedicalConditions";
 import PaymentForm from "./pages/patient/paymentForm";
 import AppointmentForm from "./pages/patient/AppointmentForm";
 import AppointmentList from "./pages/patient/AppoinmentList";
@@ -41,6 +46,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/patient-details" element={<PatientDetails />} />
+          <Route path="/medical-conditions" element={<MedicalCondtions />} />
 
           {/* Add Register route */}
         </Routes>
@@ -62,12 +68,10 @@ function App() {
             <Route path="lab" element={<Lab />} />
             <Route path="analysis" element={<AnalysisScreen />} />
             <Route path="/patientrecords" element={<PatientRecords />} />
-            <Route path="/payment" element={<PaymentForm />} />
-            <Route path="/appoinment" element={<AppointmentForm />} />
-            <Route path="/appoinmentList" element={<AppointmentList />} />
-            <Route path="/paymentOpt" element={<PaymentOpt />} />
-
-
+            <Route path="analysis" element={<AnalysisScreen />} />
+            <Route path="eqanalysis" element={<EquipmentAnalysisScreen />} />
+            <Route path="wanalysis" element={<WardAnalysisScreen />} />
+            <Route path="mwards" element={<ManageWardsScreen />} />
           </Routes>
         );
       case "doctor":
@@ -80,7 +84,11 @@ function App() {
             <Route path="users/:userId" element={<Single />} />
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
-            <Route path="/qr" element={<QRPage />} />
+            <Route path="/health-card" element={<QRPage />} />
+            <Route path="/payment" element={<PaymentForm />} />
+            <Route path="/appoinment" element={<AppointmentForm />} />
+            <Route path="/appoinmentList" element={<AppointmentList />} />
+            <Route path="/paymentOpt" element={<PaymentOpt />} />
 
           </Routes>
         );

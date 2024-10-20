@@ -22,7 +22,6 @@ const Lab = () => {
   }, []);
 
   const handleFormSubmit = async (data) => {
-    // Handle form submission logic here
     console.log("Submitted data:", data);
 
     // If editing, update the lab details
@@ -70,7 +69,11 @@ const Lab = () => {
         <Navbar />
         <button onClick={() => setIsFormVisible(true)} className="datatableTitle">Add New</button> 
         {isFormVisible && (
-          <LabForm handleSubmit={handleFormSubmit} initialData={initialData} /> // Show LabForm conditionally
+          <LabForm 
+            handleSubmit={handleFormSubmit} 
+            initialData={initialData} 
+            patientId={initialData ? initialData.patientId : ""} // Pass patientId to the form
+          /> 
         )}
         <LabTable data={labs} onEdit={handleEdit} /> {/* Pass lab data to LabTable */}
       </div>

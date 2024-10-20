@@ -2,43 +2,80 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook, FaTwitter, FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
+import {
+  FaFacebook,
+  FaTwitter,
+  FaEye,
+  FaEyeSlash,
+  FaArrowRight,
+} from "react-icons/fa"; // Import eye icons
 import "./login.scss"; // Import CSS for styling
 import logo from "../../assets/medibridgelogo.svg"; // Import SVG logo
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [nic, setNic] = useState(""); // Changed from password to NIC
+  // const [nic, setNic] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
-//   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for confirm password visibility
+
+  const validateForm = () => {
+    if (!name || !email || !password) {
+      setErrorMessage("All fields are required.");
+      return false;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    // Add more password validation if necessary
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("Password must contain letters, numbers, and special characters.");
+      return false;
+    }
+
+    // NIC format validation (example: must be alphanumeric, 10 characters)
+    // const nicRegex = /^[0-9]{9}[vV]$/; // Adjust this regex based on your specific NIC format requirements
+    // if (!nicRegex.test(nic)) {
+    //   setErrorMessage("NIC must be in the correct format (e.g., 123456789v).");
+    //   return false;
+    // }
+
+    setErrorMessage(""); // Clear error message if validation passes
+    return true;
+  };
 
   const handleRegister = async () => {
-    setLoading(true);
-    setErrorMessage("");
-
-    // Client-side validation for password matching
-    if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
-      setLoading(false);
-      return;
+    if (!validateForm()) {
+      return; // Stop if validation fails
     }
+
+    setLoading(true);
 
     try {
       const response = await axios.post("/api/user/register", {
+        name,
         email,
         password,
+        role: "patient", // Add the role here
       });
       if (response && response.data) {
         const { token, role, _id } = response.data;
         login(token, role, _id);
-        navigate("/"); // Redirect to the home page or dashboard
+        navigate("/patient-details", { state: { userId: _id } }); // Pass user ID
       } else {
         setErrorMessage("Registration failed. Please try again.");
       }
@@ -66,7 +103,7 @@ const Register = () => {
         </div>
         <h2>Create a new account</h2>
         <input
-          type="name"
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
@@ -103,7 +140,6 @@ const Register = () => {
           </span>
         </div>
 
-
         <div className="login-options">
           <label>
             <input type="checkbox" /> Remember me
@@ -114,7 +150,7 @@ const Register = () => {
         </div>
         <button
           onClick={handleRegister}
-          disabled={loading || !email || !password || !confirmPassword}
+          disabled={loading || !email || !password || !name}
           className="login-btn"
         >
           {loading ? "Registering..." : "Register"}
@@ -125,6 +161,19 @@ const Register = () => {
           <FaFacebook className="social-icon facebook" />
           <FaTwitter className="social-icon twitter" />
         </div>
+        <button
+          onClick={() => navigate("/patient-details")} // Allowing user to skip
+          className="skip-btn"
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            right: "20px",
+            fontWeight: "600",
+          }} // Adjust positioning as necessary
+        >
+          Login
+          <FaArrowRight style={{ marginLeft: "8px" }} /> {/* Arrow icon */}
+        </button>
       </div>
     </div>
   );

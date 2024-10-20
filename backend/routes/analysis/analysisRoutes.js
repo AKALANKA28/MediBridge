@@ -7,7 +7,8 @@ const {
   deletePatientVisit,
   getPeakTimeData,
   getCurrentDayPeakTimes,
-  getPeakTimesByPeriod
+  getPeakTimesByPeriod,
+  getKPIs
 } = require('../../controller/analysis/analysisController');
 
 const router = express.Router();
@@ -20,6 +21,7 @@ router.get('/visits', getPatientVisits);
 router.get('/peak', getPeakTimeData);
 router.get('/peakday', getCurrentDayPeakTimes);
 router.get('/peakperiod', getPeakTimesByPeriod);
+router.get('/kpi', getKPIs);
 
 // GET: Get a specific patient visit by ID
 //router.get('/:id', getPatientVisitById);

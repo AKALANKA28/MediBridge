@@ -11,15 +11,21 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { DarkModeContext } from "../../context/drakModeContext";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 
 const Sidebar = () => {
   const { logout } = useContext(AuthContext); // Get auth and logout from context
-
   const { dispatch } = useContext(DarkModeContext);
+  const navigate = useNavigate(); // Initialize navigate for redirection
+
+  const handleLogout = () => {
+    logout(); // Call the logout function from AuthContext
+    navigate("/"); // Redirect to the login page after logout
+  };
+
   return (
     <div className="sidebar">
       <div className="top">
@@ -83,7 +89,25 @@ const Sidebar = () => {
           <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>
             <InsertChartIcon className="icon" />
-            <span>Stats</span>
+            <span>Patient Visits</span>
+          </li>
+          </Link>
+          <Link to="/eqanalysis" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Resources</span>
+          </li>
+          </Link>
+          <Link to="/wanalysis" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Wards</span>
+          </li>
+          </Link>
+          <Link to="/mwards" style={{ textDecoration: "none" }}>
+          <li>
+            <InsertChartIcon className="icon" />
+            <span>Manage Wards</span>
           </li>
           </Link>
           <li>
@@ -115,7 +139,7 @@ const Sidebar = () => {
             <span>Profile</span>
           </li>
           {/* Use onClick instead of Link for Logout */}
-          <li onClick={logout} style={{ cursor: "pointer" }}>
+          <li onClick={handleLogout} style={{ cursor: "pointer" }}>
             <ExitToAppIcon className="icon" />
             <span>Logout</span>
           </li>

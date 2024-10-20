@@ -19,7 +19,7 @@ exports.getPatientProfile = async (req, res) => {
     const patientProfile = await PatientProfile.findById(id).populate([
       {
         path: "user",
-        select: "name email nic",
+        select: "name email nic imgUrl mobile",
       },
     //   {
     //     path: "appointments.doctor",
@@ -28,6 +28,10 @@ exports.getPatientProfile = async (req, res) => {
       {
         path: "treatments",
         select: "treatment_Id treatment_Name date description",
+      },
+      {
+        path: "labTest",
+        select: "test_Id test_Name test_result date description",
       },
     ]);
 
@@ -65,7 +69,7 @@ exports.generatePatientQRCode = async (req, res) => {
     )}/patient/${patientProfileId}`;
     // Generate QR code from URL with specified width and margin
     const qrCode = await QRCode.toDataURL(qrUrl, {
-      width: 230, // Specify the desired width
+      width: 340, // Specify the desired width
       margin: 1, // Add margin if necessary
     });
     // console.log("Generated QR URL:", qrUrl); // Debugging the QR URL
@@ -91,6 +95,10 @@ exports.getAllPatients = async (req, res) => {
       {
         path: "treatments",
         select: "treatment_Id treatment_Name date description",
+      },
+      {
+        path: "labTest",
+        select: "test_Id test_Name test_result date description",
       },
     ]);
 
