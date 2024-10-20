@@ -115,7 +115,7 @@ const Sidebar = () => {
             <span>Notifications</span>
           </li>
           <p className="title">SERVICE</p>
-          <Link to="/appoinment" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <SettingsSystemDaydreamOutlinedIcon className="icon" />
             <span>System Health</span>
@@ -127,7 +127,7 @@ const Sidebar = () => {
             <span>Logs</span>
           </li>
           </Link>
-          <Link to="/paymentOpt" style={{ textDecoration: "none" }}>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>

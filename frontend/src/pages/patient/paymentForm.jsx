@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';  // Import useNavigate from reac
 import axios from 'axios';
 import '../../style/paymentForm.css';  // Link to the external CSS file
 import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../../components/patient/sidebar/Sidebar';
 
 const PaymentForm = () => {
   const navigate = useNavigate();  // Initialize the navigate function
@@ -74,7 +74,7 @@ const PaymentForm = () => {
 
     // CVV validation (3 or 4 digits)
     if (!/^\d{3,4}$/.test(formData.cvv)) {
-      formErrors.cvv = 'CVV must be 3 or 4 digits';
+      formErrors.cvv = 'CVV must be 3 digits';
     }
 
     setErrors(formErrors);

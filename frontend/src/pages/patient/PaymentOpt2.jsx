@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../style/PaymentOpt2.css'; // Import the stylesheet
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../../components/patient/sidebar/Sidebar';
 import Navbar from '../../components/navbar/Navbar';
 
 const PaymentOpt = () => {
@@ -84,12 +84,12 @@ const PaymentOpt = () => {
           {file && <p className="file-name">{file.name}</p>}
 
           {/* Buttons */}
-          <p 
+          {/* <p 
           style={{ marginTop: '10px', cursor: 'pointer', color: 'blue' }} 
           onClick={handleNavigate} // Add click handler for navigation
           >
             Choose another method
-          </p>
+          </p> */}
           <button type="submit" className="submit-button">
             Continue
           </button>

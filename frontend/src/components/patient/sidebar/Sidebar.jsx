@@ -47,16 +47,19 @@ const Sidebar = () => {
                 <span>Health Card</span>
               </li>
             </Link>
+            <Link to="/appoinment" style={{ textDecoration: "none" }}>
             <li>
               <PersonOutlineIcon className="icon" />
               <span>Appointments</span>
             </li>
+            </Link>
           </Link>
+          <Link to="/payment" style={{ textDecoration: "none" }}>
           <li>
             <CreditCardIcon className="icon" />
             <span>Payments</span>
           </li>
-
+          </Link>
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />
