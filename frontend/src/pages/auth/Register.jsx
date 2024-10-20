@@ -15,8 +15,7 @@ import logo from "../../assets/medibridgelogo.svg"; // Import SVG logo
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [nic, setNic] = useState("");
-
+  // const [nic, setNic] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -24,16 +23,53 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
+  const validateForm = () => {
+    if (!name || !email || !password) {
+      setErrorMessage("All fields are required.");
+      return false;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return false;
+    }
+
+    if (password.length < 8) {
+      setErrorMessage("Password must be at least 8 characters long.");
+      return false;
+    }
+
+    // Add more password validation if necessary
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("Password must contain letters, numbers, and special characters.");
+      return false;
+    }
+
+    // NIC format validation (example: must be alphanumeric, 10 characters)
+    // const nicRegex = /^[0-9]{9}[vV]$/; // Adjust this regex based on your specific NIC format requirements
+    // if (!nicRegex.test(nic)) {
+    //   setErrorMessage("NIC must be in the correct format (e.g., 123456789v).");
+    //   return false;
+    // }
+
+    setErrorMessage(""); // Clear error message if validation passes
+    return true;
+  };
+
   const handleRegister = async () => {
+    if (!validateForm()) {
+      return; // Stop if validation fails
+    }
+
     setLoading(true);
-    setErrorMessage("");
 
     try {
       const response = await axios.post("/api/user/register", {
         name,
         email,
         password,
-        nic,
         role: "patient", // Add the role here
       });
       if (response && response.data) {
@@ -67,7 +103,7 @@ const Register = () => {
         </div>
         <h2>Create a new account</h2>
         <input
-          type="name"
+          type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Name"
@@ -84,15 +120,7 @@ const Register = () => {
           disabled={loading}
           className="login-input"
         />
-        {/* <input
-          type="nic"
-          value={nic}
-          onChange={(e) => setNic(e.target.value)}
-          placeholder="NIC"
-          required
-          disabled={loading}
-          className="login-input nic"
-        /> */}
+
         {/* Password Input with Eye Icon */}
         <div className="password-input">
           <input
@@ -122,7 +150,7 @@ const Register = () => {
         </div>
         <button
           onClick={handleRegister}
-          disabled={loading || !email || !password}
+          disabled={loading || !email || !password || !name}
           className="login-btn"
         >
           {loading ? "Registering..." : "Register"}
