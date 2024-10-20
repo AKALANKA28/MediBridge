@@ -147,15 +147,56 @@
 }
 
 
-.hide-mobile{
-  display: flex;
-  border-width: 1px solid #5f5f5f;
-  padding: 20px;
-  background-color: #0076C1;
-  @media (max-width: 768px) {
-    display: none;
+.hide-mobile {
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange children in a row */
+  // border: 1px solid #5f5f5f; /* Add a border */
+  border-left: 1px solid rgba(190, 190, 190, 0.5058823529);
+  border-top: 1px solid rgba(190, 190, 190, 0.5058823529);
+  margin-left: -36px;
+  // padding: 20px; /* Add some padding */
+  // background-color: #0077c156; /* Set background color */
+}
+
+.mobile-info {
+  margin-right: 20px; /* Add space between each mobile info block */
+  border-bottom: 1px solid rgba(190, 190, 190, 0.5); /* Slightly adjust opacity for clarity */
+  padding: 20px; /* Add some padding */
+  display: flex; /* Align items in a row */
+  align-items: center; /* Vertically centers items */
+}
+
+.web-text {
+  margin-right: 3px; /* Space after the label */
+  font-size: 14px;
+}
+
+.vertical-line {
+  width: 0.5px; /* Width of the vertical line */
+  height: 33px; /* Set height for the vertical line */
+  background-color:rgba(190, 190, 190, 0.5); /* Set the color of the line */
+  margin: 0 10px; /* Space around the line */
+}
+
+/* Optional: For mobile data to provide better visibility */
+.mobile-data {
+  /* Additional styles if needed */
+  white-space: nowrap; /* Prevent line breaks within mobile data */
+  font-size: 14px;
+
+}
+/* Optional: Remove the margin from the last item */
+.mobile-info:last-child {
+  margin-right: 0; /* No margin for the last item */
+}
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none; /* Hide on smaller screens */
   }
 }
+
+
 .qr-code-container {
   margin: 20px 0;
   text-align: center;
