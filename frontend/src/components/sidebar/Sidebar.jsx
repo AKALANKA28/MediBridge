@@ -79,10 +79,12 @@ const Sidebar = () => {
             <CreditCardIcon className="icon" />
             <span>Orders</span>
           </li>
+          <Link to="/payment" style={{ textDecoration: "none" }}>
           <li>
             <LocalShippingIcon className="icon" />
             <span>payment</span>
           </li>
+          </Link>
           <p className="title">USEFUL</p>
           <Link to="/analysis" style={{ textDecoration: "none" }}>
           <li>
@@ -113,18 +115,24 @@ const Sidebar = () => {
             <span>Notifications</span>
           </li>
           <p className="title">SERVICE</p>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <SettingsSystemDaydreamOutlinedIcon className="icon" />
             <span>System Health</span>
           </li>
+          </Link>
+          <Link to="/appoinmentList" style={{ textDecoration: "none" }}>
           <li>
             <PsychologyOutlinedIcon className="icon" />
             <span>Logs</span>
           </li>
+          </Link>
+          <Link to="/" style={{ textDecoration: "none" }}>
           <li>
             <SettingsApplicationsIcon className="icon" />
             <span>Settings</span>
           </li>
+          </Link>
           <p className="title">USER</p>
           <li>
             <AccountCircleOutlinedIcon className="icon" />

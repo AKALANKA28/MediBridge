@@ -26,6 +26,10 @@ import EquipmentAnalysisScreen from "./pages/analysis/EquipmentAnalysisScreen";
 import WardAnalysisScreen from "./pages/analysis/WardAnalysisScreen";
 import ManageWardsScreen from "./pages/analysis/ManageWardsScreen";
 import MedicalCondtions from "./pages/auth/MedicalConditions";
+import PaymentForm from "./pages/patient/paymentForm";
+import AppointmentForm from "./pages/patient/AppointmentForm";
+import AppointmentList from "./pages/patient/AppoinmentList";
+import PaymentOpt from "./pages/patient/PaymentOpt2";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -81,6 +85,10 @@ function App() {
             <Route path="users/new" element={<New />} />
             <Route path="/qr-code" element={<QRCodeScreen />} />
             {/* <Route path="/health-card" element={<QRPage />} /> */}
+            <Route path="/payment" element={<PaymentForm />} />
+            <Route path="/appoinment" element={<AppointmentForm />} />
+            <Route path="/appoinmentList" element={<AppointmentList />} />
+            <Route path="/paymentOpt" element={<PaymentOpt />} />
           </Routes>
         );
       default:
