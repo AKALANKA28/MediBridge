@@ -96,6 +96,10 @@ exports.getAllPatients = async (req, res) => {
         path: "treatments",
         select: "treatment_Id treatment_Name date description",
       },
+      {
+        path: "labTest",
+        select: "test_Id test_Name test_result date description",
+      },
     ]);
 
     res.status(200).json(patients);
