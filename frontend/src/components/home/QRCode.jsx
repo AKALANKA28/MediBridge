@@ -50,6 +50,12 @@ const QRCodeScreen = () => {
     fetchUserData(); // Call the new function to fetch user data
   }, [userId]);
 
+  // Function to format the date to 'YYYY-MM-DD'
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-CA"); // Format as 'YYYY-MM-DD'
+  };
+
   // Function to handle downloading the QR code as an image
   const handleDownload = () => {
     const link = document.createElement("a");
@@ -115,11 +121,11 @@ const QRCodeScreen = () => {
                       </p>
                       <p>
                         <strong>Date of Birth:</strong>{" "}
-                        {patientInfo.dob ? patientInfo.dob : "2002-05-28"}
+                        {userInfo?.dob ? formatDate(userInfo.dob) : "2002-05-28"}
                       </p>
                       <p>
                         <strong>Blood Group:</strong>{" "}
-                        {patientInfo.bloodGroup ? patientInfo.bloodGroup : "O+"}
+                        {userInfo?.blood ? userInfo.blood : "O+"}
                       </p>
 
                       <p className="web-only">
@@ -133,18 +139,18 @@ const QRCodeScreen = () => {
                       <strong className="web-text">Allergies:</strong>
                       <div className="vertical-line"></div>
                       <span className="mobile-data">
-                      {"Don't Have any Allergies"}
+                        {"Don't Have any Allergies"}
                       </span>
                     </div>
                     <div className="mobile-info">
                       <strong className="web-text">Surgeries:</strong>
                       <div className="vertical-line"></div>
                       <span className="mobile-data">
-                      {"Don't Have any Surgeries."}
+                        {"Don't Have any Surgeries."}
                       </span>
                     </div>
                     <div className="mobile-info">
-                      <strong className="web-text">Medical Condtions:</strong>
+                      <strong className="web-text">Medical Conditions:</strong>
                       <div className="vertical-line"></div>
                       <span className="mobile-data">
                         {"No Medical Conditions"}
@@ -185,9 +191,13 @@ const QRCodeScreen = () => {
                 privacy.
               </li>
             </ul>
-            <p className="extratext" style={{ marginTop: "30px", fontSize: "10px" }}>
-            This health card is powered by MediBridge. At this time, it is not yet compatible with any external app or service. 
-            Please visit https://medibridge.health for updates on future compatibility.
+            <p
+              className="extratext"
+              style={{ marginTop: "30px", fontSize: "10px" }}
+            >
+              This health card is powered by MediBridge. At this time, it is not
+              yet compatible with any external app or service. Please visit
+              https://medibridge.health for updates on future compatibility.
             </p>
           </div>
         </div>

@@ -304,6 +304,8 @@ exports.updatedUser = asyncHandler(async (req, res) => {
         nic: req.body?.nic,
         dob: req.body?.dob,
         gender: req.body?.gender,
+        blood: req.body?.blood,
+
       },
       {
         new: true,
