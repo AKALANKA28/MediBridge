@@ -130,7 +130,7 @@ const MedicalConditions = () => {
         </button>
 
         <button
-          onClick={() => navigate("/")} // Allowing user to skip
+          onClick={() => navigate("/home")} // Allowing user to skip
           className="skip-btn"
           style={{
             position: "absolute",

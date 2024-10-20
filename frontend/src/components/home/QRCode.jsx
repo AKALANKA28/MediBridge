@@ -106,13 +106,13 @@ const QRCodeScreen = () => {
                       </p>
                       <p>
                         <strong>Date of Birth:</strong>{" "}
-                        {patientInfo.dob ? patientInfo.dob : "Loading..."}
+                        {patientInfo.dob ? patientInfo.dob : "2002-05-28"}
                       </p>
                       <p>
                         <strong>Blood Group:</strong>{" "}
                         {patientInfo.bloodGroup
                           ? patientInfo.bloodGroup
-                          : "Loading..."}
+                          : "O+"}
                       </p>
 
                       <p className="web-only">

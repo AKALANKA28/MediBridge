@@ -23,7 +23,7 @@ const Login = () => {
         const { token, role, _id } = response.data;
         login(token, role, _id);
         if (role === "admin") navigate("/");
-        else if (role === "patient") navigate("/home");
+        else if (role === "patient") navigate("/");
         else if (role === "doctor") navigate("/");
         else navigate("/");
       } else {
